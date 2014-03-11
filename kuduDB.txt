@@ -1,0 +1,18 @@
+/*** Create Keyspace ***/
+/*CREATE KEYSPACE kududb WITH replication = {
+	'class':'SimpleStrategy', 
+	'replication_factor':1
+};*/
+
+/*** Delete Keyspace ***/
+/*DROP KEYSPACE kududb;*/
+
+USE kudu;
+
+/*** CREATE TABLES ***/
+/*CREATE TABLE users(
+	username text,
+	email text,
+	password text,
+	PRIMARY KEY(username)
+);*/
