@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <!-- =================Names==================== -->
+    
+    <TextView
+        android:id="@+id/lbl_name"
+        	android:layout_width="50dp"
+        	android:layout_height="wrap_content"
+        	android:layout_marginBottom="10dp"
+        	
+        	android:layout_alignParentTop="true"
+        	android:layout_alignLeft="@+id/txt_name"
+        android:text="@string/name" />
+    
+    <EditText
+        android:id="@+id/txt_name"
+        	android:layout_width="100dp"
+        	android:layout_height="wrap_content"
+        	android:layout_marginBottom="10dp"
+        	
+        	android:layout_alignParentTop="true"
+        	android:layout_alignRight="@+id/lbl_name"
+        android:inputType="textPassword" 
+	    android:maxLength="20" />
+    
+    <!-- =================Usernames==================== -->"
+
+	<TextView
+        android:id="@+id/lbl_username"
+        	android:layout_width="50dp"
+        	android:layout_height="wrap_content"
+        	android:layout_marginBottom="10dp"
+        	
+        	android:layout_below="@+id/lbl_name" 
+        	android:layout_alignLeft="@+id/txt_username"
+        android:text="@string/name" />
+    
+    <EditText
+        android:id="@+id/txt_username"
+        	android:layout_width="100dp"
+        	android:layout_height="wrap_content"
+        	android:layout_marginBottom="10dp"
+        	
+        	android:layout_below="@+id/txt_name" 
+        	android:layout_alignRight="@+id/lbl_username"
+        android:inputType="textPassword" 
+	    android:maxLength="20" />
+
+    <!-- ==================Email====================== -->
+    
+    <TextView
+        android:id="@+id/lbl_email"
+        	android:layout_width="50dp"
+        	android:layout_height="wrap_content"
+        	android:layout_marginBottom="10dp"
+        	
+        	android:layout_below="@+id/lbl_username" 
+        	android:layout_alignLeft="@+id/txt_email"
+        android:text="@string/name" />
+    
+    <EditText
+        android:id="@+id/txt_email"
+        	android:layout_width="100dp"
+        	android:layout_height="wrap_content"
+        	android:layout_marginBottom="10dp"
+        	
+        	android:layout_below="@+id/txt_username" 
+        	android:layout_alignRight="@+id/lbl_email"
+        android:inputType="textEmailAddress" 
+	    android:maxLength="20" />
+    
+    <!-- =================Old Password================== -->
+    
+    <TextView
+        android:id="@+id/lbl_password_old"
+        	android:layout_width="50dp"
+        	android:layout_height="wrap_content"
+        	android:layout_marginBottom="10dp"
+        	
+        	android:layout_below="@+id/lbl_email" 
+        	android:layout_alignLeft="@+id/txt_password_old"
+        android:text="@string/name" />
+    
+    <EditText
+        android:id="@+id/txt_password_old"
+        	android:layout_width="100dp"
+        	android:layout_height="wrap_content"
+        	android:layout_marginBottom="10dp"
+        	
+        	android:layout_below="@+id/txt_email" 
+        	android:layout_alignRight="@+id/lbl_password_old"
+        android:inputType="textPassword" 
+	    android:maxLength="20" />
+    
+    <!-- ================New Password==================== -->
+    
+    <TextView
+        android:id="@+id/lbl_password_new"
+        	android:layout_width="50dp"
+        	android:layout_height="wrap_content"
+        	android:layout_marginBottom="10dp"
+        	
+        	android:layout_below="@+id/lbl_password_old" 
+        	android:layout_alignLeft="@+id/txt_password_new"
+        android:text="@string/name" />
+    
+    <EditText
+        android:id="@+id/txt_password_new"
+        	android:layout_width="100dp"
+        	android:layout_height="wrap_content"
+        	android:layout_marginBottom="10dp"
+        	
+        	android:layout_below="@+id/txt_password_old" 
+        	android:layout_alignRight="@+id/lbl_password_new"
+        android:inputType="textPassword" 
+	    android:maxLength="20" />
+    
+    <!-- =================Location===================== -->
+    
+    <TextView
+        android:id="@+id/lbl_location"
+        	android:layout_width="50dp"
+        	android:layout_height="wrap_content"
+        	android:layout_marginBottom="10dp"
+        	
+        	android:layout_below="@+id/lbl_password_new" 
+        	android:layout_alignLeft="@+id/txt_location"
+        android:text="@string/name" />
+    
+    <EditText
+        android:id="@+id/txt_location"
+        	android:layout_width="100dp"
+        	android:layout_height="wrap_content"
+        	android:layout_marginBottom="10dp"
+        	
+        	android:layout_below="@+id/txt_password_new" 
+        	android:layout_alignRight="@+id/lbl_location"
+        android:inputType="text" 
+	    android:maxLength="40" />
+    
+    <!-- =================Biography=================== -->
+    
+    <TextView
+        android:id="@+id/lbl_biography"
+        	android:layout_width="50dp"
+        	android:layout_height="wrap_content"
+        	android:layout_marginBottom="10dp"
+        	
+        	android:layout_below="@+id/lbl_location" 
+        	android:layout_alignLeft="@+id/txt_biography"
+        android:text="@string/name" />
+    
+    <EditText
+        android:id="@+id/txt_biography"
+        	android:layout_width="100dp"
+        	android:layout_height="wrap_content"
+        	android:layout_marginBottom="10dp"
+        	
+        	android:layout_below="@+id/txt_location" 
+        	android:layout_alignRight="@+id/lbl_biography"
+        android:inputType="text|textMultiLine" 
+	    android:maxLength="100" />
+    
+    <!-- =================Update Button================= -->
+    
+    <Button
+        android:id="@+id/update"
+        	android:layout_centerHorizontal="true"
+        	android:layout_width="100dp"
+        	android:layout_height="wrap_content"
+        	android:layout_alignParentBottom="true"
+        android:text="@string/update"
+        android:background="?android:attr/selectableItemBackground" />
+    
+</RelativeLayout>

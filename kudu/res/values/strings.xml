@@ -15,4 +15,13 @@
 	<string name="password1">Password </string>
 	<string name="password2">Re-enter Password </string>
 	
+	<string name="name">Name&#58;</string>
+	<string name="username2">Username&#58;</string>
+	<string name="email2">Email&#58;</string>
+	<string name="password_old">Old Password&#58;</string>
+	<string name="password_new">New Password&#58;</string>
+	<string name="location">Location&#58;</string>
+	<string name="biography">Biography&#58;</string>
+	<string name="update">Update</string>
+	
 </resources>
