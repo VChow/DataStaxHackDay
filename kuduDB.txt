@@ -7,12 +7,36 @@
 /*** Delete Keyspace ***/
 /*DROP KEYSPACE kududb;*/
 
-USE kudu;
+USE kududb;
 
 /*** CREATE TABLES ***/
-/*CREATE TABLE users(
+CREATE TABLE users(
+	iduuid uuid,
 	username text,
 	email text,
 	password text,
-	PRIMARY KEY(username)
-);*/
+	picture text,
+	bio text, 
+	location text,
+	PRIMARY KEY(iduuid)
+);
+
+CREATE TABLE login(
+	iduuid uuid,
+	password text,
+	PRIMARY KEY(iduuid)
+);
+
+CREATE TABLE friends(
+	username text,
+	friendname text,
+	conversation uuid,
+	PRIMARY KEY(username, friendname)
+);
+
+CREATE TABLE conversation(
+	conversationuuid uuid,
+	idtimeuuid timeuuid,
+	message text,
+	PRIMARY KEY(conversationuuid, idtimeuuid)
+);
