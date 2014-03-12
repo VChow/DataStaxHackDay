@@ -52,6 +52,9 @@ public class MainActivity extends Activity {
 				Login login = new Login();
 				login.setUsername(btnUsernameStr);
 				login.setPassword(btnPasswordStr);
+				
+				Log.d("Debawg", "Username: " + login.getUsername());
+				Log.d("Debawg", "Password: " + login.getPassword());
 			}
 		});
 	}
