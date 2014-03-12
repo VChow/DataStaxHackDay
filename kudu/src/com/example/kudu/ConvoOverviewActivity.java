@@ -10,7 +10,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Toast;
 
-public class OverviewActivity extends Activity{
+public class ConvoOverviewActivity extends Activity{
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
