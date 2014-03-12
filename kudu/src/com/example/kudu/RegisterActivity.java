@@ -21,6 +21,8 @@ public class RegisterActivity extends Activity {
 		
 		imgView=(ImageView)findViewById(R.id.logo);
 		imgView.setImageResource(R.drawable.login_logo);
+		
+		setRegisterButtonListener();
 	}
 	
 	public void setRegisterButtonListener(){

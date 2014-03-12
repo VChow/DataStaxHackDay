@@ -10,7 +10,6 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.Toast;
 
 public class MainActivity extends Activity {
 
@@ -20,7 +19,7 @@ public class MainActivity extends Activity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_main);
+		setContentView(R.layout.activity_main); 
 		
 		final ImageView imgView;
 		
@@ -46,15 +45,23 @@ public class MainActivity extends Activity {
 			public void onClick(View v) {
 				EditText usernameEditText = (EditText)findViewById(R.id.username);
 				EditText passwordEditText = (EditText)findViewById(R.id.password);
-				String btnUsernameStr = usernameEditText.getText().toString();
+				String btnUsernameStr = usernameEditText.getText().toString(); 
 				String btnPasswordStr = passwordEditText.getText().toString();
 
 				Login login = new Login();
 				login.setUsername(btnUsernameStr);
 				login.setPassword(btnPasswordStr);
 				
+				//Testing Purposes
 				Log.d("Debawg", "Username: " + login.getUsername());
 				Log.d("Debawg", "Password: " + login.getPassword());
+				
+				if(validateLogin(btnUsernameStr, btnPasswordStr)){
+					Intent myIntent = new Intent(MainActivity.this, ConvoOverviewActivity.class);
+					MainActivity.this.startActivity(myIntent);
+				}else{
+					passwordEditText.setError("Incorrect Username or Password.");
+				}			
 			}
 		});
 	}
@@ -71,4 +78,14 @@ public class MainActivity extends Activity {
 		});
 	}
 	
+	public boolean validateLogin(String username, String password){
+		
+		boolean isValid = false;
+		
+		if(username.equals("1")){
+			isValid = true;
+		}
+		
+		return isValid;
+	}
 }

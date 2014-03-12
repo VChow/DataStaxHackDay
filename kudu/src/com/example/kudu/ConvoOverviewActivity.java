@@ -1,14 +1,13 @@
 package com.example.kudu;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
+import android.support.v4.view.MenuItemCompat;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
-import android.view.View.OnClickListener;
-import android.widget.Button;
-import android.widget.ImageView;
-import android.widget.Toast;
+import android.widget.SearchView;
 
 public class ConvoOverviewActivity extends Activity{
 
@@ -18,5 +17,30 @@ public class ConvoOverviewActivity extends Activity{
 		setContentView(R.layout.activity_overview);
 
 	}
+	
+	/*@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+	    getMenuInflater().inflate(R.menu.main, menu);
+	    MenuItem searchItem = menu.findItem(R.id.action_search);
+	    SearchView searchView = (SearchView) MenuItemCompat.getActionView(searchItem);
+	    // Configure the search info and add any event listeners
+	    
+	    return super.onCreateOptionsMenu(menu);
+	}*/
+	
+	/** Called when the user touches the Profile button */
+	public void gotoProfile(View view) {
+	    // Do something in response to button click
+		Intent myIntent = new Intent(ConvoOverviewActivity.this, ProfileActivity.class);
+		ConvoOverviewActivity.this.startActivity(myIntent);
+	}
+	
+	/** Called when the user touches the Contacts button */
+	public void gotoContacts(View view) {
+	    // Do something in response to button click
+		Intent myIntent = new Intent(ConvoOverviewActivity.this, ContactsActivity.class);
+		ConvoOverviewActivity.this.startActivity(myIntent);
+	}
+	
 	
 }
