@@ -40,6 +40,7 @@ public class RegisterActivity extends Activity {
 			String btnEmailStr = emailEditText.getText().toString();
 			String btnPassword1Str = password1EditText.getText().toString();
 			String btnPassword2Str = password2EditText.getText().toString();
+			
 		}
 		});
 	}

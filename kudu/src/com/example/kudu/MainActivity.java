@@ -48,12 +48,10 @@ public class MainActivity extends Activity {
 				EditText passwordEditText = (EditText)findViewById(R.id.password);
 				String btnUsernameStr = usernameEditText.getText().toString();
 				String btnPasswordStr = passwordEditText.getText().toString();
-				
-				//Used for testing
-				Toast.makeText(MainActivity.this,
-						"On Button Click : " + "\n" + 
-						btnUsernameStr + "\n" + 
-					    btnPasswordStr, Toast.LENGTH_LONG).show();
+
+				Login login = new Login();
+				login.setUsername(btnUsernameStr);
+				login.setPassword(btnPasswordStr);
 			}
 		});
 	}

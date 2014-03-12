@@ -23,6 +23,8 @@ public class User {
     	return bio; 
     }
     
+    //==========================================================
+    
     public void setUsername(String username) { 
     	this.username = username; 
     }
