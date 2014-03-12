@@ -42,5 +42,15 @@ public class ConvoOverviewActivity extends Activity{
 		ConvoOverviewActivity.this.startActivity(myIntent);
 	}
 	
-	
+	public void pullUserData(){
+		new Thread(new Runnable() {
+			@Override
+			public void run() {
+				// TODO Auto-generated method stub
+				User user = new User();
+				
+				
+			}
+		}).start();
+	}
 }

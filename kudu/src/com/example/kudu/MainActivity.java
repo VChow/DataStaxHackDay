@@ -82,9 +82,13 @@ public class MainActivity extends Activity {
 		
 		boolean isValid = false;
 		
-		if(username.equals("1")){
-			isValid = true;
-		}
+			if(username.equals("1")){
+				isValid = true;
+			}
+			
+			//Check if Username + Password are inside the Cassandra Login Column Family
+			//If yes -> isValid = true
+			
 		
 		return isValid;
 	}
