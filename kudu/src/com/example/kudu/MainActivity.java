@@ -3,7 +3,6 @@ package com.example.kudu;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -52,14 +51,10 @@ public class MainActivity extends Activity {
 				login.setUsername(btnUsernameStr);
 				login.setPassword(btnPasswordStr);
 				
-				//Testing Purposes
-				Log.d("Debawg", "Username: " + login.getUsername());
-				Log.d("Debawg", "Password: " + login.getPassword());
-				
 				if(validateLogin(btnUsernameStr, btnPasswordStr)){
 					Intent myIntent = new Intent(MainActivity.this, ConvoOverviewActivity.class);
 					MainActivity.this.startActivity(myIntent);
-				}else{
+				} else {
 					passwordEditText.setError("Incorrect Username or Password.");
 				}			
 			}
@@ -79,17 +74,12 @@ public class MainActivity extends Activity {
 	}
 	
 	public boolean validateLogin(String username, String password){
-		
 		boolean isValid = false;
-		
-			if(username.equals("1")){
-				isValid = true;
-			}
-			
-			//Check if Username + Password are inside the Cassandra Login Column Family
-			//If yes -> isValid = true
-			
-		
+		if(username.equals("1")){
+			isValid = true;
+		}
+		//Check if Username + Password are inside the Cassandra Login Column Family
+		//If yes -> isValid = true
 		return isValid;
 	}
 }
