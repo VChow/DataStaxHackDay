@@ -23,6 +23,8 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.kuduapp.models.*;
+
 public class MainActivity extends Activity {
 
 	private Button btnLogin, btnRegister;
@@ -62,31 +64,20 @@ public class MainActivity extends Activity {
 			public void onClick(View v) {
 				EditText usernameEditText = (EditText) findViewById(R.id.username);
 				EditText passwordEditText = (EditText) findViewById(R.id.password);
-				String btnUsernameStr = usernameEditText.getText().toString();
-				String btnPasswordStr = passwordEditText.getText().toString();
+				String username = usernameEditText.getText().toString();
+				String password = passwordEditText.getText().toString();
 
 				// if (checkInternetConnection()) {
 
-				Login login = new Login();
-				login.setUsername(btnUsernameStr);
-				login.setPassword(btnPasswordStr);
-
-				// if (validateLogin(btnUsernameStr, btnPasswordStr)) {
-				// Intent myIntent = new Intent(MainActivity.this,
-				// ConvoOverviewActivity.class);
-				// MainActivity.this.startActivity(myIntent);
-				//GetXMLTask task = new GetXMLTask();
-				//task.execute(new String[] { URL });
-				// } else {
-				// passwordEditText
-				// .setError("Incorrect Username or Password.");
+				LoginModel login = new LoginModel(username, password);
+				
+				if(login.checkLogin())
+				{
+					Intent myIntent = new Intent(MainActivity.this,
+							ConvoOverviewActivity.class);
+					MainActivity.this.startActivity(myIntent);
+				}
 			}
-			// /} else {
-			// Toast.makeText(MainActivity.this,
-			// "Check Internet Connection", Toast.LENGTH_LONG)
-			// .show();
-			// }
-			// }
 		});
 
 	}
