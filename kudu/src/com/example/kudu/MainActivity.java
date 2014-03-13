@@ -11,19 +11,11 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
-import com.datastax.driver.core.Cluster;
-import com.datastax.driver.core.Session;
 
 public class MainActivity extends Activity {
 
 	private Button btnLogin, btnRegister;
-	private Cluster cluster;
-	private Session session;
-	
-	public void setCluster(Cluster cluster) {
-		this.cluster = cluster;
-	}
-	
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -31,21 +23,18 @@ public class MainActivity extends Activity {
 		
 		final ImageView imgView;
 		
-		cluster = CassandraHosts.getCluster();
-		
 		imgView=(ImageView)findViewById(R.id.logo);
 		imgView.setImageResource(R.drawable.login_logo);
 		
 		setLoginButtonListener();
 		setRegisterButtonListener();
 		
+		//checkInternetConnection
 		if(checkInternetConnection()) {
-			session = cluster.connect("kududb");
 		}
 		else {
 			
 		}
-		//session.close();
 	}
 
 
