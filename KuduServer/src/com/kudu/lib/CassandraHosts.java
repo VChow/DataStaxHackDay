@@ -21,7 +21,7 @@ import java.util.List;
 
 public final class CassandraHosts {
 private static Cluster cluster;
-static String Host ="127.0.0.1"; //at least one starting point to talk to
+static String Host ="kududb.cloudapp.net"; //at least one starting point to talk to
 public CassandraHosts(){
 
 }
@@ -48,7 +48,7 @@ while (it.hasNext()) {
 Host ch=it.next();
 sHosts[i]=(String)ch.getAddress().toString();
 
-System.out.println("Hosts"+ch.getAddress().toString());
+System.out.println("Hosts "+ch.getAddress().toString());
 i++;
 }
 
@@ -61,7 +61,7 @@ if(cluster == null)
 	cluster = Cluster.builder()
 	.addContactPoint(Host).build();
 	getHosts(cluster);
-	Keyspaces.SetUpKeySpaces(cluster);
+	//Keyspaces.SetUpKeySpaces(cluster);
 
 }
 
