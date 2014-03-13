@@ -8,8 +8,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 
-import com.example.kudu.R;
-import com.kuduapp.models.*;
+import com.kudu.R;
+import com.kudu.models.*;
 
 public class RegisterActivity extends Activity {
 

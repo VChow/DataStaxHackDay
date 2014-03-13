@@ -1,12 +1,6 @@
 package com.kudu.activities;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.URL;
-import java.net.URLConnection;
 
 import org.json.JSONException;
 
@@ -14,19 +8,16 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.net.ConnectivityManager;
-import android.os.AsyncTask;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.Toast;
 
-import com.example.kudu.R;
-import com.kuduapp.models.*;
+import com.kudu.R;
+import com.kudu.models.LoginModel;
 
 public class MainActivity extends Activity {
 
@@ -64,10 +55,10 @@ public class MainActivity extends Activity {
 
 			@Override
 			public void onClick(View v) {
-				
+
 
 				if (checkInternetConnection()) {
-					
+
 					new Thread(new Runnable() {
 						public void run(){
 							EditText usernameEditText = (EditText) findViewById(R.id.username);
@@ -75,30 +66,30 @@ public class MainActivity extends Activity {
 							String username = usernameEditText.getText().toString();
 							String password = passwordEditText.getText().toString();
 
-				LoginModel login = new LoginModel(username, password);
-				
-				try {
-					if(login.checkLogin())
-					{
-						Intent myIntent = new Intent(MainActivity.this,
-								ConversationOverviewActivity.class);
-						MainActivity.this.startActivity(myIntent);
-					}
-					else
-					{
-						//display error
-					}
-						
-				} catch (IllegalStateException e) {
-					e.printStackTrace();
-				} catch (IOException e) {
-					e.printStackTrace();
-				} catch (JSONException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
+							LoginModel login = new LoginModel(username, password);
+
+							try {
+								if(login.checkLogin())
+								{
+									Intent myIntent = new Intent(MainActivity.this,
+											ConversationOverviewActivity.class);
+									MainActivity.this.startActivity(myIntent);
+								}
+								else
+								{
+									//display error
+								}
+
+							} catch (IllegalStateException e) {
+								e.printStackTrace();
+							} catch (IOException e) {
+								e.printStackTrace();
+							} catch (JSONException e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+							}
 						}
-				
+
 					}).start();
 				}
 			}
@@ -117,17 +108,6 @@ public class MainActivity extends Activity {
 				MainActivity.this.startActivity(myIntent);
 			}
 		});
-	}
-
-	public boolean validateLogin(String username, String password) {
-		boolean isValid = false;
-		if (username.equals("1")) {
-			isValid = true;
-		}
-		// Check if Username + Password are inside the Cassandra Login
-		// Column Family
-		// If yes -> isValid = true
-		return isValid;
 	}
 
 	private boolean checkInternetConnection() {
