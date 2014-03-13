@@ -62,12 +62,16 @@ public class MainActivity extends Activity {
 
 			@Override
 			public void onClick(View v) {
-				EditText usernameEditText = (EditText) findViewById(R.id.username);
-				EditText passwordEditText = (EditText) findViewById(R.id.password);
-				String username = usernameEditText.getText().toString();
-				String password = passwordEditText.getText().toString();
+				
 
-				// if (checkInternetConnection()) {
+				if (checkInternetConnection()) {
+					
+					new Thread(new Runnable() {
+						public void run(){
+							EditText usernameEditText = (EditText) findViewById(R.id.username);
+							EditText passwordEditText = (EditText) findViewById(R.id.password);
+							String username = usernameEditText.getText().toString();
+							String password = passwordEditText.getText().toString();
 
 				LoginModel login = new LoginModel(username, password);
 				
@@ -76,6 +80,10 @@ public class MainActivity extends Activity {
 					Intent myIntent = new Intent(MainActivity.this,
 							ConvoOverviewActivity.class);
 					MainActivity.this.startActivity(myIntent);
+				}
+						}
+				
+					}).start();
 				}
 			}
 		});
