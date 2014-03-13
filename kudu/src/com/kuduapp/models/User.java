@@ -1,4 +1,4 @@
-package com.example.kudu;
+package com.kuduapp.models;
 
 public class User {
 	String username, password, email, location, bio;

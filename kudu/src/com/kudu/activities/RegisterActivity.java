@@ -1,4 +1,4 @@
-package com.example.kudu;
+package com.kudu.activities;
 
 import android.app.Activity;
 import android.os.Bundle;
@@ -7,6 +7,9 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+
+import com.example.kudu.R;
+import com.kuduapp.models.*;
 
 public class RegisterActivity extends Activity {
 

@@ -1,4 +1,6 @@
-package com.example.kudu;
+package com.kudu.activities;
+
+import com.example.kudu.R;
 
 import android.app.Activity;
 import android.os.Bundle;

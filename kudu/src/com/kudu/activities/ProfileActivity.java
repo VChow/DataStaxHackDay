@@ -1,4 +1,6 @@
-package com.example.kudu;
+package com.kudu.activities;
+
+import com.example.kudu.R;
 
 import android.app.Activity;
 import android.os.Bundle;
@@ -10,12 +12,12 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Toast;
 
-public class ContactsActivity extends Activity{
+public class ProfileActivity extends Activity{
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_contacts);
+		setContentView(R.layout.activity_profile);
 
 	}
 	

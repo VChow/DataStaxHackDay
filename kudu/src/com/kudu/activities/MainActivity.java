@@ -1,4 +1,4 @@
-package com.example.kudu;
+package com.kudu.activities;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -25,12 +25,12 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.example.kudu.R;
 import com.kuduapp.models.*;
 
 public class MainActivity extends Activity {
 
 	private Button btnLogin, btnRegister;
-	private static final String URL = "http://10.0.2.2:8080/kuduServerApp/test";
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
