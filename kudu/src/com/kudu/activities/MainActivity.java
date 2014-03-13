@@ -81,9 +81,14 @@ public class MainActivity extends Activity {
 					if(login.checkLogin())
 					{
 						Intent myIntent = new Intent(MainActivity.this,
-								ConvoOverviewActivity.class);
+								ConversationOverviewActivity.class);
 						MainActivity.this.startActivity(myIntent);
 					}
+					else
+					{
+						//display error
+					}
+						
 				} catch (IllegalStateException e) {
 					e.printStackTrace();
 				} catch (IOException e) {
