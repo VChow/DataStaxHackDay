@@ -11,6 +11,7 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 public class MainActivity extends Activity {
 
@@ -56,16 +57,21 @@ public class MainActivity extends Activity {
 				String btnUsernameStr = usernameEditText.getText().toString(); 
 				String btnPasswordStr = passwordEditText.getText().toString();
 
-				Login login = new Login();
-				login.setUsername(btnUsernameStr);
-				login.setPassword(btnPasswordStr);
+				if(checkInternetConnection()){
 				
-				if(validateLogin(btnUsernameStr, btnPasswordStr)){
-					Intent myIntent = new Intent(MainActivity.this, ConvoOverviewActivity.class);
-					MainActivity.this.startActivity(myIntent);
-				} else {
-					passwordEditText.setError("Incorrect Username or Password.");
-				}			
+					Login login = new Login();
+					login.setUsername(btnUsernameStr);
+					login.setPassword(btnPasswordStr);
+				
+					if(validateLogin(btnUsernameStr, btnPasswordStr)){
+						Intent myIntent = new Intent(MainActivity.this, ConvoOverviewActivity.class);
+						MainActivity.this.startActivity(myIntent);
+					} else {
+						passwordEditText.setError("Incorrect Username or Password.");
+					}	
+				}else{
+					Toast.makeText(MainActivity.this,"Check Internet Connection",Toast.LENGTH_LONG).show();
+				}
 			}
 		});
 	}
