@@ -75,8 +75,8 @@ public class MainActivity extends Activity {
 				// Intent myIntent = new Intent(MainActivity.this,
 				// ConvoOverviewActivity.class);
 				// MainActivity.this.startActivity(myIntent);
-				GetXMLTask task = new GetXMLTask();
-				task.execute(new String[] { URL });
+				//GetXMLTask task = new GetXMLTask();
+				//task.execute(new String[] { URL });
 				// } else {
 				// passwordEditText
 				// .setError("Incorrect Username or Password.");
