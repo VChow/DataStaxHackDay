@@ -75,11 +75,17 @@ public class MainActivity extends Activity {
 
 				LoginModel login = new LoginModel(username, password);
 				
-				if(login.checkLogin())
-				{
-					Intent myIntent = new Intent(MainActivity.this,
-							ConvoOverviewActivity.class);
-					MainActivity.this.startActivity(myIntent);
+				try {
+					if(login.checkLogin())
+					{
+						Intent myIntent = new Intent(MainActivity.this,
+								ConvoOverviewActivity.class);
+						MainActivity.this.startActivity(myIntent);
+					}
+				} catch (IllegalStateException e) {
+					e.printStackTrace();
+				} catch (IOException e) {
+					e.printStackTrace();
 				}
 						}
 				

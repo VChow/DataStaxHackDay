@@ -1,22 +1,21 @@
 package com.kuduapp.models;
 
+import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.UnsupportedEncodingException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.apache.http.HttpResponse;
-import org.apache.http.client.ClientProtocolException;
-import org.apache.http.client.ResponseHandler;
+import org.apache.http.NameValuePair;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpPost;
-import org.apache.http.entity.StringEntity;
-import org.apache.http.impl.client.BasicResponseHandler;
 import org.apache.http.impl.client.DefaultHttpClient;
-import org.json.JSONException;
-import org.json.JSONObject;
+import org.apache.http.message.BasicNameValuePair;
 
-import android.content.Intent;
-
-import com.example.kudu.MainActivity;
-import com.example.kudu.RegisterActivity;
+import android.util.Log;
 
 public class LoginModel {
 	
@@ -35,46 +34,27 @@ public class LoginModel {
 		
 		return password;
 	}
-	public boolean checkLogin()
+	
+	public boolean checkLogin() throws IOException, IllegalStateException
 	{
-		//instantiates httpclient to make request
-	    DefaultHttpClient httpclient = new DefaultHttpClient();
+		 	HttpClient httpclient = new DefaultHttpClient();
+	        HttpPost httppost = new HttpPost("http://10.0.2.2:8080/KuduServer/login");
+	        List<NameValuePair> params = new ArrayList<NameValuePair>();
+	        params.add(new BasicNameValuePair("username", "tom"));
+	        params.add(new BasicNameValuePair("password", "tom"));
+	        
+	        HttpResponse response = null;
+	            httppost.setEntity(new UrlEncodedFormEntity(params));
+	            response = httpclient.execute(httppost);
+	        InputStream in = null;
+	        
+	        BufferedReader reader = new BufferedReader(new InputStreamReader(in));
+	        String line = null;
+	        String returnVal = null;
+				while((line = reader.readLine()) != null){
+					returnVal = line;
+				}
 
-	    //url with the post data
-	    HttpPost httpost = new HttpPost("http://10.0.2.2:8080/KuduServer/login");
-	    
-	    JSONObject json = new JSONObject();
-	    try {
-			json.accumulate("username", username);
-		} catch (JSONException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	    
-	    StringEntity se = null;
-		try {
-			se = new StringEntity(json.toString());
-		} catch (UnsupportedEncodingException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	    
-	    httpost.setEntity(se);
-	    httpost.setHeader("Accept", "application/json");
-	    httpost.setHeader("Content-type", "application/json");
-	    
-
-	    //Handles what is returned from the page 
-	    ResponseHandler responseHandler = new BasicResponseHandler();
-	    try {
-	    	HttpResponse httpResponse = httpclient.execute(httpost, responseHandler);
-		} catch (ClientProtocolException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		return true;
+	     return true;
 	}
 }
