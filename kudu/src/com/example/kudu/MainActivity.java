@@ -1,7 +1,9 @@
 package com.example.kudu;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
+import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.View;
@@ -9,11 +11,18 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import com.datastax.driver.core.Cluster;
+import com.datastax.driver.core.Session;
 
 public class MainActivity extends Activity {
 
-	private Button btnLogin;
-	private Button btnRegister;
+	private Button btnLogin, btnRegister;
+	private Cluster cluster;
+	private Session session;
+	
+	public void setCluster(Cluster cluster) {
+		this.cluster = cluster;
+	}
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -22,12 +31,23 @@ public class MainActivity extends Activity {
 		
 		final ImageView imgView;
 		
+		cluster = CassandraHosts.getCluster();
+		
 		imgView=(ImageView)findViewById(R.id.logo);
 		imgView.setImageResource(R.drawable.login_logo);
 		
 		setLoginButtonListener();
 		setRegisterButtonListener();
+		
+		if(checkInternetConnection()) {
+			session = cluster.connect("kududb");
+		}
+		else {
+			
+		}
+		//session.close();
 	}
+
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
@@ -81,5 +101,16 @@ public class MainActivity extends Activity {
 		//Check if Username + Password are inside the Cassandra Login Column Family
 		//If yes -> isValid = true
 		return isValid;
+	}
+	
+	private boolean checkInternetConnection() {
+		ConnectivityManager conMgr = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+		if (conMgr.getActiveNetworkInfo() != null
+				&& conMgr.getActiveNetworkInfo().isAvailable()
+				&& conMgr.getActiveNetworkInfo().isConnected()) {
+			return true;
+		} else {
+			return false;
+		}
 	}
 }
