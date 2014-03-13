@@ -33,7 +33,6 @@ public class MainActivity extends Activity {
 		if(checkInternetConnection()) {
 		}
 		else {
-			
 		}
 	}
 
