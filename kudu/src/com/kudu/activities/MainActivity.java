@@ -15,6 +15,7 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.kudu.R;
 import com.kudu.models.LoginModel;
@@ -78,6 +79,7 @@ public class MainActivity extends Activity {
 								else
 								{
 									//display error
+									Toast.makeText(MainActivity.this,"Incorrect Username or Password",Toast.LENGTH_LONG).show();
 								}
 
 							} catch (IllegalStateException e) {
@@ -91,6 +93,8 @@ public class MainActivity extends Activity {
 						}
 
 					}).start();
+				}else{
+					Toast.makeText(MainActivity.this,"No Internet Connection",Toast.LENGTH_LONG).show();
 				}
 			}
 		});
