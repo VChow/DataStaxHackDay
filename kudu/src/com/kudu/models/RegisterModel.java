@@ -82,7 +82,7 @@ public class RegisterModel {
 	private boolean parseResult(String line) throws JSONException{
 		JSONObject result = new JSONObject(line);
 		
-		if(result.getString("whatever").equals("true"))
+		if(result.getString("register").equals("true"))
 			return true;
 		else
 			return false;
