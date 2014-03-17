@@ -58,8 +58,7 @@ public class RegisterModel {
 			session.close();
 			userAdded = true;
 		}
-			
-		
+					
 		return userAdded;
 	}
 	

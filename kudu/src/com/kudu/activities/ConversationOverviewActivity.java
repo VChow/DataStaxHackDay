@@ -50,7 +50,7 @@ public class ConversationOverviewActivity extends Activity{
 			@Override
 			public void run() {
 				// TODO Auto-generated method stub
-				User user = new User();
+				UpdateModel user = new UpdateModel();
 				
 				
 			}

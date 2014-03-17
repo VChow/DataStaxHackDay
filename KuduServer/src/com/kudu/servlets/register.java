@@ -61,13 +61,13 @@ public class register extends HttpServlet{
 		registerModel.setCluster(cluster);
 		
 		if(!registerModel.checkExistingUser(username)){
-			if(registerModel.addNewUser(username,  password, email)){
+			if(registerModel.addNewUser(username, password, email)){
 				System.out.println("User: " + username + " was successfully registered.");
 			}
 		}
 		
 		//What do this even do???
-		/*response.setContentType("application/json");
+		response.setContentType("application/json");
 		PrintWriter out = response.getWriter();
 		JSONObject jsonObject = new JSONObject();
 		//if(loginModel.checkLogin(username, password))
@@ -76,6 +76,6 @@ public class register extends HttpServlet{
 		//	jsonObject.put("login", "false");
 		
 		out.print(jsonObject);
-		out.flush();*/
+		out.flush();
 	}
 }
