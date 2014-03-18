@@ -63,6 +63,7 @@ public class LoginModel {
 	
 	private boolean parseResult(String line) throws JSONException
 	{
+		//Convert String into a JSON Object to read
 		JSONObject result = new JSONObject(line);
 		
 		if(result.getString("login").equals("true"))
