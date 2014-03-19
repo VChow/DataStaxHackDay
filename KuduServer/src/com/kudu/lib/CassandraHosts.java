@@ -8,69 +8,68 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**********************************************************
-*
-*
-* @author administrator
-*
-*Hosts are
-* 192.168.2.10 Seed for Vagrant hosts
-*
-*
-*
-*/
+ * 
+ * 
+ * @author administrator
+ * 
+ *         Hosts are 192.168.2.10 Seed for Vagrant hosts
+ * 
+ * 
+ * 
+ */
 
 public final class CassandraHosts {
-private static Cluster cluster;
-static String Host ="kududb.cloudapp.net"; //at least one starting point to talk to
-public CassandraHosts(){
+	private static Cluster cluster;
+	static String Host = "kududb.cloudapp.net"; // at least one starting point
+												// to talk to
 
-}
+	public CassandraHosts() {
 
-public static String getHost(){
-return (Host);
-}
+	}
 
-public static String[] getHosts(Cluster cluster){
+	public static String getHost() {
+		return (Host);
+	}
 
-if (cluster==null){
-System.out.println("Creating cluster connection");
-cluster = Cluster.builder()
-.addContactPoint(Host).build();
-}
-System.out.println("Cluster Name " + cluster.getClusterName());
-Metadata mdata = cluster.getMetadata();
-Set<Host> hosts =mdata.getAllHosts();
-String sHosts[] = new String[hosts.size()];
+	public static String[] getHosts(Cluster cluster) {
 
-Iterator<Host> it =hosts.iterator();
-int i=0;
-while (it.hasNext()) {
-Host ch=it.next();
-sHosts[i]=(String)ch.getAddress().toString();
+		if (cluster == null) {
+			System.out.println("Creating cluster connection");
+			cluster = Cluster.builder().addContactPoint(Host).build();
+		}
+		System.out.println("Cluster Name " + cluster.getClusterName());
+		Metadata mdata = cluster.getMetadata();
+		Set<Host> hosts = mdata.getAllHosts();
+		String sHosts[] = new String[hosts.size()];
 
-System.out.println("Hosts "+ch.getAddress().toString());
-i++;
-}
+		Iterator<Host> it = hosts.iterator();
+		int i = 0;
+		while (it.hasNext()) {
+			Host ch = it.next();
+			sHosts[i] = (String) ch.getAddress().toString();
 
-return sHosts;
-}
-public static Cluster getCluster(){
-System.out.println("getCluster");
-if(cluster == null)
-{
-	cluster = Cluster.builder()
-	.addContactPoint(Host).build();
-	getHosts(cluster);
-	//Keyspaces.SetUpKeySpaces(cluster);
+			System.out.println("Hosts " + ch.getAddress().toString());
+			i++;
+		}
 
-}
+		return sHosts;
+	}
 
-return cluster;
+	public static Cluster getCluster() {
+		System.out.println("getCluster");
+		if (cluster == null) {
+			cluster = Cluster.builder().addContactPoint(Host).build();
+			getHosts(cluster);
+			// Keyspaces.SetUpKeySpaces(cluster);
 
-}	
+		}
 
-public void close() {
-cluster.close();
-}
+		return cluster;
+
+	}
+
+	public void close() {
+		cluster.close();
+	}
 
 }

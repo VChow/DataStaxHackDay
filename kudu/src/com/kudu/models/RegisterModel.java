@@ -22,38 +22,14 @@ public class RegisterModel {
 	String url = "http://10.0.2.2:8080/KuduServer/register";
 	String username, password, email;
 	
-	public RegisterModel(String username, String password, String email){
+	public RegisterModel(String username, String password, String email) {
 		this.username = username;
 		this.password = password;
 		this.email = email;
 	}
 	
-	public boolean checkExistingUser()throws IOException, IllegalStateException, JSONException{
-		HttpClient httpclient = new DefaultHttpClient();
-		HttpPost httppost = new HttpPost(url);
-		List<NameValuePair> params = new ArrayList<NameValuePair>();
-		params.add(new BasicNameValuePair("username", username));
-
-		HttpResponse response = null;
-		httppost.setEntity(new UrlEncodedFormEntity(params));
-		response = httpclient.execute(httppost);
-		InputStream in = response.getEntity().getContent();
-
-		BufferedReader reader = new BufferedReader(new InputStreamReader(in));
-		String line = null;
-		String returnVal = null;
-		while((line = reader.readLine()) != null){
-			returnVal = line;
-		}
-		
-		if(parseResult(returnVal))
-			return true;
-		else
-			return false;
-	}
-	
-	public boolean addNewUser()throws IOException, IllegalStateException, JSONException{
-	
+	public boolean addNewUser() throws IOException, IllegalStateException, JSONException
+	{
 		HttpClient httpclient = new DefaultHttpClient();
 		HttpPost httppost = new HttpPost(url);
 		List<NameValuePair> params = new ArrayList<NameValuePair>();
@@ -79,7 +55,8 @@ public class RegisterModel {
 			return false;
 	}
 	
-	private boolean parseResult(String line) throws JSONException{
+	private boolean parseResult(String line) throws JSONException 
+	{
 		JSONObject result = new JSONObject(line);
 		
 		if(result.getString("register").equals("true"))

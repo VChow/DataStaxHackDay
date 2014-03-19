@@ -1,7 +1,6 @@
 package com.kudu.models;
 
 import java.util.UUID;
-
 import com.datastax.driver.core.BoundStatement;
 import com.datastax.driver.core.Cluster;
 import com.datastax.driver.core.PreparedStatement;
@@ -17,27 +16,6 @@ public class RegisterModel {
 	{
 		this.cluster = cluster;
 	}
-	
-	public boolean checkExistingUser(String username){
-		boolean usernameExists = true;
-		
-		Session session = cluster.connect("kududb");
-		PreparedStatement statement = session.prepare("SELECT username from users WHERE username = \'" + username + "\';");
-		BoundStatement boundStatement = new BoundStatement(statement);
-		ResultSet rs = session.execute(boundStatement);
-		
-		//If not empty, then the username is already taken
-		if (rs.isExhausted()) {
-			session.close();
-			usernameExists = false;
-		}else{
-			usernameExists = true;
-		}
-		
-		return usernameExists;
-	}
-	
-	
 	
 	public boolean addNewUser(String username, String password, String email){
 		boolean userAdded = false;
@@ -57,8 +35,7 @@ public class RegisterModel {
 		if(rs.isExhausted()){
 			session.close();
 			userAdded = true;
-		}
-					
+		}			
 		return userAdded;
 	}
 	

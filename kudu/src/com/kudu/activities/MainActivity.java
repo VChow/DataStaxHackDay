@@ -70,18 +70,15 @@ public class MainActivity extends Activity {
 							LoginModel login = new LoginModel(username, password);
 
 							try {
-								if(login.checkLogin())
-								{
+								if(login.checkLogin()) {
 									Intent myIntent = new Intent(MainActivity.this,
 											ConversationOverviewActivity.class);
 									MainActivity.this.startActivity(myIntent);
 								}
-								else
-								{
+								else {
 									//display error
 									Toast.makeText(MainActivity.this,"Incorrect Username or Password",Toast.LENGTH_LONG).show();
 								}
-
 							} catch (IllegalStateException e) {
 								e.printStackTrace();
 							} catch (IOException e) {
@@ -90,14 +87,12 @@ public class MainActivity extends Activity {
 								e.printStackTrace();
 							}
 						}
-
 					}).start();
-				}else{
+				} else {
 					Toast.makeText(MainActivity.this,"No Internet Connection",Toast.LENGTH_LONG).show();
 				}
 			}
 		});
-
 	}
 
 	public void setRegisterButtonListener() {

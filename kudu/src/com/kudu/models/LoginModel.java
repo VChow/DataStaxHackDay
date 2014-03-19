@@ -33,7 +33,6 @@ public class LoginModel {
 	public String encryptPassword()
 	{
 		password = "#fuckTom";
-		
 		return password;
 	}
 	
@@ -56,7 +55,6 @@ public class LoginModel {
 		while((line = reader.readLine()) != null){
 			returnVal = line;
 		}
-		Log.v("shithouse", returnVal);
 		if(parseResult(returnVal))
 			return true;
 		else
