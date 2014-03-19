@@ -1,8 +1,7 @@
 package com.kudu.activities;
 
-import com.kudu.R;
-import com.kudu.models.UpdateModel;
 
+import com.kudu.models.UpdateModel;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;

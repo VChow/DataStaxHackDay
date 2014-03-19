@@ -1,7 +1,5 @@
 package com.kudu.activities;
 
-import com.kudu.R;
-
 import android.app.Activity;
 import android.os.Bundle;
 import android.util.Log;

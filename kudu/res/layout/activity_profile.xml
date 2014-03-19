@@ -28,7 +28,7 @@
         <requestFocus />
     </EditText>
       
-    <!-- =================Usernames==================== -->"
+    <!-- =================Usernames==================== -->
 
 	<TextView
         android:id="@+id/lbl_username"

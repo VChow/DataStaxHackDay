@@ -8,8 +8,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.SearchView;
-
-import com.kudu.R;
 import com.kudu.models.*;
 
 public class ConversationOverviewActivity extends Activity{

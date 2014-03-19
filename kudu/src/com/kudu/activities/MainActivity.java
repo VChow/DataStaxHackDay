@@ -17,7 +17,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
-import com.kudu.R;
+
 import com.kudu.models.LoginModel;
 
 public class MainActivity extends Activity {
