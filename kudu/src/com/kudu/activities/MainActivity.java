@@ -9,6 +9,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -16,6 +17,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
+
 
 
 import com.kudu.models.LoginModel;
@@ -56,8 +58,6 @@ public class MainActivity extends Activity {
 
 			@Override
 			public void onClick(View v) {
-
-
 				if (checkInternetConnection()) {
 
 					new Thread(new Runnable() {
@@ -87,7 +87,6 @@ public class MainActivity extends Activity {
 							} catch (IOException e) {
 								e.printStackTrace();
 							} catch (JSONException e) {
-								// TODO Auto-generated catch block
 								e.printStackTrace();
 							}
 						}

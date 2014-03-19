@@ -17,6 +17,8 @@ import org.apache.http.message.BasicNameValuePair;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import android.util.Log;
+
 public class LoginModel {
 	
 	String url = "http://10.0.2.2:8080/KuduServer/login";
@@ -54,7 +56,7 @@ public class LoginModel {
 		while((line = reader.readLine()) != null){
 			returnVal = line;
 		}
-		
+		Log.v("shithouse", returnVal);
 		if(parseResult(returnVal))
 			return true;
 		else
