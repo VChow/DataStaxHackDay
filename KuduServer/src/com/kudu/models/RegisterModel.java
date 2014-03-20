@@ -24,9 +24,9 @@ public class RegisterModel {
 		BoundStatement boundStatement = new BoundStatement(statement);
 		ResultSet rs = session.execute(boundStatement);
 		if (!rs.isExhausted()) {
-			session.close();
 			userExists = true;
 		}
+		session.close();
 		return userExists;
 	}
 	
@@ -34,7 +34,11 @@ public class RegisterModel {
 		boolean userAdded = true;
 		Session session = cluster.connect("kududb");
 		
-		String insertDetails = "INSERT INTO users (iduuid, username, email, password) VALUES ("+uuid+", '"+username+"', '"+email+"', '"+password+"');";
+		String insertDetails = "BEGIN BATCH "
+				+ "INSERT INTO users (iduuid, username, email) VALUES ("+uuid+", '"+username+"', '"+email+"');"
+				+ "INSERT INTO login (iduuid, password) VALUES ("+uuid+", '"+password+"');"
+				+ "APPLY BATCH";
+				
 		PreparedStatement statement = session.prepare(insertDetails);                  
 		BoundStatement boundStatement = new BoundStatement(statement);
 		session.execute(boundStatement);

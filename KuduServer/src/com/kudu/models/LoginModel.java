@@ -21,32 +21,27 @@ public class LoginModel {
 	public boolean checkLogin(String username, String password)
 	{
 		Session session = cluster.connect("kududb");
-		PreparedStatement statement = session.prepare("SELECT iduuid from users WHERE username = \'" + username + "\';");
+		String query1 = "SELECT iduuid FROM users WHERE username=\'"+username+"\';";
+		PreparedStatement statement = session.prepare(query1);
 		BoundStatement boundStatement = new BoundStatement(statement);
 		ResultSet rs = session.execute(boundStatement);
 		if (rs.isExhausted()) {
 			session.close();
 			return false;
-		}
-		else
-		{
+		} else {
 			UUID uuid = null;
-			for (Row row : rs)
-			{
+			for (Row row : rs) {
 				uuid = row.getUUID("iduuid");
 			}
 
-			statement = session.prepare("SELECT iduuid from users WHERE iduuid = \'" + uuid + "\' AND password = \'"
-					+ password + "\';");
+			String query2 = "SELECT password FROM login WHERE iduuid="+uuid+" AND password='"+password+"'";
+			statement = session.prepare(query2);
 			boundStatement =  new BoundStatement(statement);
 			rs = session.execute(boundStatement);
-			if( rs.isExhausted())
-			{
+			if(rs.isExhausted()) {
 				session.close();
 				return false;
-			}
-			else
-			{
+			} else {
 				session.close();
 				return true;
 			}

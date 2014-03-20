@@ -20,6 +20,7 @@ import android.widget.Toast;
 
 
 
+
 import com.kudu.models.LoginModel;
 
 public class MainActivity extends Activity {
@@ -59,11 +60,10 @@ public class MainActivity extends Activity {
 			@Override
 			public void onClick(View v) {
 				if (checkInternetConnection()) {
-
 					new Thread(new Runnable() {
 						public void run(){
-							EditText usernameEditText = (EditText) findViewById(R.id.username);
-							EditText passwordEditText = (EditText) findViewById(R.id.password);
+							final EditText usernameEditText = (EditText) findViewById(R.id.username);
+							final EditText passwordEditText = (EditText) findViewById(R.id.password);
 							String username = usernameEditText.getText().toString();
 							String password = passwordEditText.getText().toString();
 
@@ -76,8 +76,12 @@ public class MainActivity extends Activity {
 									MainActivity.this.startActivity(myIntent);
 								}
 								else {
-									//display error
-									Toast.makeText(MainActivity.this,"Incorrect Username or Password",Toast.LENGTH_LONG).show();
+									MainActivity.this.runOnUiThread(new Runnable(){
+									    public void run(){
+									    	passwordEditText.setError("incorrect username or password.");
+									    	usernameEditText.setError("incorrect username or password");
+									    }
+									});
 								}
 							} catch (IllegalStateException e) {
 								e.printStackTrace();

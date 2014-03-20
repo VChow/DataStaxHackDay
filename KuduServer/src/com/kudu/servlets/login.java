@@ -32,8 +32,6 @@ public class login extends HttpServlet {
 		cluster = CassandraHosts.getCluster();
 	}
 
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {}
-
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String username = request.getParameter("username"); 
 		String password = request.getParameter("password");
