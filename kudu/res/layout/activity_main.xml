@@ -61,6 +61,5 @@
 	     android:layout_alignRight="@+id/password"
 	     android:layout_marginBottom="88dp"
 	     android:text="@string/register"
-	     android:background="@drawable/btn_border" />	 
-
+	     android:background="@drawable/btn_border" />
 </RelativeLayout>
