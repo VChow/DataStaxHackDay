@@ -4,26 +4,6 @@
     android:layout_height="match_parent"
     android:orientation="vertical" >
 
-    <ImageButton
-        android:id="@+id/profile"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true"       
-        android:src="@drawable/ic_profile"
-        android:contentDescription="@string/profile"
-        android:background="?android:attr/selectableItemBackground"
-        android:onClick="gotoProfile" />
-    
-    <ImageButton
-        android:id="@+id/contacts"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentTop="true"      
-        android:src="@drawable/ic_contacts"
-        android:contentDescription="@string/contacts"
-        android:background="?android:attr/selectableItemBackground"
-        android:onClick="gotoContacts" />   
+      
 
 </RelativeLayout>
