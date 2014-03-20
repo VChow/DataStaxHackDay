@@ -28,6 +28,11 @@ public class ProfileModel {
 		
 	}
 	
+	public ProfileModel(String name, String username, String password,
+			String email, String location, String bio){
+		
+	}
+	
 	//==========================================================
 	public void setUserDetails(String name, String username, String password,
 			String email, String location, String bio) {
@@ -92,15 +97,23 @@ public class ProfileModel {
     //==========================================================
     
     public String[] retrieveProfile() throws IOException, IllegalStateException, JSONException{
-    	String[] userProfile = new String[5];
+    	String[] userProfile = new String[5];   	
+    	retrieve = "1";
     	
+    	/*
+    	 * Get shiz from db and put into array
+    	 */
+    	
+    	retrieve = null;
     	return userProfile;
     }
     
     public boolean updateProfile() throws IOException, IllegalStateException, JSONException
     {
     	update = "1"; //Make it not null.
-    	
+    	/*
+    	 * get variables from app and put in global params.
+    	 */
     	HttpClient httpclient = new DefaultHttpClient();
 		HttpPost httppost = new HttpPost(url);
 		List<NameValuePair> params = new ArrayList<NameValuePair>();
