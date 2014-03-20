@@ -49,10 +49,14 @@ public class RegisterModel {
 			returnVal = line;
 		}
 		
-		if(parseResult(returnVal))
+		if(parseResult(returnVal)) {
+			System.out.println("TRUE: "+returnVal);
 			return true;
-		else
+		}
+		else {
+			System.out.println("FALSE: "+returnVal);
 			return false;
+		}
 	}
 	
 	private boolean parseResult(String line) throws JSONException 

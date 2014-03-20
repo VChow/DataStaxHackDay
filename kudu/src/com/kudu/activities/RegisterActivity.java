@@ -6,6 +6,7 @@ import org.json.JSONException;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.view.View;
@@ -43,23 +44,30 @@ public class RegisterActivity extends Activity {
 				if (checkInternetConnection()) {
 					new Thread(new Runnable() {
 						public void run() {
-							EditText usernameEditText = (EditText) findViewById(R.id.username);
-							EditText emailEditText = (EditText) findViewById(R.id.email);
-							EditText password1EditText = (EditText) findViewById(R.id.password_1);
-							EditText password2EditText = (EditText) findViewById(R.id.password_2);
-							String username = usernameEditText.getText()
-									.toString();
+							final EditText usernameEditText = (EditText) findViewById(R.id.username);
+							final EditText emailEditText = (EditText) findViewById(R.id.email);
+							final EditText password1EditText = (EditText) findViewById(R.id.password_1);
+							final EditText password2EditText = (EditText) findViewById(R.id.password_2);
+							String username = usernameEditText.getText().toString();
 							String email = emailEditText.getText().toString();
-							String password_1 = password1EditText.getText()
-									.toString();
-							String password_2 = password2EditText.getText()
-									.toString();
+							String password_1 = password1EditText.getText().toString();
+							String password_2 = password2EditText.getText().toString();
 
 							if (password_1.equals(password_2)) {
 								RegisterModel newUser = new RegisterModel(
 										username, password_1, email);
 								try {
-									newUser.addNewUser();
+									if(newUser.addNewUser()) {
+										Intent myIntent = new Intent(RegisterActivity.this,
+												ConversationOverviewActivity.class);
+										RegisterActivity.this.startActivity(myIntent);
+									} else {
+										RegisterActivity.this.runOnUiThread(new Runnable(){
+										    public void run(){
+										    	usernameEditText.setError("Username already exists");
+										    }
+										});
+									}
 								} catch (IllegalStateException e) {
 									e.printStackTrace();
 								} catch (IOException e) {

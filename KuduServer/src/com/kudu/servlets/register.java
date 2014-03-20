@@ -2,6 +2,7 @@ package com.kudu.servlets;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.UUID;
 
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
@@ -16,18 +17,11 @@ import com.datastax.driver.core.Cluster;
 import com.kudu.lib.CassandraHosts;
 import com.kudu.models.RegisterModel;
 
-/**
- * Servlet implementation class register
- */
-
 @WebServlet({ "/register", "/register/*"})
 public class register extends HttpServlet{
 	private Cluster cluster;
 	private static final long serialVersionUID = 1L;
 	
-	/**
-     * @see HttpServlet#HttpServlet()
-     */
 	public register() {
         super();
     }
@@ -37,34 +31,26 @@ public class register extends HttpServlet{
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String username = request.getParameter("username"); 
-		String password = request.getParameter("password");
-		String email = request.getParameter("email");
+		final String username = request.getParameter("username"); 
+		final String password = request.getParameter("password");
+		final String email = request.getParameter("email");
+		final UUID uuid = UUID.randomUUID();
 		
-		System.out.println("username: "+username);
-		System.out.println("password: "+password);
-		System.out.println("email: "+email);
-		
-		
-		/*RegisterModel registerModel = new RegisterModel();
+		RegisterModel registerModel = new RegisterModel();
 		registerModel.setCluster(cluster);
 		
-		if(!registerModel.checkExistingUser(username)){
-			if(registerModel.addNewUser(username, password, email)){
-				System.out.println("User: " + username + " was successfully registered.");
-			}
-		}
-		
-		//What do this even do???
 		response.setContentType("application/json");
 		PrintWriter out = response.getWriter();
 		JSONObject jsonObject = new JSONObject();
-		//if(loginModel.checkLogin(username, password))
-			jsonObject.put("register", "true");
-		//else
-		//	jsonObject.put("login", "false");
-		
+		if(!registerModel.checkExistingUsers(username)){
+			if(registerModel.addNewUser(username, password, email, uuid))
+				jsonObject.put("register", "true");
+			else
+				jsonObject.put("register", "false");
+		}
+		else
+			jsonObject.put("register", "false");
 		out.print(jsonObject);
-		out.flush();*/
+		out.flush();
 	}
 }

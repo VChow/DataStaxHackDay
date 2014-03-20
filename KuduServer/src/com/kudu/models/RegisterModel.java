@@ -5,7 +5,6 @@ import com.datastax.driver.core.BoundStatement;
 import com.datastax.driver.core.Cluster;
 import com.datastax.driver.core.PreparedStatement;
 import com.datastax.driver.core.ResultSet;
-import com.datastax.driver.core.Row;
 import com.datastax.driver.core.Session;
 
 public class RegisterModel {
@@ -17,31 +16,37 @@ public class RegisterModel {
 		this.cluster = cluster;
 	}
 	
-	public boolean addNewUser(String username, String password, String email){
-		boolean userAdded = false;
-		
+	public boolean checkExistingUsers(String username) {
+		boolean userExists = false;
+		Session session = cluster.connect("kududb");
+		String query = "SELECT username FROM users WHERE username='"+username+"';";
+		PreparedStatement statement = session.prepare(query);
+		BoundStatement boundStatement = new BoundStatement(statement);
+		ResultSet rs = session.execute(boundStatement);
+		if (!rs.isExhausted()) {
+			session.close();
+			userExists = true;
+		}
+		return userExists;
+	}
+	
+	public boolean addNewUser(String username, String password, String email, UUID uuid){
+		boolean userAdded = true;
 		Session session = cluster.connect("kududb");
 		
-		//Add user to users table
-		PreparedStatement statement = session.prepare("INSERT into users (username, password, email) VALUES ('"+ username + "','"+ password + "','" + email + "');");                   
+		String insertDetails = "INSERT INTO users (iduuid, username, email, password) VALUES ("+uuid+", '"+username+"', '"+email+"', '"+password+"');";
+		PreparedStatement statement = session.prepare(insertDetails);                  
 		BoundStatement boundStatement = new BoundStatement(statement);
 		session.execute(boundStatement);
 		
-		//Check if user was added
-		PreparedStatement statement2 = session.prepare("SELECT * from users WHERE username = \'" + username + "\';");
+		String checkDetails = "SELECT username FROM users WHERE username='"+username+"';";
+		PreparedStatement statement2 = session.prepare(checkDetails);
 		BoundStatement boundStatement2 = new BoundStatement(statement2);
 		ResultSet rs = session.execute(boundStatement2);
 		
-		if(rs.isExhausted()){
-			session.close();
-			userAdded = true;
-		}			
+		if(rs.isExhausted())
+			userAdded = false;
+		session.close();
 		return userAdded;
 	}
-	
-	
-	
-	
-	
-	
 }
