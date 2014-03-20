@@ -20,38 +20,45 @@ import org.json.JSONObject;
 public class ProfileModel {
 	
 	String url = "http://10.0.2.2:8080/KuduServer/profile";
-	String username, password, email, location, bio;
+	String name, username, password, email, location, bio;
 	
 	public ProfileModel(){
 		
 	}
 	
 	//==========================================================
-	public void setUserDetails(String username, String password, String email, String location, String bio){
+	public void setUserDetails(String name, String username, String password,
+			String email, String location, String bio) {
+		this.name = name;
 		this.username = username;
 		this.password = password;
 		this.email = email;
 		this.location = location;
 		this.bio = bio;
 	}
-	
-	 public void setUsername(String username) { 
-	    	this.username = username; 
-	    }	    
-	 public void setPassword(String password) { 
-	    	this.password = password; 
-	    }	    
-	 public void setEmail(String email) { 
-	    	this.email = email; 
-	    }	    
-	 public void setLocation(String location) { 
-	    	this.location = location; 
-	    }	    
-	 public void setbio(String bio) { 
-	    	this.bio = bio; 
-	    }
-	    
+	public void setName(String name) {
+		this.name = name;
+	}
+	public void setUsername(String username) {
+		this.username = username;
+	}
+	public void setPassword(String password) {
+		this.password = password;
+	}
+	public void setEmail(String email) {
+		this.email = email;
+	}
+	public void setLocation(String location) {
+		this.location = location;
+	}
+	public void setbio(String bio) {
+		this.bio = bio;
+	}
+
     //========================================================== 
+	public String getName() {
+		return name;
+	}
 	public String getUsername() {
     	return username; 
     }   
@@ -68,8 +75,9 @@ public class ProfileModel {
     	return bio; 
     }
     public String[] getDetails(){
-    	String[] userDetails = new String[5];
-    	  	
+    	String[] userDetails = new String[6];
+    	
+    	userDetails[0] = name;
     	userDetails[1] = username;
     	userDetails[2] = password;
     	userDetails[3] = email;
@@ -86,6 +94,7 @@ public class ProfileModel {
     	HttpClient httpclient = new DefaultHttpClient();
 		HttpPost httppost = new HttpPost(url);
 		List<NameValuePair> params = new ArrayList<NameValuePair>();
+		params.add(new BasicNameValuePair("name", name));
 		params.add(new BasicNameValuePair("username", username));
 		params.add(new BasicNameValuePair("password", password));
 		params.add(new BasicNameValuePair("email", email));
