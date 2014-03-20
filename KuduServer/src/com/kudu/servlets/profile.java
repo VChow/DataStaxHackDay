@@ -33,24 +33,23 @@ public class profile extends HttpServlet{
 	
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		final String username = request.getParameter("username"); 
+		final UUID uuid = UUID.randomUUID();
+		final String name = request.getParameter("name");
 		final String password = request.getParameter("password");
 		final String email = request.getParameter("email");
-		final UUID uuid = UUID.randomUUID();
-		
+		final String location = request.getParameter("location");
+		final String bio = request.getParameter("bio"); 
+				
 		ProfileModel profileModel = new ProfileModel();
 		profileModel.setCluster(cluster);
 		
 		response.setContentType("application/json");
 		PrintWriter out = response.getWriter();
 		JSONObject jsonObject = new JSONObject();
-		if(!profileModel.checkExistingUsers(username)){
-			if(profileModel.addNewUser(username, password, email, uuid))
-				jsonObject.put("register", "true");
-			else
-				jsonObject.put("register", "false");
-		}
-		else
-			jsonObject.put("register", "false");
+		
+		profileModel.updateProfile(username, name, uuid, password, email, location, bio);
+			jsonObject.put("profileUpdate", true);
+
 		out.print(jsonObject);
 		out.flush();
 	}

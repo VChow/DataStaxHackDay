@@ -89,7 +89,7 @@ public class ProfileModel {
     
     //==========================================================
     
-    public boolean pullDetails() throws IOException, IllegalStateException, JSONException
+    public boolean updateDetails() throws IOException, IllegalStateException, JSONException
     {
     	HttpClient httpclient = new DefaultHttpClient();
 		HttpPost httppost = new HttpPost(url);
@@ -123,7 +123,7 @@ public class ProfileModel {
 	{
 		JSONObject result = new JSONObject(line);
 		
-		if(result.getString("update").equals("true"))
+		if(result.getString("profileUpdate").equals("true"))
 			return true;
 		else
 			return false;
