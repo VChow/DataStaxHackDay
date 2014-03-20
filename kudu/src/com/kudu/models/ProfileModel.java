@@ -21,6 +21,8 @@ public class ProfileModel {
 	
 	String url = "http://10.0.2.2:8080/KuduServer/profile";
 	String name, username, password, email, location, bio;
+	String update = null;
+	String retrieve = null;
 	
 	public ProfileModel(){
 		
@@ -89,11 +91,20 @@ public class ProfileModel {
     
     //==========================================================
     
-    public boolean updateDetails() throws IOException, IllegalStateException, JSONException
+    public String[] retrieveProfile() throws IOException, IllegalStateException, JSONException{
+    	String[] userProfile = new String[5];
+    	
+    	return userProfile;
+    }
+    
+    public boolean updateProfile() throws IOException, IllegalStateException, JSONException
     {
+    	update = "1"; //Make it not null.
+    	
     	HttpClient httpclient = new DefaultHttpClient();
 		HttpPost httppost = new HttpPost(url);
 		List<NameValuePair> params = new ArrayList<NameValuePair>();
+		params.add(new BasicNameValuePair("update", update));
 		params.add(new BasicNameValuePair("name", name));
 		params.add(new BasicNameValuePair("username", username));
 		params.add(new BasicNameValuePair("password", password));
@@ -108,7 +119,9 @@ public class ProfileModel {
 
 		BufferedReader reader = new BufferedReader(new InputStreamReader(in));
 		String line = null;
-		String returnVal = null;
+		String returnVal = null;		
+		update = null; //Reset back to null for next use.
+		
 		while((line = reader.readLine()) != null){
 			returnVal = line;
 		}
