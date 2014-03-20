@@ -17,12 +17,12 @@ import org.apache.http.message.BasicNameValuePair;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class UpdateModel {
+public class ProfileModel {
 	
-	String url = "http://10.0.2.2:8080/KuduServer/update";
+	String url = "http://10.0.2.2:8080/KuduServer/profile";
 	String username, password, email, location, bio;
 	
-	public UpdateModel(){
+	public ProfileModel(){
 		
 	}
 	
@@ -67,13 +67,30 @@ public class UpdateModel {
     public String getBio() { 
     	return bio; 
     }
+    public String[] getDetails(){
+    	String[] userDetails = new String[5];
+    	  	
+    	userDetails[1] = username;
+    	userDetails[2] = password;
+    	userDetails[3] = email;
+    	userDetails[4] = location;
+    	userDetails[5] = bio;
+    	
+    	return userDetails;
+    }
     
     //==========================================================
     
-    public boolean pullDetails() throws IOException, IllegalStateException, JSONException{
+    public boolean pullDetails() throws IOException, IllegalStateException, JSONException
+    {
     	HttpClient httpclient = new DefaultHttpClient();
 		HttpPost httppost = new HttpPost(url);
 		List<NameValuePair> params = new ArrayList<NameValuePair>();
+		params.add(new BasicNameValuePair("username", username));
+		params.add(new BasicNameValuePair("password", password));
+		params.add(new BasicNameValuePair("email", email));
+		params.add(new BasicNameValuePair("location", location));
+		params.add(new BasicNameValuePair("bio", bio));
 		
 		HttpResponse response = null;
 		httppost.setEntity(new UrlEncodedFormEntity(params));

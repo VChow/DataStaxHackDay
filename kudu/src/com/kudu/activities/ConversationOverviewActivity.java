@@ -48,7 +48,7 @@ public class ConversationOverviewActivity extends Activity{
 			@Override
 			public void run() {
 				// TODO Auto-generated method stub
-				UpdateModel user = new UpdateModel();
+				ProfileModel user = new ProfileModel();
 				
 				
 			}

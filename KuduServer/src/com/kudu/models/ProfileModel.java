@@ -1,5 +1,5 @@
 package com.kudu.models;
 
-public class UpdateModel {
+public class ProfileModel {
 
 }

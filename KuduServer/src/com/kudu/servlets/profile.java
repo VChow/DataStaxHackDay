@@ -1,5 +1,5 @@
 package com.kudu.servlets;
 
-public class update {
+public class profile {
 
 }
