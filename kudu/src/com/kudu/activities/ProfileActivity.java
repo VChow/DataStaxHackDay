@@ -32,21 +32,25 @@ public class ProfileActivity extends Activity {
 	public final EditText locationText = (EditText) findViewById(R.id.txt_location);
 	public final EditText bioText = (EditText) findViewById(R.id.txt_biography);
 
-	public String username = usernameText.getText().toString();
+	public String username, name, password_old, password_new, email, location, bio;
+	
+	/*public String username = usernameText.getText().toString();
 	public String name = nameText.getText().toString();
 	public String password_old = old_passwordText.getText().toString();
 	public String password_new = new_passwordText.getText().toString();
 	public String email = emailText.getText().toString();
 	public String location = locationText.getText().toString();
-	public String bio = bioText.getText().toString();
+	public String bio = bioText.getText().toString();*/
 
+	public ProfileModel profileModel = new ProfileModel();
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_profile);
 
 		if (checkInternetConnection()) {
-			retrieveProfile();
+			retrieveProfile();//Shove in a uuid as params
 		} else {
 			Toast.makeText(ProfileActivity.this, "Unable to retrieve details",
 					Toast.LENGTH_LONG).show();
@@ -60,15 +64,14 @@ public class ProfileActivity extends Activity {
 		return true;
 	}
 
-	public void retrieveProfile() {
+	public void retrieveProfile() {//Shove in uuid as params
 
 		new Thread(new Runnable() {
 			public void run() {
-				ProfileModel profileModel = new ProfileModel();
 
 				try {
 					String[] userProfile = new String[5];
-					userProfile = profileModel.retrieveProfile();
+					userProfile = profileModel.retrieveProfile();//Shove in uuid as params
 					populateProfile(userProfile);
 				} catch (IllegalStateException e) {
 					e.printStackTrace();
@@ -91,10 +94,8 @@ public class ProfileActivity extends Activity {
 					new Thread(new Runnable() {
 						public void run() {
 							try {
-								ProfileModel profileModel = new ProfileModel();
+								//ProfileModel profileModel = new ProfileModel();					
 								if (profileModel.updateProfile()) {
-									// Doesn't actually check if profile was
-									// successfully updated.
 									Toast.makeText(ProfileActivity.this,
 											"Profile Updated",
 											Toast.LENGTH_LONG).show();
@@ -126,6 +127,18 @@ public class ProfileActivity extends Activity {
 		locationText.setText(userProfile[5]);
 	}
 
+	public void updateProfileModel(){
+		String username = usernameText.getText().toString();
+		String name = nameText.getText().toString();
+		String password_old = old_passwordText.getText().toString();
+		String password_new = new_passwordText.getText().toString();
+		String email = emailText.getText().toString();
+		String location = locationText.getText().toString();
+		String bio = bioText.getText().toString();
+		
+		profileModel.setUserDetails(name, username, password_old, password_new, email, location, bio);
+	}
+	
 	private boolean checkInternetConnection() {
 		ConnectivityManager conMgr = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
 		if (conMgr.getActiveNetworkInfo() != null

@@ -1,5 +1,6 @@
 package com.kudu.models;
 
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.UUID;
 
@@ -32,8 +33,10 @@ public class ProfileModel {
 			
 	}
 	
+	//public ArrayList<String> pullProfile(UUID uuid){
 	public String[] pullProfile(UUID uuid){
-		String[] userDetails = new String[6];
+		String[] userProfile = new String[6];
+		//ArrayList<String> userProfile = new ArrayList<String>();
 		
 		Session session = cluster.connect("kududb");
 		String query = "BEGIN BATCH"
@@ -51,15 +54,21 @@ public class ProfileModel {
 			
 			while(it.hasNext()){
 				Row r = it.next();
-				userDetails[0] = r.getString(0); //username
-				userDetails[1] = r.getString(2); //name 				
-				userDetails[3] = r.getString(3); //bio
-				userDetails[4] = r.getString(4); //email
-				userDetails[5] = r.getString(5); //location
-				userDetails[2] = r.getString(6); //password
+				userProfile[0] = r.getString(0); //username
+				userProfile[1] = r.getString(2); //name 				
+				userProfile[3] = r.getString(3); //bio
+				userProfile[4] = r.getString(4); //email
+				userProfile[5] = r.getString(5); //location
+				userProfile[2] = r.getString(6); //password
+				/*userProfile.add(r.getString(0));
+				userProfile.add(r.getString(2));
+				userProfile.add(r.getString(3));
+				userProfile.add(r.getString(4));
+				userProfile.add(r.getString(5));
+				userProfile.add(r.getString(6));*/
 			}
 		}
 		session.close();
-		return userDetails;
+		return userProfile;
 	}
 }

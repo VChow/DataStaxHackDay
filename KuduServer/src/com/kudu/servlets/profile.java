@@ -2,6 +2,8 @@ package com.kudu.servlets;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.UUID;
 
 import javax.servlet.ServletConfig;
@@ -11,6 +13,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
 import com.datastax.driver.core.Cluster;
@@ -55,8 +58,12 @@ public class profile extends HttpServlet{
 			out.flush();
 		}
 		else if(request.getParameter("retrieve") != null){
-			profileModel.pullProfile(uuid);
-			jsonObject.put("profileRetreive", true);			
+			String[] userProfile = new String[6];
+			//ArrayList<String> userProfile = new ArrayList<String>();
+			
+			userProfile = profileModel.pullProfile(uuid);
+			//jsonObject.put("profileRetrieve", new JSONArray(Arrays.asList(userProfile)));
+			jsonObject.put("profileRetrieve", userProfile);
 			out.print(jsonObject);
 			out.flush();
 		}
