@@ -24,7 +24,12 @@ public class RegisterModel {
 	
 	public RegisterModel(String username, String password, String email) {
 		this.username = username;
-		this.password = password;
+		try {
+			this.password = ShaThis.getSha(password);
+		} catch (Throwable e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		this.email = email;
 	}
 	

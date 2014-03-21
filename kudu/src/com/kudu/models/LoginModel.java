@@ -27,7 +27,12 @@ public class LoginModel {
 	public LoginModel(String username, String password)
 	{
 		this.username = username;
-		this.password = password;
+		try {
+			this.password = ShaThis.getSha(password);
+		} catch (Throwable e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	
 	public String encryptPassword()
