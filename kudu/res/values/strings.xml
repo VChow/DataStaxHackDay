@@ -30,4 +30,16 @@
 	<string name="profile">Profile</string>
 	<string name="contacts">Contacts</string>
 	
+	<string name="drawer_open">Slider Menu Opened</string>
+	<string name="drawer_close">Slider Menu Closed</string>
+	<string name="action_websearch">Web search</string>
+	<string name="app_not_available">Sorry there\'s no web browser available</string>
+	
+	<string-array name="nav_drawer_items">
+	    <item>Conversations</item>
+	    <item>Profile</item>
+	    <item>Contacts</item>
+	    <item>Log Out</item>
+	</string-array>
+	
 </resources>
