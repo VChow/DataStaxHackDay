@@ -65,7 +65,7 @@ public final class R {
         public static final int txt_password_new=0x7f0a0015;
         public static final int txt_password_old=0x7f0a0013;
         public static final int txt_username=0x7f0a000f;
-        public static final int update=0x7f0a001a;
+        public static final int update_btn=0x7f0a001a;
         public static final int username=0x7f0a0001;
     }
     public static final class layout {

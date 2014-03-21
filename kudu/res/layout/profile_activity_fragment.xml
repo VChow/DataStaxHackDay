@@ -4,13 +4,12 @@
     android:layout_height="match_parent"
     android:orientation="vertical" >
 
-    <!-- =================Names==================== -->
-
-<TextView
+     <!-- =================Names==================== -->
+	
+	<TextView
         android:id="@+id/lbl_name"
         android:layout_width="50dp"
         android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/txt_name"
         android:layout_alignParentLeft="true"
         android:layout_marginLeft="24dp"
         android:text="@string/name" />
@@ -22,15 +21,14 @@
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:ems="10"
-        android:inputType="textPassword"
+        android:inputType="text"
         android:maxLength="20" >
-
         <requestFocus />
     </EditText>
-      
+
     <!-- =================Usernames==================== -->
 
-<TextView
+	<TextView
         android:id="@+id/lbl_username"
         android:layout_width="75dp"
         android:layout_height="wrap_content"
@@ -45,9 +43,9 @@
         android:layout_alignLeft="@+id/txt_name"
         android:layout_below="@+id/txt_name"
         android:ems="10"
-        android:inputType="textPassword"
-        android:maxLength="20" />
-    
+        android:inputType="text"
+        android:maxLength="20" /> 
+        
     <!-- ==================Email====================== -->
 
     <TextView
@@ -71,7 +69,7 @@
     
     <!-- =================Old Password================== -->
 
-<TextView
+	<TextView
         android:id="@+id/lbl_password_old"
         android:layout_width="75dp"
         android:layout_height="wrap_content"
@@ -113,7 +111,7 @@
     
     <!-- =================Location===================== -->
 
-<TextView
+	<TextView
         android:id="@+id/lbl_location"
         android:layout_width="75dp"
         android:layout_height="wrap_content"
@@ -134,7 +132,7 @@
     
     <!-- =================Biography=================== -->
 
-<TextView
+	<TextView
         android:id="@+id/lbl_biography"
         android:layout_width="75dp"
         android:layout_height="wrap_content"
@@ -151,17 +149,15 @@
         android:ems="10"
         android:inputType="text|textMultiLine"
         android:maxLength="100" />
-  
-    <!-- =================Update Button================= -->
-
-    <Button
-        android:id="@+id/update"
-        android:layout_width="100dp"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/lbl_biography"
-        android:layout_marginTop="56dp"
-        android:layout_toRightOf="@+id/lbl_biography"
-        android:background="?android:attr/selectableItemBackground"
-        android:text="@string/update" />
+    
+     <!-- =================Update Button================= -->
+     
+    <Button android:id="@+id/update_btn"
+    	android:layout_width="wrap_content"
+   		android:layout_height="wrap_content"
+    	android:text="@string/update"
+    	android:layout_toRightOf="@+id/lbl_biography"
+    	android:layout_marginTop="100dp"
+    	android:onClick="addGoal" />
     
 </RelativeLayout>
