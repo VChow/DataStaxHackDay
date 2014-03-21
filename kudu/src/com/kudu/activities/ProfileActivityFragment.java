@@ -6,17 +6,17 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-public class ConversationActivityFragment extends Fragment {
+public class ProfileActivityFragment extends Fragment {
 
-    public ConversationActivityFragment() {}
+    public ProfileActivityFragment() {}
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.conversation_activity_fragment, container, false);
+        View rootView = inflater.inflate(R.layout.profile_activity_fragment, container, false);
         
         //test to see if the fragment is changing on drawer click.
-        //getActivity().setTitle("ConversationActivityFragment");
+        //getActivity().setTitle("ProfileActivityFragment");
         return rootView;
     }
 }

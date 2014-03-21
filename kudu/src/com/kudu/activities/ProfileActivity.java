@@ -20,7 +20,8 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
-public class ProfileActivity extends Activity {
+//NEEDS TO PUT INTO THE PROFILE FRAGMENT CLASS
+/*public class ProfileActivity extends Activity {
 
 	private Button btnUpdate;
 
@@ -40,7 +41,7 @@ public class ProfileActivity extends Activity {
 	public String password_new = new_passwordText.getText().toString();
 	public String email = emailText.getText().toString();
 	public String location = locationText.getText().toString();
-	public String bio = bioText.getText().toString();*/
+	public String bio = bioText.getText().toString();
 
 	public ProfileModel profileModel = new ProfileModel();
 	
@@ -150,4 +151,4 @@ public class ProfileActivity extends Activity {
 		}
 	}
 
-}
+}*/

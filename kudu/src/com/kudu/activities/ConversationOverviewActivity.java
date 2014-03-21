@@ -118,35 +118,41 @@ public class ConversationOverviewActivity extends Activity{
 
 	private void selectItem(int position) {
 		Fragment fragment;
-		FragmentManager fragmentManager;
 		switch (position) {
 			case 0: // ConversationOverviewFragment
 				fragment = new ConversationActivityFragment();
-				fragmentManager = getFragmentManager();
-				fragmentManager.beginTransaction().replace(R.id.content_frame, fragment).commit();
+				fragmentManager(fragment);
+				closeDrawer(position);
+				return;
 			case 1: // ProfileFragment
-				// fragment = new ProfileActivityFragment();
-				// fragmentManager = getFragmentManager();
-				// fragmentManager.beginTransaction().replace(R.id.content_frame,
-				// fragment).commit();
+				fragment = new ProfileActivityFragment();
+				fragmentManager(fragment);
+				closeDrawer(position);
 				return;
 			case 2: // ContactsFragment
-				// fragment = new ContactsActivityFragment();
-				// fragmentManager = getFragmentManager();
-				// fragmentManager.beginTransaction().replace(R.id.content_frame,fragment).commit();
+				fragment = new ContactsActivityFragment();
+				fragmentManager(fragment);
+				closeDrawer(position);
 				return;
 			case 3: // LogOut Fragment
 				return;
 			default: // ConversationOverviewFragment
 				fragment = new ConversationActivityFragment();
-				fragmentManager = getFragmentManager();
-				fragmentManager.beginTransaction().replace(R.id.content_frame, fragment).commit();
+				fragmentManager(fragment);
+				closeDrawer(position);
 		}
-		// Update selected item and title, then close the drawer.
+    }
+	
+	private void fragmentManager(Fragment fragment) {
+		FragmentManager fragmentManager = getFragmentManager();
+		fragmentManager.beginTransaction().replace(R.id.content_frame, fragment).commit();
+	}
+	
+	private void closeDrawer(int position) {
 		mDrawerList.setItemChecked(position, true);
 		setTitle(mListTitles[position]);
 		mDrawerLayout.closeDrawer(mDrawerList);
-    }
+	}
 
     @Override
     public void setTitle(CharSequence title) {
