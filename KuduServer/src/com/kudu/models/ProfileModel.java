@@ -16,8 +16,7 @@ public class ProfileModel {
 		this.cluster = cluster; 
 	}
 	
-	public void updateProfile(String username, String name, UUID uuid, String email, String password, String location, String bio){
-
+	public void updateProfile(String username, String name, UUID uuid, String email, String password, String location, String bio) {
 		Session session = cluster.connect("kududb");
 		String query = "BEGIN BATCH"
 				+ "UPDATE users (name, username, email, location, bio) VALUES ("+name+", '"+username+"', '"+email+"', '"+location+"', '"+bio+"'); WHERE iduuid =" +uuid+";"                                            
@@ -28,8 +27,8 @@ public class ProfileModel {
 		session.execute(boundStatement);
 	}
 	
-	/*public String[] pullProfile(UUID uuid){
-		
+	public String[] getProfile(UUID uuid, String username) {
+		String [] userProfile = new String[6];
 		Session session = cluster.connect("kududb");
 		String query = "BEGIN BATCH"
 				+ "SELECT * from users WHERE iduuid = '" + uuid +"';"
@@ -40,27 +39,19 @@ public class ProfileModel {
 		BoundStatement boundStatement = new BoundStatement(statement);
 		ResultSet rs = session.execute(boundStatement);
 		
-		/*if(!rs.isExhausted()){
-			
+		if(!rs.isExhausted()){
 			Iterator<Row> it = rs.iterator();
-			
 			while(it.hasNext()){
 				Row r = it.next();
 				userProfile[0] = r.getString(0); //username
-				userProfile[1] = r.getString(2); //name 				
+				userProfile[1] = r.getString(2); //name 
+				userProfile[2] = r.getString(6); //password
 				userProfile[3] = r.getString(3); //bio
 				userProfile[4] = r.getString(4); //email
 				userProfile[5] = r.getString(5); //location
-				userProfile[2] = r.getString(6); //password
-				/*userProfile.add(r.getString(0));
-				userProfile.add(r.getString(2));
-				userProfile.add(r.getString(3));
-				userProfile.add(r.getString(4));
-				userProfile.add(r.getString(5));
-				userProfile.add(r.getString(6));
 			}
 		}
 		session.close();
 		return userProfile;
-	}*/
+	}
 }

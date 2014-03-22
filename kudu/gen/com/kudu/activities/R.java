@@ -45,12 +45,12 @@ public final class R {
         public static final int email=0x7f0a0005;
         public static final int image=0x7f0a0008;
         public static final int lbl_biography=0x7f0a0018;
-        public static final int lbl_email=0x7f0a0010;
-        public static final int lbl_location=0x7f0a0016;
-        public static final int lbl_name=0x7f0a000c;
-        public static final int lbl_password_new=0x7f0a0014;
-        public static final int lbl_password_old=0x7f0a0012;
-        public static final int lbl_username=0x7f0a000e;
+        public static final int lbl_email=0x7f0a0011;
+        public static final int lbl_location=0x7f0a0017;
+        public static final int lbl_name=0x7f0a000e;
+        public static final int lbl_password_new=0x7f0a0015;
+        public static final int lbl_password_old=0x7f0a0013;
+        public static final int lbl_username=0x7f0a000f;
         public static final int left_drawer=0x7f0a000b;
         public static final int login=0x7f0a0003;
         public static final int logo=0x7f0a0000;
@@ -59,12 +59,12 @@ public final class R {
         public static final int password_2=0x7f0a0007;
         public static final int register=0x7f0a0004;
         public static final int txt_biography=0x7f0a0019;
-        public static final int txt_email=0x7f0a0011;
-        public static final int txt_location=0x7f0a0017;
-        public static final int txt_name=0x7f0a000d;
-        public static final int txt_password_new=0x7f0a0015;
-        public static final int txt_password_old=0x7f0a0013;
-        public static final int txt_username=0x7f0a000f;
+        public static final int txt_email=0x7f0a0012;
+        public static final int txt_location=0x7f0a0016;
+        public static final int txt_name=0x7f0a000c;
+        public static final int txt_password_new=0x7f0a000d;
+        public static final int txt_password_old=0x7f0a0014;
+        public static final int txt_username=0x7f0a0010;
         public static final int update_btn=0x7f0a001a;
         public static final int username=0x7f0a0001;
     }

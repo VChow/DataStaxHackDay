@@ -73,6 +73,7 @@ public class ProfileModel {
 		params.add(new BasicNameValuePair("email", email));
 		params.add(new BasicNameValuePair("location", location));
 		params.add(new BasicNameValuePair("bio", bio));
+		params.add(new BasicNameValuePair("id", id.toString()));
 		
 		HttpResponse response = null;
 		httppost.setEntity(new UrlEncodedFormEntity(params));
@@ -97,12 +98,13 @@ public class ProfileModel {
     public String[] retrieveProfile() throws IOException, IllegalStateException, JSONException
     {
     	String[] userProfile = new String[5];   	
-    	retrieve = "true";
-    	
+    	retrieve = "true";   	
     	HttpClient httpclient = new DefaultHttpClient();
 		HttpPost httppost = new HttpPost(url);
 		List<NameValuePair> params = new ArrayList<NameValuePair>();
 		params.add(new BasicNameValuePair("retrieve", retrieve));
+		params.add(new BasicNameValuePair("username", username));
+		params.add(new BasicNameValuePair("id", id.toString()));
 		
 		HttpResponse response = null;
 		httppost.setEntity(new UrlEncodedFormEntity(params));
