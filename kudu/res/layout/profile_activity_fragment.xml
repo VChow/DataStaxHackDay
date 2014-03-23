@@ -17,7 +17,8 @@
         android:layout_marginTop="15dp"
         android:ems="10"
         android:inputType="text"
-        android:maxLength="20" >
+        android:maxLength="20"
+        android:hint="@string/name" >
         <requestFocus />
 	</EditText>
 
@@ -49,7 +50,8 @@
         android:layout_below="@+id/txt_name"
         android:ems="10"
         android:inputType="text"
-        android:maxLength="20" /> 
+        android:maxLength="20"
+        android:hint="@string/username" /> 
         
     <!-- ==================Email====================== -->
 
@@ -70,6 +72,7 @@
         android:layout_below="@+id/txt_username"
         android:ems="10"
         android:inputType="textEmailAddress"
+        android:hint="@string/email"
         android:maxLength="20" />
     
     <!-- =================Old Password================== -->
@@ -90,7 +93,8 @@
         android:layout_below="@+id/lbl_email"
         android:ems="10"
         android:inputType="textPassword"
-        android:maxLength="20" />
+        android:maxLength="20" 
+        android:hint="@string/password1"/>
   
     <!-- ================New Password==================== -->
 
@@ -112,7 +116,8 @@
         android:layout_toRightOf="@+id/lbl_password_new"
         android:ems="10"
         android:inputType="textPassword"
-        android:maxLength="20" >
+        android:maxLength="20" 
+        android:hint="@string/password1" >
     </EditText>
     
     <!-- =================Location===================== -->
@@ -134,7 +139,8 @@
         android:layout_alignLeft="@+id/txt_password_old"
         android:ems="10"
         android:inputType="text"
-        android:maxLength="40" />
+        android:maxLength="40" 
+        android:hint="@string/location"/>
     
     <!-- =================Biography=================== -->
 
@@ -155,7 +161,8 @@
         android:layout_below="@+id/txt_location"
         android:ems="10"
         android:inputType="text|textMultiLine"
-        android:maxLength="100" />
+        android:maxLength="100"
+        android:hint="@string/biography" />
     
      <!-- =================Update Button================= -->
 

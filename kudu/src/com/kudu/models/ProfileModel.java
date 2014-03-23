@@ -22,19 +22,18 @@ import org.json.JSONObject;
 public class ProfileModel {
 	
 	String url = "http://10.0.2.2:8080/KuduServer/profile";
-	String name, username, password_old, password_new, email, location, bio;
+	String name, username, password, email, location, bio;
 	UUID id;
 	String update = "false";
 	String retrieve = "false";
 	
 	public ProfileModel(){}
 	
-	public ProfileModel(String name, String username, String password_old, String password_new,
+	public ProfileModel(String name, String username, String password,
 			String email, String location, String bio, UUID id){
 		this.name = name;
 		this.username = username;
-		this.password_old = password_old;
-		this.password_new = password_new;
+		this.password = password;
 		this.email = email;
 		this.location = location;
 		this.bio = bio;
@@ -43,8 +42,7 @@ public class ProfileModel {
 	
 	public String getName() { return name; }
 	public String getUsername() { return username; }   
-    public String getPassword_old() { return password_old; }
-    public String getPassword_new() { return password_new; }
+    public String getPassword() { return password; }
     public String getEmail() { return email; }    
     public String getLocation() { return location; }   
     public String getBio() { return bio; }
@@ -52,12 +50,17 @@ public class ProfileModel {
 	
 	public void setName(String name) { this.name = name; }
 	public void setUsername(String username) { this.username = username; }
-	public void setPassword(String password_old) { this.password_old = password_old; }
-	public void setPassword_new(String password_new){ this.password_new = password_new; }
 	public void setEmail(String email) { this.email = email; }
 	public void setLocation(String location) { this.location = location; }
-	public void setbio(String bio) { this.bio = bio; }
-	public void setID(UUID id) { this.id = id; }
+	public void setBio(String bio) { this.bio = bio; }
+	public void setID(String uuid) { 
+		UUID id = UUID.fromString(uuid);
+		this.id = id; 
+	}
+	public void setPassword(String password) throws Throwable { 
+		ShaThis.getSha(password);
+		this.password = password; 
+	}
     
 	public boolean updateProfile() throws IOException, IllegalStateException, JSONException
     {
@@ -68,12 +71,11 @@ public class ProfileModel {
 		params.add(new BasicNameValuePair("update", update));
 		params.add(new BasicNameValuePair("name", name));
 		params.add(new BasicNameValuePair("username", username));
-		params.add(new BasicNameValuePair("password_old", password_old));
-		params.add(new BasicNameValuePair("password_new", password_new));
+		params.add(new BasicNameValuePair("password", password));
 		params.add(new BasicNameValuePair("email", email));
 		params.add(new BasicNameValuePair("location", location));
 		params.add(new BasicNameValuePair("bio", bio));
-		params.add(new BasicNameValuePair("id", id.toString()));
+		params.add(new BasicNameValuePair("id", "63d09c45-9cdc-4245-87d9-bcb9e4847f37"));
 		
 		HttpResponse response = null;
 		httppost.setEntity(new UrlEncodedFormEntity(params));
@@ -83,26 +85,32 @@ public class ProfileModel {
 		BufferedReader reader = new BufferedReader(new InputStreamReader(in));
 		String line = null;
 		String returnVal = null;		
-		update = "false";
 		
 		while((line = reader.readLine()) != null){
 			returnVal = line;
 		}
 		
-		if(parseResult(returnVal))
+		if(parseResult(returnVal)) {
+			update = "false";
 			return true;
-		else
+		} else {
+			update = "false";
 			return false;
+		}
     }
     
-    public String[] retrieveProfile() throws IOException, IllegalStateException, JSONException
+    public void retrieveProfile() throws IOException, IllegalStateException, JSONException
     {
-    	String[] userProfile = new String[5];   	
+    	//testing values
+    	username = "admin";
+    	id = UUID.fromString("5934738f-cc87-40c1-b592-12457d08481b");
+    	  	
     	retrieve = "true";   	
     	HttpClient httpclient = new DefaultHttpClient();
 		HttpPost httppost = new HttpPost(url);
 		List<NameValuePair> params = new ArrayList<NameValuePair>();
 		params.add(new BasicNameValuePair("retrieve", retrieve));
+		params.add(new BasicNameValuePair("update", update));
 		params.add(new BasicNameValuePair("username", username));
 		params.add(new BasicNameValuePair("id", id.toString()));
 		
@@ -110,28 +118,32 @@ public class ProfileModel {
 		httppost.setEntity(new UrlEncodedFormEntity(params));
 		response = httpclient.execute(httppost);
 		InputStream in = response.getEntity().getContent();
-
 		BufferedReader reader = new BufferedReader(new InputStreamReader(in));
+		
 		String line = null;
-		String returnVal = null;		
-    	retrieve = "false";
+		StringBuilder builder = new StringBuilder();	
     	
     	while((line = reader.readLine()) != null){
-			returnVal = line;
+			builder.append(line);
 		}
-    	return userProfile;
+    	
+    	JSONObject jsonObject = new JSONObject(builder.toString());
+    	JSONArray userDetails = jsonObject.getJSONArray("profileRetrieve");
+    	setUsername(userDetails.getString(0));
+    	System.out.println(getUsername());
+    	setID(userDetails.getString(1));
+    	setName(userDetails.getString(2));
+    	setEmail(userDetails.getString(3));
+    	setBio(userDetails.getString(5));
+    	setLocation(userDetails.getString(6));
+    	retrieve = "false";
     }
     
     private boolean parseResult(String line) throws JSONException {
 		JSONObject result = new JSONObject(line);
-		if(result.getString("profileUpdate").equals("true"))
+		if(result.getString("update").equals("true"))
 			return true;
 		else
 			return false;
 	}
-    
-    private boolean parseResult(String[] profile) {
-    	JSONArray userProfile = new JSONArray();
-    	return true;
-    }
 }

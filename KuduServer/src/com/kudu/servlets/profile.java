@@ -47,7 +47,8 @@ public class profile extends HttpServlet{
 		final String email = req.getParameter("email");
 		final String location = req.getParameter("location");
 		final String bio = req.getParameter("bio");	
-		//final String id = req.getParameter("uuid");
+		final String id = req.getParameter("id");
+		UUID uuid = UUID.fromString(id);
 		
 		ProfileModel profileModel = new ProfileModel();
 		profileModel.setCluster(cluster);
@@ -55,26 +56,25 @@ public class profile extends HttpServlet{
 		res.setContentType("application/json");
 		PrintWriter out = res.getWriter();
 		JSONObject jsonObject = new JSONObject();
-		//profileModel.updateProfile(username, name, uuid, password, email, location, bio);
+		profileModel.updateProfile(username, name, uuid, password, email, location, bio);
 		jsonObject.put("profileUpdate", true);
 		out.print(jsonObject);
 		out.flush();
 	}
 	
 	public void retrieve(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
-		String [] userProfile = new String[6];
+		String [] userProfile = new String[7];
 		final String username = req.getParameter("username");
 		final String id = req.getParameter("id");
-		UUID uuidid = UUID.fromString(id);
 		
 		ProfileModel profileModel = new ProfileModel();
-		userProfile = profileModel.getProfile(uuidid, username);
-		
+		profileModel.setCluster(cluster);
+		userProfile = profileModel.getProfile(id, username);
+	
 		res.setContentType("application/json");
 		PrintWriter out = res.getWriter();
 		JSONObject jsonObject = new JSONObject();
 		jsonObject.put("profileRetrieve", new JSONArray(Arrays.asList(userProfile)));
-		jsonObject.put("profileRetrieve", userProfile);
 		out.print(jsonObject);
 		out.flush();
 	}

@@ -1,14 +1,10 @@
 package com.kudu.models;
 
 import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
 
 public final class ShaThis {
 
-	public ShaThis()
-	{
-
-	}
+	public ShaThis(){}
 
 	public static String getSha(String encrypt) throws Throwable
 	{

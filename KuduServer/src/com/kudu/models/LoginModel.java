@@ -1,5 +1,6 @@
 package com.kudu.models;
 
+import java.util.Iterator;
 import java.util.UUID;
 
 import com.datastax.driver.core.BoundStatement;
@@ -21,7 +22,8 @@ public class LoginModel {
 	public boolean checkLogin(String username, String password)
 	{
 		Session session = cluster.connect("kududb");
-		String query1 = "SELECT iduuid FROM users WHERE username=\'"+username+"\';";
+		String query1 = "SELECT iduuid FROM users WHERE username=\'" + username
+				+ "\';";
 		PreparedStatement statement = session.prepare(query1);
 		BoundStatement boundStatement = new BoundStatement(statement);
 		ResultSet rs = session.execute(boundStatement);
@@ -34,16 +36,25 @@ public class LoginModel {
 				uuid = row.getUUID("iduuid");
 			}
 
-			String query2 = "SELECT password FROM login WHERE iduuid="+uuid+" AND password='"+password+"'";
+			String query2 = "SELECT * FROM login WHERE iduuid=" + uuid + " ;";
 			statement = session.prepare(query2);
-			boundStatement =  new BoundStatement(statement);
+			boundStatement = new BoundStatement(statement);
 			rs = session.execute(boundStatement);
-			if(rs.isExhausted()) {
+			if (rs.isExhausted()) {
 				session.close();
 				return false;
 			} else {
+				String serverPassword = null;
+				Iterator<Row> it = rs.iterator();
+				while(it.hasNext()){
+					Row r = it.next();
+					serverPassword = r.getString(1); //username
+				}
 				session.close();
-				return true;
+				if(serverPassword.equals(password))
+					return true;
+				else
+					return false;
 			}
 		}
 	}
