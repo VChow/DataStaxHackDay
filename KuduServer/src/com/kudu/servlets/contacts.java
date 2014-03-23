@@ -2,6 +2,7 @@ package com.kudu.servlets;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.Arrays;
 import java.util.UUID;
 
 import javax.servlet.Servlet;
@@ -12,6 +13,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.json.JSONArray;
 import org.json.simple.JSONObject;
 
 import com.datastax.driver.core.Cluster;
@@ -34,31 +36,26 @@ public class contacts extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		if(request.getParameter("retrieve").equals("true"))
 			retrieve(request,response);
-		else if (request.getParameter("insert").equals("true"))
-			insert(request,response);
+		//else if (request.getParameter("insert").equals("true"))
+			//insert(request,response);
 	}
 
-	public void retrieve(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
-		final String user_id = request.getParameter("user_id");
-		UUID uuid = null;
-		uuid = uuid.fromString(user_id);
+	public void retrieve(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException{
+		final String username = req.getParameter("username");
 		
-		ContactsModel contactsModel = new ContactsModel();
-		contactsModel.setCluster(cluster);
+		ContactsModel cm = new ContactsModel();
+		cm.setCluster(cluster);
+		String[] values = cm.retrieveContacts(username);
 		
-		response.setContentType("application/json");
-		PrintWriter out = response.getWriter();
+		res.setContentType("application/json");
+		PrintWriter out = res.getWriter();
 		JSONObject jsonObject = new JSONObject();
-		
-		/*
-		 * Should return a JSONArray? or JSONObject
-		 */
-		contactsModel.retrieveContacts(uuid);
+		jsonObject.put("contactsValues", new JSONArray(Arrays.asList(values)));
 		out.print(jsonObject);
 		out.flush();
 	}
 	
-	public void insert(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
+	/*public void insert(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
 		final String user_id = request.getParameter("uuid");
 		final String contactname = request.getParameter("contactname");
 		UUID uuid = null;
@@ -80,6 +77,6 @@ public class contacts extends HttpServlet {
 		
 		out.print(jsonObject);
 		out.flush();
-	}
+	}*/
 	
 }

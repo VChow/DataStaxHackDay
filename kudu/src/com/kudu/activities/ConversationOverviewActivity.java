@@ -76,7 +76,7 @@ public class ConversationOverviewActivity extends Activity{
     }
 
     /* Called whenever we call invalidateOptionsMenu() */
-    @Override
+   @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
         // If the nav drawer is open, hide action items related to the content view
         boolean drawerOpen = mDrawerLayout.isDrawerOpen(mDrawerList);

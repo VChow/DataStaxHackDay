@@ -5,8 +5,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
-import java.util.UUID;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
@@ -19,129 +19,48 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import android.util.JsonReader;
+import android.util.Log;
+
 
 public class ContactsModel {
 
 	String url = "http://10.0.2.2:8080/KuduServer/contacts";
-	String user_id;
-	List contacts = new ArrayList();
-	
 	String retrieve = "false";
-	String insert = "false";
+	LinkedList<String> temp = new LinkedList<String>();
 	
-	/*public ContactsModel(UUID uuid){
-		this.user_id = uuid.toString();
-	}*/
-	
-	public ContactsModel(){
-		
-	}
-	
-	public void setUUID(UUID user_id){
-		this.user_id = user_id.toString();
-	}
-	
-	public List retrieveContacts() throws IOException, IllegalStateException, JSONException
-	{
+	public LinkedList<String> getContacts(String username) throws IOException, IllegalStateException, JSONException {
 		retrieve = "true";
 		
+		//request
 		HttpClient httpclient = new DefaultHttpClient();
 		HttpPost httppost = new HttpPost(url);
 		List<NameValuePair> params = new ArrayList<NameValuePair>();
 		params.add(new BasicNameValuePair("retrieve", retrieve));
-		params.add(new BasicNameValuePair("uuid", user_id));
+		params.add(new BasicNameValuePair("username", username));
 		
+		//response
 		HttpResponse response = null;
 		httppost.setEntity(new UrlEncodedFormEntity(params));
 		response = httpclient.execute(httppost);
 		InputStream in = response.getEntity().getContent();
-		
-		/*
-		 * http://developer.android.com/reference/android/util/JsonReader.html
-		 */
-		JsonReader reader = new JsonReader(new InputStreamReader(in, "UTF-8"));
-		try 
-		{
-			return readContactsArray(reader);
-		} 
-		catch (Exception e){}
-
-		reader.close();				
-		retrieve = "false";
-		
-		return contacts;
-	}
-	
-	
-	public List readContactsArray(JsonReader reader) throws IOException {
-		List contactsList = new ArrayList();
-		
-		reader.beginArray();
-	     while (reader.hasNext()) {
-	       contactsList.add(readContact(reader));
-	     }
-	     reader.endArray();
-		
-		return contactsList;
-	}
-	
-	
-	public String readContact(JsonReader reader) throws IOException {
-		String name = null;
-		
-		reader.beginObject();
-		
-		while (reader.hasNext()){
-			name = reader.nextName();
-		}
-		
-		reader.endObject();
-		
-		return name;
-	}
-	
-	public boolean addContact(String contactname) throws IOException, IllegalStateException, JSONException
-	{
-		insert = "true";
-		
-		HttpClient httpclient = new DefaultHttpClient();
-		HttpPost httppost = new HttpPost(url);
-		List<NameValuePair> params = new ArrayList<NameValuePair>();
-		params.add(new BasicNameValuePair("insert", insert));
-		params.add(new BasicNameValuePair("uuid", user_id));
-		params.add(new BasicNameValuePair("contactname", contactname));
-			
-		HttpResponse response = null;
-		httppost.setEntity(new UrlEncodedFormEntity(params));
-		response = httpclient.execute(httppost);
-		InputStream in = response.getEntity().getContent();
-		
 		BufferedReader reader = new BufferedReader(new InputStreamReader(in));
+		
 		String line = null;
-		String returnVal = null;		
-    	retrieve = "false";
+		StringBuilder builder = new StringBuilder();	
     	
     	while((line = reader.readLine()) != null){
-			returnVal = line;
+			builder.append(line);
 		}
     	
-    	if(parseResult(returnVal)) {
-			return true;
-		}
-		else {
-			return false;
-		}
+    	JSONObject jsonObject = new JSONObject(builder.toString());
+    	JSONArray values = jsonObject.getJSONArray("contactsValues");
+    	for(int i = 0; i < values.length(); i++) {
+    		temp.add(values.getString(i)); 
+    	}
+    	retrieve = "true";
+		return temp;
 	}
+
 	
-	private boolean parseResult(String line) throws JSONException 
-	{
-		JSONObject result = new JSONObject(line);
-		
-		if(result.getString("contactAdded").equals("true"))
-			return true;
-		else
-			return false;
-	}
 	
 }

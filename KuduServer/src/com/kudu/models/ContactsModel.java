@@ -1,5 +1,7 @@
 package com.kudu.models;
 
+import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.UUID;
 
 import com.datastax.driver.core.BoundStatement;
@@ -18,21 +20,23 @@ private Cluster cluster;
 		this.cluster = cluster;
 	}
 	
-	public void retrieveContacts(UUID user_id)
+	public String[] retrieveContacts(String username)
 	{
+		LinkedList<String> values = new LinkedList<String>();
 		Session session = cluster.connect("kududb");
-		String query = "SELECT "; //all usernames from friends(?) where uuid = user_id
+		String query = "SELECT friendname FROM friends WHERE username='"+username+"';";
 		
 		PreparedStatement statement = session.prepare(query);
 		BoundStatement boundStatement = new BoundStatement(statement);
 		ResultSet rs = session.execute(boundStatement);
 		
 		if(!rs.isExhausted()) {
-			//add the shit into a JSON
+			for(Row row : rs) {
+				values.add(row.getString("friendname")); 
+			}
 		}
 		session.close();
-		
-		//return JSON thing
+		return values.toArray(new String[values.size()]);
 	}
 	
 	public boolean addContact(UUID user_id, String contactname)

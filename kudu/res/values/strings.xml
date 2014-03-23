@@ -7,6 +7,7 @@
     <string name="search_hint">Search conversations</string>
     <string name="action_search">Search</string>
     <string name="action_drawer">Settings</string>
+    <string name="add_contact">Add Contact</string>
     
     <string name="username_login">username</string>
 	<string name="password_login">password</string>
@@ -42,4 +43,6 @@
 	    <item>Log Out</item>
 	</string-array>
 	
+	<string name="add_contact_message">Add a Contact</string>
+	<string name="add_contact_btn">Add</string>
 </resources>
