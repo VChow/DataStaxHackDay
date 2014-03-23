@@ -12,7 +12,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.json.JSONArray;
+//import org.json.JSONArray;
 import org.json.simple.JSONObject;
 
 import com.datastax.driver.core.Cluster;
@@ -73,7 +73,7 @@ public class profile extends HttpServlet{
 		res.setContentType("application/json");
 		PrintWriter out = res.getWriter();
 		JSONObject jsonObject = new JSONObject();
-		jsonObject.put("profileRetrieve", new JSONArray(Arrays.asList(userProfile)));
+		//jsonObject.put("profileRetrieve", new JSONArray(Arrays.asList(userProfile)));
 		jsonObject.put("profileRetrieve", userProfile);
 		out.print(jsonObject);
 		out.flush();
