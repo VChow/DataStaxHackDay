@@ -28,6 +28,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 				+ key + " text not null);";
 		Log.d("EventsData", "onCreate: " + sql);
 		db.execSQL(sql);
+		sql = "create table session (username text PRIMARY KEY, UUID text);";
+		db.execSQL(sql);
 	}
 
 	@Override
