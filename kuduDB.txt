@@ -11,14 +11,14 @@ USE kududb;
 
 /*** CREATE TABLES ***/
 CREATE TABLE users(
-	iduuid uuid,
 	username text,
+	iduuid uuid,
+	name text,
 	email text,
-	password text,
 	picture text,
 	bio text, 
 	location text,
-	PRIMARY KEY(iduuid)
+	PRIMARY KEY(username, iduuid)
 );
 
 CREATE TABLE login(
@@ -39,4 +39,11 @@ CREATE TABLE conversation(
 	idtimeuuid timeuuid,
 	message text,
 	PRIMARY KEY(conversationuuid, idtimeuuid)
+);
+
+CREATE TABLE key (
+	id uuid,
+	friend uuid,
+	diffie int,
+	PRIMARY KEY(id, friend)
 );
