@@ -9,6 +9,7 @@ import java.util.List;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
+import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpPost;
@@ -17,11 +18,44 @@ import org.apache.http.message.BasicNameValuePair;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import android.util.Log;
+
 public class ConversationModel {
 
 	String url = "http://10.0.2.2:8080/KuduServer/conversation";
+	String conversationID, friendName, username;
 	
-	public ConversationModel(){
+	public ConversationModel(String friendName, String username){
+		this.friendName = friendName;
+		this.username = username;
+	}
+	
+	public void getConversation() throws ClientProtocolException, IOException, JSONException
+	{
+		HttpClient httpclient = new DefaultHttpClient();
+		HttpPost httppost = new HttpPost(url);
+		List<NameValuePair> params = new ArrayList<NameValuePair>();
+		params.add(new BasicNameValuePair("friendID", friendName));
+		params.add(new BasicNameValuePair("username", username));
+
+		HttpResponse response = null;
+		httppost.setEntity(new UrlEncodedFormEntity(params));
+		response = httpclient.execute(httppost);
+		InputStream in = response.getEntity().getContent();
+
+		BufferedReader reader = new BufferedReader(new InputStreamReader(in));
+		StringBuilder sb = new StringBuilder();
+		int cp;
+		while((cp = reader.read()) != -1)
+		{
+			sb.append((char)cp);
+		}
+		in.close();
+		String jsonText = sb.toString();
+		
+		Log.e("text", jsonText);
+		JSONObject jOb = new JSONObject(jsonText);
+		
 		
 	}
 }
