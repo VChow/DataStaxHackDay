@@ -65,9 +65,9 @@ public class MainActivity extends Activity {
 									ConversationOverviewActivity.class);
 							MainActivity.this.startActivity(myIntent);
 							
-							/*try {
+							try {
 								if(login.checkLogin()) {
-									Intent myIntent = new Intent(MainActivity.this,
+									myIntent = new Intent(MainActivity.this,
 											ConversationOverviewActivity.class);
 									MainActivity.this.startActivity(myIntent);
 								}
@@ -85,7 +85,7 @@ public class MainActivity extends Activity {
 								e.printStackTrace();
 							} catch (JSONException e) {
 								e.printStackTrace();
-							}*/
+							}
 						}
 					}).start();
 				} else {

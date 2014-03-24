@@ -39,28 +39,40 @@ private Cluster cluster;
 		return values.toArray(new String[values.size()]);
 	}
 	
-	public boolean addContact(UUID user_id, String contactname)
+	public boolean addContact(String contact, String username)
 	{
 		boolean contactAdded = true;
+		UUID uuid = UUID.randomUUID();
 		Session session = cluster.connect("kududb");
-		String insertContact = "INSERT INTO"; //friends(?) (contact_name) where uuid = user_id
 		
-		PreparedStatement statement = session.prepare(insertContact);
+		String checkContact = "SELECT username FROM users WHERE username='"+contact+"';"; 
+		PreparedStatement statement = session.prepare(checkContact);
 		BoundStatement boundStatement = new BoundStatement(statement);
-		session.execute(boundStatement);
+		ResultSet result1 = session.execute(boundStatement);
 		
-		/*
-		 * Check if the contact was added
-		 */
-		String checkAdded = "SELECT "; //contactname from friends(?) where uuid = user_id
-		PreparedStatement statement2 = session.prepare(checkAdded);
-		BoundStatement boundStatement2 = new BoundStatement(statement2);
-		ResultSet rs = session.execute(boundStatement2);
+		String checkFriends = "SELECT username,friendname FROM friends WHERE username='"+username+"' AND friendName='"+contact+"';"; 
+		PreparedStatement statement4 = session.prepare(checkFriends);
+		BoundStatement boundStatement4 = new BoundStatement(statement4);
+		ResultSet result2 = session.execute(boundStatement4);
 		
-		if(rs.isExhausted())
+		
+		if(!result1.isExhausted() & result2.isExhausted()) {
+			String insertContact = "INSERT INTO friends (username, friendname, conversation) VALUES ('"+username+"', '"+contact+"', "+uuid+");"; 
+			PreparedStatement statement1 = session.prepare(insertContact);
+			BoundStatement boundStatement1 = new BoundStatement(statement1);
+			session.execute(boundStatement1);
+			
+			String checkAdded = "SELECT friendname FROM friends WHERE username='"+username+"';";
+			PreparedStatement statement2 = session.prepare(checkAdded);
+			BoundStatement boundStatement2 = new BoundStatement(statement2);
+			ResultSet res = session.execute(boundStatement2);
+			
+			if(res.isExhausted())
+				contactAdded = false;
+			session.close();
+		} else {
 			contactAdded = false;
-		session.close();
-		
+		}
 		return contactAdded;
 	}
 	

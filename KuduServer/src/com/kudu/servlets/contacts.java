@@ -33,11 +33,11 @@ public class contacts extends HttpServlet {
 		cluster = CassandraHosts.getCluster();
 	}
     
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		if(request.getParameter("retrieve").equals("true"))
-			retrieve(request,response);
-		//else if (request.getParameter("insert").equals("true"))
-			//insert(request,response);
+	protected void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
+		if(req.getParameter("retrieve").equals("true"))
+			retrieve(req,res);
+		else if (req.getParameter("add").equals("true"))
+			addContact(req,res);
 	}
 
 	public void retrieve(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException{
@@ -55,11 +55,9 @@ public class contacts extends HttpServlet {
 		out.flush();
 	}
 	
-	/*public void insert(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
-		final String user_id = request.getParameter("uuid");
-		final String contactname = request.getParameter("contactname");
-		UUID uuid = null;
-		uuid = uuid.fromString(user_id);
+	public void addContact(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
+		final String contact = request.getParameter("contact");
+		final String username = request.getParameter("username");
 		
 		ContactsModel contactsModel = new ContactsModel();
 		contactsModel.setCluster(cluster);
@@ -67,16 +65,13 @@ public class contacts extends HttpServlet {
 		response.setContentType("application/json");
 		PrintWriter out = response.getWriter();
 		JSONObject jsonObject = new JSONObject();
-		if(contactsModel.addContact(uuid, contactname)){
-			jsonObject.put("contactAdded", "true");		
-		}
-		else
-		{
+		if(contactsModel.addContact(contact, username)) {
+			jsonObject.put("contactAdded", "true");	
+		} else {
 			jsonObject.put("contactAdded", "false");
 		}
-		
 		out.print(jsonObject);
 		out.flush();
-	}*/
+	}
 	
 }

@@ -45,4 +45,7 @@
 	
 	<string name="add_contact_message">Add a Contact</string>
 	<string name="add_contact_btn">Add</string>
+	<string name="add_contact_error_message">No contact of this name</string>
+	<string name="add_contact_success_message">Added contact successfully</string>
+	<string name="add_cancel_btn">Cancel</string>
 </resources>

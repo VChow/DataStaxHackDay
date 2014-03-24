@@ -26,6 +26,7 @@ public class ContactsModel {
 
 	String url = "http://10.0.2.2:8080/KuduServer/contacts";
 	String retrieve = "false";
+	String add = "false";
 	LinkedList<String> temp = new LinkedList<String>();
 	
 	public LinkedList<String> getContacts(String username) throws IOException, IllegalStateException, JSONException {
@@ -60,7 +61,45 @@ public class ContactsModel {
     	retrieve = "true";
 		return temp;
 	}
+	
+	public boolean addContact(String contact, String username) throws IOException, IllegalStateException, JSONException {
+		add = "true";
+		
+		//request
+		HttpClient httpclient = new DefaultHttpClient();
+		HttpPost httppost = new HttpPost(url);
+		List<NameValuePair> params = new ArrayList<NameValuePair>();
+		params.add(new BasicNameValuePair("add", add));
+		params.add(new BasicNameValuePair("retrieve", retrieve));
+		params.add(new BasicNameValuePair("contact", contact));
+		params.add(new BasicNameValuePair("username", username));
+		
+		HttpResponse response = null;
+		httppost.setEntity(new UrlEncodedFormEntity(params));
+		response = httpclient.execute(httppost);
+		InputStream in = response.getEntity().getContent();
 
+		BufferedReader reader = new BufferedReader(new InputStreamReader(in));
+		String line = null;
+		String returnVal = null;
+		while((line = reader.readLine()) != null){
+			returnVal = line;
+		}
+		
+		add = "false";
+		if(parseResult(returnVal)) {
+			return true;
+		} else {
+			return false;
+		}
+	}
 	
-	
+	private boolean parseResult(String line) throws JSONException 
+	{
+		JSONObject result = new JSONObject(line);
+		if(result.getString("contactAdded").equals("true"))
+			return true;
+		else
+			return false;
+	}		
 }
