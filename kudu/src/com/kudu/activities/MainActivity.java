@@ -70,8 +70,6 @@ public class MainActivity extends Activity {
 							try {
 								String uuid = login.checkLogin();
 								if(uuid != null) {
-									//db = new DatabaseModel(getApplicationContext(), password, MainActivity.this);
-									//db.insertSession(uuid, username);
 									db.createTables();
 									db.getSession(uuid, username);
 									myIntent = new Intent(MainActivity.this,
