@@ -42,11 +42,11 @@ public class login extends HttpServlet {
 		response.setContentType("application/json");
 		PrintWriter out = response.getWriter();
 		JSONObject jsonObject = new JSONObject();
-		if(loginModel.checkLogin(username, password))
-			jsonObject.put("login", "true");
-		else
-			jsonObject.put("login", "false");
 		
+		String uuid = loginModel.checkLogin(username, password);
+		if(!uuid.equals(null)) {
+			jsonObject.put("login", uuid);
+		}
 		out.print(jsonObject);
 		out.flush();
 	}

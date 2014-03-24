@@ -19,8 +19,10 @@ public class LoginModel {
 		this.cluster = cluster;
 	}
 	
-	public boolean checkLogin(String username, String password)
+	public String checkLogin(String username, String password)
 	{
+		String serverPassword = null;
+		UUID uuid = null;
 		Session session = cluster.connect("kududb");
 		String query1 = "SELECT iduuid FROM users WHERE username=\'" + username
 				+ "\';";
@@ -29,9 +31,8 @@ public class LoginModel {
 		ResultSet rs = session.execute(boundStatement);
 		if (rs.isExhausted()) {
 			session.close();
-			return false;
+			return null;
 		} else {
-			UUID uuid = null;
 			for (Row row : rs) {
 				uuid = row.getUUID("iduuid");
 			}
@@ -42,19 +43,19 @@ public class LoginModel {
 			rs = session.execute(boundStatement);
 			if (rs.isExhausted()) {
 				session.close();
-				return false;
+				return null;
 			} else {
-				String serverPassword = null;
 				Iterator<Row> it = rs.iterator();
 				while(it.hasNext()){
 					Row r = it.next();
-					serverPassword = r.getString(1); //username
+					serverPassword = r.getString("password"); //password
 				}
 				session.close();
 				if(serverPassword.equals(password))
-					return true;
-				else
-					return false;
+					return uuid.toString();
+				else {
+					return null;
+				}
 			}
 		}
 	}
