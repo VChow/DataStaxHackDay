@@ -18,10 +18,11 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
-import com.kudu.models.LoginModel;
+import com.kudu.models.*;
 
 public class MainActivity extends Activity {
 
+	private DatabaseModel db;
 	private Button btnLogin, btnRegister;
 
 	@Override
@@ -67,6 +68,7 @@ public class MainActivity extends Activity {
 							
 							try {
 								if(login.checkLogin()) {
+									db = new DatabaseModel(getApplicationContext(), password, MainActivity.this);
 									myIntent = new Intent(MainActivity.this,
 											ConversationOverviewActivity.class);
 									MainActivity.this.startActivity(myIntent);
@@ -117,5 +119,10 @@ public class MainActivity extends Activity {
 		} else {
 			return false;
 		}
+	}
+	
+	public DatabaseModel getDatabase()
+	{
+		return db;
 	}
 }
