@@ -37,6 +37,7 @@ CREATE TABLE friends(
 CREATE TABLE conversation(
 	conversationuuid uuid,
 	idtimeuuid timeuuid,
+	sender text,
 	message text,
 	PRIMARY KEY(conversationuuid, idtimeuuid)
 );
