@@ -28,7 +28,6 @@ public class ConversationOverviewActivity extends Activity{
     private String[] mListTitles;
 	
 	@Override
-	//blah
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.drawer_layout);
