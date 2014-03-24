@@ -8,7 +8,7 @@ import android.util.Log;
 
 /** Helper to the database, manages versions and creation */
 public class DatabaseHelper extends SQLiteOpenHelper {
-	private static final String DATABASE_NAME = "storedKeys.db";
+	private static final String DATABASE_NAME = "kudu.db";
 	private static final int DATABASE_VERSION = 1;
 
 	// Table name
