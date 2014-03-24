@@ -17,6 +17,8 @@ import org.apache.http.message.BasicNameValuePair;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import android.util.Log;
+
 public class LoginModel {
 	
 	String url = "http://10.0.2.2:8080/KuduServer/login";
@@ -39,7 +41,7 @@ public class LoginModel {
 		return password;
 	}
 	
-	public boolean checkLogin() throws IOException, IllegalStateException, JSONException
+	public String checkLogin() throws IOException, IllegalStateException, JSONException
 	{
 		HttpClient httpclient = new DefaultHttpClient();
 		HttpPost httppost = new HttpPost(url);
@@ -58,18 +60,9 @@ public class LoginModel {
 		while((line = reader.readLine()) != null){
 			returnVal = line;
 		}
-		if(parseResult(returnVal))
-			return true;
-		else
-			return false;
-	}
-	
-	private boolean parseResult(String line) throws JSONException
-	{
-		JSONObject result = new JSONObject(line);
-		if(result.getString("login").equals("true"))
-			return true;
-		else
-			return false;
+		
+		JSONObject result = new JSONObject(returnVal);
+		String temp = result.getString("login");
+		return temp;
 	}
 }

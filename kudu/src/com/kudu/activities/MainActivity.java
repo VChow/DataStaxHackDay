@@ -22,14 +22,15 @@ import com.kudu.models.*;
 
 public class MainActivity extends Activity {
 
-	private DatabaseModel db;
+	private DatabaseHelper db;
 	private Button btnLogin, btnRegister;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
-
+		
+		db = new DatabaseHelper(this);
 		final ImageView imgView;
 
 		imgView = (ImageView) findViewById(R.id.logo);
@@ -67,8 +68,12 @@ public class MainActivity extends Activity {
 							MainActivity.this.startActivity(myIntent);
 							
 							try {
-								if(login.checkLogin()) {
-									db = new DatabaseModel(getApplicationContext(), password, MainActivity.this);
+								String uuid = login.checkLogin();
+								if(uuid != null) {
+									//db = new DatabaseModel(getApplicationContext(), password, MainActivity.this);
+									//db.insertSession(uuid, username);
+									db.createTables();
+									db.getSession(uuid, username);
 									myIntent = new Intent(MainActivity.this,
 											ConversationOverviewActivity.class);
 									MainActivity.this.startActivity(myIntent);
@@ -119,10 +124,5 @@ public class MainActivity extends Activity {
 		} else {
 			return false;
 		}
-	}
-	
-	public DatabaseModel getDatabase()
-	{
-		return db;
 	}
 }
