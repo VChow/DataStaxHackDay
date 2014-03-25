@@ -23,8 +23,6 @@ public class ConversationActivity extends Activity{
 
 	public static void startActivity(Context context, String name){
 
-		Log.d("#fuckTom", "Friendname: " + name);
-
 		// Build extras with passed in parameters
 		Bundle extras = new Bundle();
 		extras.putString(INTENT_KEY_PARAM_A, name);
@@ -47,7 +45,6 @@ public class ConversationActivity extends Activity{
 
 		new Thread(new Runnable() {
 			public void run(){
-				Log.e("text", "Shit house");
 				try {
 					conversation = conversationModel.getConversation();
 				} catch (ClientProtocolException e) {
