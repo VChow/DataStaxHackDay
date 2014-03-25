@@ -17,7 +17,7 @@ import org.json.simple.JSONObject;
 
 import com.datastax.driver.core.Cluster;
 import com.kudu.lib.CassandraHosts;
-import com.kudu.models.ConversationModel;
+import com.kudu.models.*;
 
 /**
  * Servlet implementation class conversation
@@ -64,8 +64,8 @@ public class conversation extends HttpServlet {
 		response.setContentType("application/json");
 		PrintWriter out = response.getWriter();
 		JSONObject jsonObject = new JSONObject();
-
-		jsonObject.put("conversation", conversation);
+		
+		jsonObject.putAll(conversation);
 
 		out.print(jsonObject);
 		out.flush();

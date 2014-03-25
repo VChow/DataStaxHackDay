@@ -27,8 +27,8 @@ public class ConversationModel {
 		String conversationID = getConversationID(friendID, username);
 
 		Session session = cluster.connect("kududb");
-		String query1 = "SELECT * FROM conversation WHERE conversationuuid=\'" + conversationID
-				+ "\' LIMIT 100;";
+		String query1 = "SELECT * FROM conversation WHERE conversationuuid=" + conversationID
+				+ " LIMIT 100;";
 		PreparedStatement statement = session.prepare(query1);
 		BoundStatement boundStatement = new BoundStatement(statement);
 		ResultSet rs = session.execute(boundStatement);
@@ -39,8 +39,9 @@ public class ConversationModel {
 			UUID uuid = null;
 			String message;
 			for (Row row : rs) {
-				uuid = row.getUUID("conversation");
-				message = row.getString("message");
+				uuid = row.getUUID("idtimeuuid");
+				message = "person:" + row.getString("message");
+				System.out.println(uuid.toString() + " : " + message);
 				conversation.put(uuid, message);
 			}
 			session.close();
