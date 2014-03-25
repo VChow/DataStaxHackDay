@@ -41,19 +41,19 @@ public class ConversationActivity extends Activity{
 		// Extract parameters
 		Bundle extras = getIntent().getExtras();
 		friendname = extras.getString(INTENT_KEY_PARAM_A);
-		conversationModel = new ConversationModel("mark", "admin");
-		
-		try {
-			conversationModel.getConversation();
-		} catch (ClientProtocolException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (JSONException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+//		conversationModel = new ConversationModel("mark", "admin");
+//		
+//		try {
+//			conversationModel.getConversation();
+//		} catch (ClientProtocolException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		} catch (IOException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		} catch (JSONException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
 	}
 }

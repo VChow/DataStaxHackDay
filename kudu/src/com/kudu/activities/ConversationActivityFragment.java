@@ -11,6 +11,7 @@ import android.app.Activity;
 import android.app.DialogFragment;
 import android.app.ListFragment;
 import android.content.Context;
+import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.util.Log;
@@ -95,6 +96,9 @@ setListAdapter(adapter);
 public void onListItemClick(ListView lv, View v, int position, long id) {
      String itemSelection = getListView().getItemAtPosition(position).toString();
      //new addDialog(getActivity(), itemSelection);
+     Intent startConversation = new Intent(getActivity(), ConversationActivity.class);
+     startConversation.putExtra("Friendname", "mark");
+     startActivity(startConversation);
     }
 
 /*
