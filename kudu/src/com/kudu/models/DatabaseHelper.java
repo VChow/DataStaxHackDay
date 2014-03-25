@@ -57,7 +57,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 	public void getSession(String uuid, String username) {
 		SQLiteDatabase db = this.getWritableDatabase();
 		Cursor cursor = db.query(SESSION_TABLE, allColumns, null, null, null, null, null);
-		if(!cursor.equals(null)) {
+		if(cursor!=null && cursor.getCount()>0) {
 			cursor.moveToFirst();
 			String sessionUsername = cursor.getString(0);
 			String sessionUUID = cursor.getString(1);
