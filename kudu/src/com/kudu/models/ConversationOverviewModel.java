@@ -24,91 +24,92 @@ import android.util.Log;
 
 public class ConversationOverviewModel {
 
-String url = "http://10.0.2.2:8080/KuduServer/conversationOverview";
-String retrieve = "false";
-String insert = "false";
-LinkedList<String> temp = new LinkedList<String>();
+	//String url = "http://10.0.2.2:8080/KuduServer/conversationOverview";
+	String url = "http://10.0.3.2:8080/KuduServer/conversationOverview";
+	String retrieve = "false";
+	String insert = "false";
+	LinkedList<String> temp = new LinkedList<String>();
 
-public ConversationOverviewModel() {
+	public ConversationOverviewModel() {
 
-}
+	}
 
-public LinkedList<String> getConversations(String username)
-throws IOException, IllegalStateException, JSONException {
-retrieve = "true";
+	public LinkedList<String> getConversations(String username)
+			throws IOException, IllegalStateException, JSONException {
+		retrieve = "true";
 
-// request
-HttpClient httpclient = new DefaultHttpClient();
-HttpPost httppost = new HttpPost(url);
-List<NameValuePair> params = new ArrayList<NameValuePair>();
-params.add(new BasicNameValuePair("retrieve", retrieve));
-params.add(new BasicNameValuePair("username", username));
+		// request
+		HttpClient httpclient = new DefaultHttpClient();
+		HttpPost httppost = new HttpPost(url);
+		List<NameValuePair> params = new ArrayList<NameValuePair>();
+		params.add(new BasicNameValuePair("retrieve", retrieve));
+		params.add(new BasicNameValuePair("username", username));
 
-// response
-HttpResponse response = null;
-httppost.setEntity(new UrlEncodedFormEntity(params));
-response = httpclient.execute(httppost);
-InputStream in = response.getEntity().getContent();
-BufferedReader reader = new BufferedReader(new InputStreamReader(in));
+		// response
+		HttpResponse response = null;
+		httppost.setEntity(new UrlEncodedFormEntity(params));
+		response = httpclient.execute(httppost);
+		InputStream in = response.getEntity().getContent();
+		BufferedReader reader = new BufferedReader(new InputStreamReader(in));
 
-String line = null;
-StringBuilder builder = new StringBuilder();
- 
-while ((line = reader.readLine()) != null) {
-builder.append(line);
-}
-JSONObject jsonObject = new JSONObject(builder.toString());
+		String line = null;
+		StringBuilder builder = new StringBuilder();
 
-JSONArray values = jsonObject.getJSONArray("conversationValues");
-for (int i = 0; i < values.length(); i++) {
-temp.add(values.getString(i));
-}
+		while ((line = reader.readLine()) != null) {
+			builder.append(line);
+		}
+		JSONObject jsonObject = new JSONObject(builder.toString());
 
-retrieve = "false";
-return temp;
-}
+		JSONArray values = jsonObject.getJSONArray("conversationValues");
+		for (int i = 0; i < values.length(); i++) {
+			temp.add(values.getString(i));
+		}
 
-public boolean addConversation(String username, String friendname)
-throws IOException, IllegalStateException, JSONException {
-boolean conversationAdded = true;
-insert = "true";
+		retrieve = "false";
+		return temp;
+	}
 
-// request
-HttpClient httpclient = new DefaultHttpClient();
-HttpPost httppost = new HttpPost(url);
-List<NameValuePair> params = new ArrayList<NameValuePair>();
-params.add(new BasicNameValuePair("insert", insert));
-params.add(new BasicNameValuePair("username", username));
-params.add(new BasicNameValuePair("friendname", friendname));
+	public boolean addConversation(String username, String friendname)
+			throws IOException, IllegalStateException, JSONException {
+		boolean conversationAdded = true;
+		insert = "true";
 
-// response
-HttpResponse response = null;
-httppost.setEntity(new UrlEncodedFormEntity(params));
-response = httpclient.execute(httppost);
-InputStream in = response.getEntity().getContent();
-BufferedReader reader = new BufferedReader(new InputStreamReader(in));
+		// request
+		HttpClient httpclient = new DefaultHttpClient();
+		HttpPost httppost = new HttpPost(url);
+		List<NameValuePair> params = new ArrayList<NameValuePair>();
+		params.add(new BasicNameValuePair("insert", insert));
+		params.add(new BasicNameValuePair("username", username));
+		params.add(new BasicNameValuePair("friendname", friendname));
 
-String line = null;
-String returnVal = null;
-while ((line = reader.readLine()) != null)
-{returnVal = line;}
+		// response
+		HttpResponse response = null;
+		httppost.setEntity(new UrlEncodedFormEntity(params));
+		response = httpclient.execute(httppost);
+		InputStream in = response.getEntity().getContent();
+		BufferedReader reader = new BufferedReader(new InputStreamReader(in));
 
-insert = "false";
+		String line = null;
+		String returnVal = null;
+		while ((line = reader.readLine()) != null)
+		{returnVal = line;}
 
-if (parseResult(returnVal))
-{return true;}
-else
-{return false;}
+		insert = "false";
 
-}
+		if (parseResult(returnVal))
+		{return true;}
+		else
+		{return false;}
 
-private boolean parseResult(String line) throws JSONException {
-JSONObject result = new JSONObject(line);
+	}
 
-if (result.getString("conversationAdded").equals("true"))
-return true;
-else
-return false;
-}
+	private boolean parseResult(String line) throws JSONException {
+		JSONObject result = new JSONObject(line);
+
+		if (result.getString("conversationAdded").equals("true"))
+			return true;
+		else
+			return false;
+	}
 
 }

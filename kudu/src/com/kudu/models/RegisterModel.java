@@ -19,7 +19,8 @@ import org.json.JSONObject;
 
 public class RegisterModel {
 
-	String url = "http://10.0.2.2:8080/KuduServer/register";
+	//String url = "http://10.0.2.2:8080/KuduServer/register";
+	String url = "http://10.0.3.2:8080/KuduServer/register";
 	String username, password, email;
 	
 	public RegisterModel(String username, String password, String email) {
