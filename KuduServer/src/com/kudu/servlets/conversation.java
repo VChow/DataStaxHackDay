@@ -55,22 +55,46 @@ public class conversation extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		ConversationModel convModel = new ConversationModel();
 		convModel.setCluster(cluster);
+		
+		String username = request.getParameter("username");
+		String message = request.getParameter("message");
+		String getID = request.getParameter("getID");
+		String ID = request.getParameter("convID");
+		if(message != null)
+			convModel.addMessage(username, ID, message);
+		else if(getID != null)
+			getID(request, response);
+		else
+		{
+			LinkedHashMap<String, String> conversation = convModel.getConversation(ID);
+
+			response.setContentType("application/json");
+			PrintWriter out = response.getWriter();
+			JSONObject jsonObject = new JSONObject();
+
+			if(conversation != null)
+			{
+				jsonObject.putAll(conversation);
+				out.print(jsonObject);
+			}
+			out.flush();
+		}
+	}
+
+	protected void getID(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
+	{
+		ConversationModel convModel = new ConversationModel();
+		convModel.setCluster(cluster);
 
 		String friendID = request.getParameter("friendID");
 		String username = request.getParameter("username");
-
-		LinkedHashMap<String, String> conversation = convModel.getConversation(friendID, username);
-
+		
+		String convID = convModel.getConversationID(friendID, username);
 		response.setContentType("application/json");
 		PrintWriter out = response.getWriter();
 		JSONObject jsonObject = new JSONObject();
-		
-		if(conversation != null)
-			jsonObject.putAll(conversation);
-
+		jsonObject.put("convID", convID);
 		out.print(jsonObject);
 		out.flush();
-
 	}
-
 }

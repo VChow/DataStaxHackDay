@@ -64,7 +64,7 @@ public final class R {
         public static final int password_1=0x7f0a0008;
         public static final int password_2=0x7f0a0009;
         public static final int register=0x7f0a0006;
-        public static final int sendButton=0x7f0a0001;
+        public static final int send_button=0x7f0a0001;
         public static final int textView2=0x7f0a000c;
         public static final int textView3=0x7f0a000d;
         public static final int timestamp=0x7f0a0021;

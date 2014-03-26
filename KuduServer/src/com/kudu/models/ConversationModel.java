@@ -21,11 +21,9 @@ public class ConversationModel {
 		this.cluster = cluster;
 	}
 
-	public LinkedHashMap<String, String> getConversation(String friendID, String username)
+	public LinkedHashMap<String, String> getConversation(String conversationID)
 	{
 		LinkedHashMap<String, String> conversation = new LinkedHashMap<String, String>();
-
-		String conversationID = getConversationID(friendID, username);
 
 		Session session = cluster.connect("kududb");
 		String query1 = "SELECT * FROM conversation WHERE conversationuuid=" + conversationID
@@ -42,8 +40,7 @@ public class ConversationModel {
 			for (Row row : rs) {
 				uuid = row.getUUID("idtimeuuid");
 				long time = UUIDs.unixTimestamp(uuid);
-				message = "person:" + row.getString("message");
-				System.out.println(time + " : " + message);
+				message = row.getString("message");
 				conversation.put(String.valueOf(time), message);
 			}
 			session.close();
@@ -52,8 +49,19 @@ public class ConversationModel {
 
 
 	}
+	
+	public void addMessage(String username, String conversationID, String message)
+	{
+		UUID uuid = UUIDs.timeBased();
+		Session session = cluster.connect("kududb");
+		String query1 = "INSERT INTO conversation (conversationuuid, idtimeuuid, message) VALUES (" + 
+		conversationID + ", " + uuid + ", \'" + username + ":" + message + "\');";
+		PreparedStatement statement = session.prepare(query1);
+		BoundStatement boundStatement = new BoundStatement(statement);
+		session.execute(boundStatement);
+	}
 
-	private String getConversationID(String friendID, String username)
+	public String getConversationID(String friendID, String username)
 	{
 		Session session = cluster.connect("kududb");
 		String query1 = "SELECT conversation FROM friends WHERE username=\'" + username
