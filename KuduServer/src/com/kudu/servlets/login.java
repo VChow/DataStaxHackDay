@@ -44,9 +44,7 @@ public class login extends HttpServlet {
 		JSONObject jsonObject = new JSONObject();
 		
 		String uuid = loginModel.checkLogin(username, password);
-		if(!uuid.equals(null)) {
-			jsonObject.put("login", uuid);
-		}
+		jsonObject.put("login", uuid);
 		out.print(jsonObject);
 		out.flush();
 	}
