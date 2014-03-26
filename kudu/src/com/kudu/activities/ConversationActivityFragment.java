@@ -36,7 +36,7 @@ public class ConversationActivityFragment extends ListFragment{
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		View rootView = inflater.inflate(R.layout.activity_conversation, container, false);
 		context = container.getContext();
-		setHasOptionsMenu(true);
+		//setHasOptionsMenu(true);
 		Bundle args = getArguments();
 		String friendName = args.getString("friendname");
 		getActivity().setTitle(friendName);
@@ -64,7 +64,6 @@ public class ConversationActivityFragment extends ListFragment{
 	@Override
 	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
 		super.onCreateOptionsMenu(menu, inflater);
-		inflater.inflate(R.menu.action_bar_icons_contacts, menu);
 	}
 
 	private List<Item> displayConversation(LinkedHashMap<String, String> conversation)
@@ -116,4 +115,3 @@ public class ConversationActivityFragment extends ListFragment{
 	}
 
 }
-

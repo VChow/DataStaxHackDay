@@ -42,7 +42,6 @@ public final class R {
         public static final int xxhdpi_logo=0x7f02000f;
     }
     public static final class id {
-        public static final int action_websearch=0x7f0a0022;
         public static final int add_button=0x7f0a000d;
         public static final int add_contact=0x7f0a0021;
         public static final int add_contact_txtb=0x7f0a0009;

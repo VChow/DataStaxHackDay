@@ -5,24 +5,28 @@ import java.io.IOException;
 import org.json.JSONException;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
-import com.kudu.models.*;
+import com.kudu.models.DatabaseHelper;
+import com.kudu.models.LoginModel;
+import com.kudu.models.Session;
 
 public class MainActivity extends Activity {
 
-	private DatabaseHelper db;
+	static public DatabaseHelper db;
 	private Button btnLogin, btnRegister;
 
 	@Override
@@ -36,9 +40,11 @@ public class MainActivity extends Activity {
 		imgView = (ImageView) findViewById(R.id.logo);
 		imgView.setImageResource(R.drawable.login_logo);
 
+		db.createTables();
+		
 		setLoginButtonListener();
 		setRegisterButtonListener();
-	}
+	} 
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
@@ -47,6 +53,40 @@ public class MainActivity extends Activity {
 		return true;
 	}
 
+	/*
+	 * When the user returns to the main activity.
+	 */
+	/*@Override
+	protected void onResume() {
+		Log.v("IT", "IT");
+		Session sess = new Session();
+		sess = db.checkSessionExists();
+		
+		//Log.v("CHECK", sess.getUsername());
+		if((sess.getUsername().equals(null))) {
+			Intent myIntent = new Intent(MainActivity.this,
+					ConversationOverviewActivity.class);
+			MainActivity.this.startActivity(myIntent);
+			Log.v("IT", "MIET");
+		}
+		super.onResume();
+	}*/
+	
+	@Override
+	public void onBackPressed() {
+		new AlertDialog.Builder(this)
+        .setTitle("Really Exit?")
+        .setMessage("Are you sure you want to exit?")
+        .setNegativeButton(android.R.string.no, null)
+        .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+			
+			@Override
+			public void onClick(DialogInterface dialog, int which) {
+				MainActivity.super.onBackPressed();
+			}
+		}).create().show();
+	}
+	
 	public void setLoginButtonListener() {
 		btnLogin = (Button) findViewById(R.id.login);
 		btnLogin.setOnClickListener(new OnClickListener() {
@@ -62,19 +102,15 @@ public class MainActivity extends Activity {
 							String password = passwordEditText.getText().toString();
 
 							LoginModel login = new LoginModel(username, password);
-
-							Intent myIntent = new Intent(MainActivity.this,
-									ConversationOverviewActivity.class);
-							MainActivity.this.startActivity(myIntent);
 							
 							try {
 								String uuid = login.checkLogin();
 								if(uuid != null) {
-									db.createTables();
 									db.getSession(uuid, username);
-									myIntent = new Intent(MainActivity.this,
+									Intent myIntent = new Intent(MainActivity.this,
 											ConversationOverviewActivity.class);
 									MainActivity.this.startActivity(myIntent);
+									finish();
 								}
 								else {
 									MainActivity.this.runOnUiThread(new Runnable(){

@@ -12,7 +12,7 @@ import android.util.Log;
 public class DatabaseHelper extends SQLiteOpenHelper {
 	private static final String DATABASE_NAME = "kudu.db";
 	private static final int DATABASE_VERSION = 1;
-	
+	public Session ns = new Session();
 	//SessionTable
 	public static final String SESSION_TABLE = "session";
 	//SessionColumns
@@ -41,6 +41,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 	
 	public void createTables() {
 		SQLiteDatabase db = this.getWritableDatabase();
+		//DROP TABLES - used for testing
+		//db.execSQL("DROP TABLE IF EXISTS " + SESSION_TABLE);
 		db.execSQL(CREATE_TABLE_SESSION);
 	}
 	
@@ -50,11 +52,15 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 		values.put(SESSION_UUID, uuid);
 		values.put(SESSION_USERNAME, username);
 		db.insert(SESSION_TABLE, null, values);
-		Log.v("SHIT", "SHIT");
+		ns.setUsername(username);
+		ns.setUuid(uuid);
+		Log.v("Session:", "insertSession: "+ns.getUsername());
+		Log.v("Session:", "insertSession: "+ns.getUuid());
+		Log.v("Session:", "insertSession");
 		db.close();
 	}
 	
-	public void getSession(String uuid, String username) {
+	public Session getSession(String uuid, String username) {
 		SQLiteDatabase db = this.getWritableDatabase();
 		Cursor cursor = db.query(SESSION_TABLE, allColumns, null, null, null, null, null);
 		if(cursor!=null && cursor.getCount()>0) {
@@ -62,11 +68,41 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 			String sessionUsername = cursor.getString(0);
 			String sessionUUID = cursor.getString(1);
 			
+			ns.setUsername(sessionUsername);
+			ns.setUuid(sessionUUID);
 			//Testing
-			Log.v("FUCK", sessionUsername);
-			Log.v("FUCK", sessionUUID);
+			Log.v("Session:", "getSession: "+ns.getUsername());
+			Log.v("Session:", "getSession: "+ns.getUuid());
+			db.close();
+			return ns;
 		} else {
 			insertSession(uuid, username);
 		}
+		return null;
+	}
+	
+	public Session checkSessionExists() {
+		SQLiteDatabase db = this.getWritableDatabase();
+		Cursor cursor = db.query(SESSION_TABLE, allColumns, null, null, null, null, null);
+		if(cursor!=null && cursor.getCount()>0) {
+			cursor.moveToFirst();
+			Log.v("Session:", "cse1: "+ns.getUsername());
+			Log.v("Session:", "cse1: "+ns.getUuid());
+			return ns;
+		}
+		ns.setUsername(null);
+		ns.setUuid(null);
+		Log.v("Session:", "cse2: "+ns.getUuid());
+		Log.v("Session:", "cse2: "+ns.getUsername());
+		return ns;
+	}
+	
+	public void deleteSession(String uuid, String username) {
+		SQLiteDatabase db = this.getWritableDatabase();
+		db.delete(SESSION_TABLE, SESSION_USERNAME+" = ?", new String[] { username });
+		ns.setUsername(null);
+		ns.setUuid(null);
+		Log.v("Session:", "deleteSession");
+		db.close();
 	}
 }
