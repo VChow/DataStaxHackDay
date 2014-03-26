@@ -90,6 +90,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 			Log.v("Session:", "cse1: "+ns.getUuid());
 			return ns;
 		}
+		ns.setUsername(null);
+		ns.setUuid(null);
 		Log.v("Session:", "cse2: "+ns.getUuid());
 		Log.v("Session:", "cse2: "+ns.getUsername());
 		return ns;

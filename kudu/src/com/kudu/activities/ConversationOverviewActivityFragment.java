@@ -23,9 +23,10 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 import com.kudu.models.ConversationOverviewModel;
+import com.kudu.models.Session;
 
 public class ConversationOverviewActivityFragment extends ListFragment {
-	String username = "admin";
+	String username = "";
 	private Context context;
 
 	public ConversationOverviewActivityFragment() {}
@@ -35,6 +36,9 @@ public class ConversationOverviewActivityFragment extends ListFragment {
 			Bundle savedInstanceState) {
 		View rootView = inflater.inflate(R.layout.conversation_activity_fragment, container, false);
 		context = container.getContext();
+		Session session = new Session();
+		session = MainActivity.db.checkSessionExists();
+		username = session.getUsername();
 		setHasOptionsMenu(true);
 		displayConversations();
 		return rootView;
@@ -43,7 +47,6 @@ public class ConversationOverviewActivityFragment extends ListFragment {
 	@Override
 	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
 		super.onCreateOptionsMenu(menu, inflater);
-		inflater.inflate(R.menu.action_bar_icons_contacts, menu);
 	}
 
 	private void displayConversations(){

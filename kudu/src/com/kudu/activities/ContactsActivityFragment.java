@@ -21,6 +21,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 import com.kudu.models.ContactsModel;
+import com.kudu.models.Session;
 
 public class ContactsActivityFragment extends ListFragment {
     String username = "admin";
@@ -31,6 +32,9 @@ public class ContactsActivityFragment extends ListFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.contacts_activity_fragment, container, false);
         context = container.getContext();
+		Session session = new Session();
+		session = MainActivity.db.checkSessionExists();
+		username = session.getUsername();
         setHasOptionsMenu(true);
         displayContacts();
         return rootView;

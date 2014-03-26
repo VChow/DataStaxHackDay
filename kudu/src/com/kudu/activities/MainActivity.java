@@ -5,7 +5,9 @@ import java.io.IOException;
 import org.json.JSONException;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.os.Bundle;
@@ -54,18 +56,36 @@ public class MainActivity extends Activity {
 	/*
 	 * When the user returns to the main activity.
 	 */
-	@Override
+	/*@Override
 	protected void onResume() {
-		if(db.checkSessionExists().equals(null)) {
+		Log.v("IT", "IT");
+		Session sess = new Session();
+		sess = db.checkSessionExists();
+		
+		//Log.v("CHECK", sess.getUsername());
+		if((sess.getUsername().equals(null))) {
 			Intent myIntent = new Intent(MainActivity.this,
 					ConversationOverviewActivity.class);
 			MainActivity.this.startActivity(myIntent);
+			Log.v("IT", "MIET");
 		}
 		super.onResume();
-	}
+	}*/
 	
 	@Override
-	public void onBackPressed() {}
+	public void onBackPressed() {
+		new AlertDialog.Builder(this)
+        .setTitle("Really Exit?")
+        .setMessage("Are you sure you want to exit?")
+        .setNegativeButton(android.R.string.no, null)
+        .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+			
+			@Override
+			public void onClick(DialogInterface dialog, int which) {
+				MainActivity.super.onBackPressed();
+			}
+		}).create().show();
+	}
 	
 	public void setLoginButtonListener() {
 		btnLogin = (Button) findViewById(R.id.login);
