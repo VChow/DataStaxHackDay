@@ -32,11 +32,11 @@ public class ConversationOverviewModel {
 
 	public ConversationOverviewModel() {
 
-	}
+	}  
 
 	public LinkedList<String> getConversations(String username)
 			throws IOException, IllegalStateException, JSONException {
-		retrieve = "true";
+		retrieve = "true"; 
 
 		// request
 		HttpClient httpclient = new DefaultHttpClient();

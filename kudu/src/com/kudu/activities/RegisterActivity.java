@@ -76,7 +76,11 @@ public class RegisterActivity extends Activity {
 									e.printStackTrace();
 								}
 							} else {
-								password2EditText.setError("The two password's do not match.");
+								RegisterActivity.this.runOnUiThread(new Runnable(){
+								    public void run(){
+								    	password2EditText.setError("The two password's do not match.");
+								    }
+								});								
 							}
 						}
 					}).start();
