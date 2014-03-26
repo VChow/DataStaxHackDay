@@ -17,8 +17,6 @@ import org.apache.http.message.BasicNameValuePair;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import android.util.Log;
-
 public class LoginModel {
 	
 	//String url = "http://10.0.2.2:8080/KuduServer/login";
@@ -34,12 +32,6 @@ public class LoginModel {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-	}
-	
-	public String encryptPassword()
-	{
-		password = "#fuckTom";
-		return password;
 	}
 	
 	public String checkLogin() throws IOException, IllegalStateException, JSONException
