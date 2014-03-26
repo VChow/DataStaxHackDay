@@ -124,7 +124,7 @@ public class ConversationOverviewActivity extends Activity{
 		Fragment fragment;
 		switch (position) {
 			case 0: // ConversationOverviewFragment
-				fragment = new ConversationActivityFragment();
+				fragment = new ConversationOverviewActivityFragment();
 				fragmentManager(fragment);
 				closeDrawer(position);
 				return;
@@ -146,7 +146,7 @@ public class ConversationOverviewActivity extends Activity{
 				ConversationOverviewActivity.this.startActivity(myIntent);
 				return;
 			default: // ConversationOverviewFragment
-				fragment = new ConversationActivityFragment();
+				fragment = new ConversationOverviewActivityFragment();
 				fragmentManager(fragment);
 				closeDrawer(position);
 		}

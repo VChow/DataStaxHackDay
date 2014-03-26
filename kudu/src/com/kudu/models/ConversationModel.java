@@ -5,6 +5,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.LinkedHashMap;
 import java.util.List;
 
 import org.apache.http.HttpResponse;
@@ -18,21 +20,21 @@ import org.apache.http.message.BasicNameValuePair;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import android.util.Log;
-
 public class ConversationModel {
 
 	//String url = "http://10.0.2.2:8080/KuduServer/conversation";
 	String url = "http://10.0.3.2:8080/KuduServer/conversation";
-	String conversationID, friendName, username;
+	String conversationID, friendName, username, convKey;
 	
 	public ConversationModel(String friendName, String username){
 		this.friendName = friendName;
 		this.username = username;
+		//this.convKey = db.getKey(conversationID);
 	}
 	
-	public void getConversation() throws ClientProtocolException, IOException, JSONException
+	public LinkedHashMap<String, String> getConversation() throws ClientProtocolException, IOException, JSONException
 	{
+		LinkedHashMap<String, String> conversation = new LinkedHashMap<String, String>();
 		HttpClient httpclient = new DefaultHttpClient();
 		HttpPost httppost = new HttpPost(url);
 		List<NameValuePair> params = new ArrayList<NameValuePair>();
@@ -52,11 +54,20 @@ public class ConversationModel {
 			sb.append((char)cp);
 		}
 		in.close();
+		
 		String jsonText = sb.toString();
 		
-		Log.e("text", jsonText);
 		JSONObject jOb = new JSONObject(jsonText);
 		
+		Iterator<?> keys = jOb.keys(); 
+		while (keys.hasNext())
+		{
+			String key = (String)keys.next();
+			String value = jOb.getString(key);
+			conversation.put(key, value);
+			
+		}
 		
+		return conversation;
 	}
 }
