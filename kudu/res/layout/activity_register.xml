@@ -39,7 +39,7 @@
 	  	android:ems="10"
 	    android:hint="@string/email"
 	    android:inputType="textEmailAddress"
-	    android:maxLength="20" />
+	    android:maxLength="40" />
 	
 	<EditText
 	    android:id="@+id/password_1"

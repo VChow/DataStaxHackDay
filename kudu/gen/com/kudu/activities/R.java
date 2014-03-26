@@ -48,12 +48,12 @@ public final class R {
         public static final int drawer_layout=0x7f0a000e;
         public static final int email=0x7f0a0006;
         public static final int lbl_biography=0x7f0a001d;
-        public static final int lbl_email=0x7f0a0016;
+        public static final int lbl_email=0x7f0a0015;
         public static final int lbl_location=0x7f0a001c;
         public static final int lbl_name=0x7f0a0013;
-        public static final int lbl_password_new=0x7f0a001a;
-        public static final int lbl_password_old=0x7f0a0018;
-        public static final int lbl_username=0x7f0a0014;
+        public static final int lbl_password_new=0x7f0a0019;
+        public static final int lbl_password_old=0x7f0a0017;
+        public static final int lbl_username=0x7f0a0011;
         public static final int left_drawer=0x7f0a0010;
         public static final int login=0x7f0a0004;
         public static final int logo=0x7f0a0001;
@@ -65,12 +65,12 @@ public final class R {
         public static final int textView2=0x7f0a000b;
         public static final int textView3=0x7f0a000c;
         public static final int txt_biography=0x7f0a001e;
-        public static final int txt_email=0x7f0a0017;
+        public static final int txt_email=0x7f0a0016;
         public static final int txt_location=0x7f0a001b;
-        public static final int txt_name=0x7f0a0011;
-        public static final int txt_password_new=0x7f0a0012;
-        public static final int txt_password_old=0x7f0a0019;
-        public static final int txt_username=0x7f0a0015;
+        public static final int txt_name=0x7f0a0014;
+        public static final int txt_password_new=0x7f0a001a;
+        public static final int txt_password_old=0x7f0a0018;
+        public static final int txt_username=0x7f0a0012;
         public static final int update_btn=0x7f0a001f;
         public static final int username=0x7f0a0002;
     }
