@@ -35,14 +35,16 @@ public final class R {
         public static final int ldpi_logo=0x7f020008;
         public static final int login_logo=0x7f020009;
         public static final int mdpi_logo=0x7f02000a;
-        public static final int selector=0x7f02000b;
-        public static final int xhdpi_logo=0x7f02000c;
-        public static final int xxhdpi_logo=0x7f02000d;
+        public static final int received_message_shape=0x7f02000b;
+        public static final int selector=0x7f02000c;
+        public static final int sent_message_shape=0x7f02000d;
+        public static final int xhdpi_logo=0x7f02000e;
+        public static final int xxhdpi_logo=0x7f02000f;
     }
     public static final class id {
-        public static final int action_websearch=0x7f0a0021;
+        public static final int action_websearch=0x7f0a0022;
         public static final int add_button=0x7f0a000d;
-        public static final int add_contact=0x7f0a0020;
+        public static final int add_contact=0x7f0a0021;
         public static final int add_contact_txtb=0x7f0a0009;
         public static final int cancel_button=0x7f0a000a;
         public static final int content_frame=0x7f0a000f;
@@ -65,6 +67,7 @@ public final class R {
         public static final int register=0x7f0a0005;
         public static final int textView2=0x7f0a000b;
         public static final int textView3=0x7f0a000c;
+        public static final int timestamp=0x7f0a0020;
         public static final int txt_biography=0x7f0a001e;
         public static final int txt_email=0x7f0a0017;
         public static final int txt_location=0x7f0a001b;
@@ -86,6 +89,8 @@ public final class R {
         public static final int drawer_layout=0x7f030007;
         public static final int drawer_list_item=0x7f030008;
         public static final int profile_activity_fragment=0x7f030009;
+        public static final int received_row=0x7f03000a;
+        public static final int sender_row=0x7f03000b;
     }
     public static final class menu {
         public static final int action_bar_icons_contacts=0x7f090000;

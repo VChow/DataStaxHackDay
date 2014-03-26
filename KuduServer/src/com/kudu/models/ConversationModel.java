@@ -10,6 +10,7 @@ import com.datastax.driver.core.PreparedStatement;
 import com.datastax.driver.core.ResultSet;
 import com.datastax.driver.core.Row;
 import com.datastax.driver.core.Session;
+import com.datastax.driver.core.utils.UUIDs;
 
 public class ConversationModel {
 
@@ -20,9 +21,9 @@ public class ConversationModel {
 		this.cluster = cluster;
 	}
 
-	public LinkedHashMap<UUID, String> getConversation(String friendID, String username)
+	public LinkedHashMap<String, String> getConversation(String friendID, String username)
 	{
-		LinkedHashMap<UUID, String> conversation = new LinkedHashMap<UUID, String>();
+		LinkedHashMap<String, String> conversation = new LinkedHashMap<String, String>();
 
 		String conversationID = getConversationID(friendID, username);
 
@@ -40,9 +41,10 @@ public class ConversationModel {
 			String message;
 			for (Row row : rs) {
 				uuid = row.getUUID("idtimeuuid");
+				long time = UUIDs.unixTimestamp(uuid);
 				message = "person:" + row.getString("message");
-				System.out.println(uuid.toString() + " : " + message);
-				conversation.put(uuid, message);
+				System.out.println(time + " : " + message);
+				conversation.put(String.valueOf(time), message);
 			}
 			session.close();
 			return conversation;

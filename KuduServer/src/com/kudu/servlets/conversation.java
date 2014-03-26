@@ -59,13 +59,14 @@ public class conversation extends HttpServlet {
 		String friendID = request.getParameter("friendID");
 		String username = request.getParameter("username");
 
-		LinkedHashMap<UUID, String> conversation = convModel.getConversation(friendID, username);
+		LinkedHashMap<String, String> conversation = convModel.getConversation(friendID, username);
 
 		response.setContentType("application/json");
 		PrintWriter out = response.getWriter();
 		JSONObject jsonObject = new JSONObject();
 		
-		jsonObject.putAll(conversation);
+		if(conversation != null)
+			jsonObject.putAll(conversation);
 
 		out.print(jsonObject);
 		out.flush();
