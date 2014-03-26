@@ -24,7 +24,7 @@ private Cluster cluster;
 	{
 		LinkedList<String> values = new LinkedList<String>();
 		Session session = cluster.connect("kududb");
-		String query = "SELECT friendname FROM friends WHERE username='"+username+"';";
+		String query = "SELECT * FROM friends WHERE username='"+username+"';";
 		
 		PreparedStatement statement = session.prepare(query);
 		BoundStatement boundStatement = new BoundStatement(statement);
@@ -32,6 +32,7 @@ private Cluster cluster;
 		
 		if(!rs.isExhausted()) {
 			for(Row row : rs) {
+				if(!(row.getUUID("conversation")== null))
 				values.add(row.getString("friendname")); 
 			}
 		}

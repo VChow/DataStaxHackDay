@@ -58,19 +58,22 @@ public class ConversationModel {
 		in.close();
 		
 		String jsonText = sb.toString();
+		Log.d("text", jsonText);
 		
-		JSONObject jOb = new JSONObject(jsonText);
+		String[] entries = jsonText.split(",");
+		entries[0] = entries[0].substring(1);
+		entries[entries.length-1] = entries[entries.length-1].substring(0, entries[entries.length-1].length()-1);
 		
-		Iterator<?> keys = jOb.keys(); 
-		while (keys.hasNext())
+		for(int i = 0; i< entries.length; i++)
 		{
-			String key = (String)keys.next();
-			String value = jOb.getString(key);
-			Log.e(key, value);
-			conversation.put(key, value);
-			
+			String[] subEntries = entries[i].split(":", 2);
+			for (int j = 0; j < subEntries.length; j++)
+			{
+				subEntries[j] = subEntries[j].substring(1);
+				subEntries[j] = subEntries[j].substring(0, subEntries[j].length()-1);
+			}
+			conversation.put(subEntries[0], subEntries[1]);
 		}
-		
 		return conversation;
 	}
 }

@@ -1,6 +1,7 @@
 package com.kudu.activities;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -10,7 +11,6 @@ import android.app.ListFragment;
 import android.content.Context;
 import android.net.ConnectivityManager;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -23,6 +23,7 @@ import com.kudu.adapters.Receiver;
 import com.kudu.adapters.Sender;
 import com.kudu.models.ConversationModel;
 import com.kudu.models.GetMessagesThread;
+import com.kudu.models.Session;
 
 
 
@@ -31,6 +32,7 @@ public class ConversationActivityFragment extends ListFragment{
 	private ConversationModel conversationModel;
 	private LinkedHashMap<String, String> conversation;
 	private GetMessagesThread getMessages;
+	private String username;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -40,7 +42,12 @@ public class ConversationActivityFragment extends ListFragment{
 		Bundle args = getArguments();
 		String friendName = args.getString("friendname");
 		getActivity().setTitle(friendName);
-		conversationModel = new ConversationModel(friendName, "admin");
+		
+		Session session = new Session();
+		session = MainActivity.db.checkSessionExists();
+		username = session.getUsername();
+		
+		conversationModel = new ConversationModel(friendName, username);
 		
 		getMessages = new GetMessagesThread(conversationModel);
 		getMessages.start();
@@ -81,22 +88,19 @@ public class ConversationActivityFragment extends ListFragment{
 				String time = pair.getKey().toString();
 				String codedMessage = pair.getValue().toString();
 
-				String[] messageArray = codedMessage.split("\\:");
-				String message = null;
-				if(messageArray.length > 2)
-				{
-					StringBuilder sb =  new StringBuilder();
-					for (int i=1; i<messageArray.length; i++)
-					{
-						sb.append(messageArray[i]);
-						if(i!=messageArray.length - 1)
-							sb.append(":");
-					}
-					message = sb.toString();
-				}
+				String[] messageArray = codedMessage.split("\\:", 2);
+				String message = messageArray[1];
+				String sender = messageArray[0];
+				
+				long longtime = Long.parseLong(time);
+				Date times = new Date(longtime);
+				
+				String formatTime = String.valueOf(times.getHours()) + ":" + String.valueOf(times.getMinutes());
+				
+				if(sender.equals(username))
+					items.add(new Sender (message, formatTime));
 				else
-					message = messageArray[1];
-				Log.e("message", message);
+					items.add(new Receiver(message, formatTime));
 			}
 		}
 		return items;
