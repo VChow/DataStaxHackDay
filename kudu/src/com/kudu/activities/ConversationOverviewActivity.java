@@ -9,6 +9,7 @@ import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.widget.DrawerLayout;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -17,6 +18,9 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
+
+import com.kudu.models.DatabaseHelper;
+import com.kudu.models.Session;
 
 public class ConversationOverviewActivity extends Activity{
 	private DrawerLayout mDrawerLayout;
@@ -76,11 +80,11 @@ public class ConversationOverviewActivity extends Activity{
     }
 
     /* Called whenever we call invalidateOptionsMenu() */
-   @Override
+    @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
         // If the nav drawer is open, hide action items related to the content view
         boolean drawerOpen = mDrawerLayout.isDrawerOpen(mDrawerList);
-        menu.findItem(R.id.action_websearch).setVisible(!drawerOpen);
+        //menu.findItem(R.id.action_websearch).setVisible(!drawerOpen);
         return super.onPrepareOptionsMenu(menu);
     }
 
@@ -93,7 +97,7 @@ public class ConversationOverviewActivity extends Activity{
         }
         // Handle action buttons
         switch(item.getItemId()) {
-        case R.id.action_websearch:
+        /*case R.id.action_websearch:
             // create intent to perform web search for this planet
             Intent intent = new Intent(Intent.ACTION_WEB_SEARCH);
             intent.putExtra(SearchManager.QUERY, getActionBar().getTitle());
@@ -103,7 +107,7 @@ public class ConversationOverviewActivity extends Activity{
             } else {
                 Toast.makeText(this, R.string.app_not_available, Toast.LENGTH_LONG).show();
             }
-            return true;
+            return true;*/
         default:
             return super.onOptionsItemSelected(item);
         }
@@ -135,6 +139,11 @@ public class ConversationOverviewActivity extends Activity{
 				closeDrawer(position);
 				return;
 			case 3: // LogOut Fragment
+				Session currSession = MainActivity.db.checkSessionExists();
+				MainActivity.db.deleteSession(currSession.getUuid(), currSession.getUsername());
+				Intent myIntent = new Intent(ConversationOverviewActivity.this,
+						MainActivity.class);
+				ConversationOverviewActivity.this.startActivity(myIntent);
 				return;
 			default: // ConversationOverviewFragment
 				fragment = new ConversationActivityFragment();
