@@ -19,6 +19,7 @@ import org.json.simple.JSONObject;
 import com.datastax.driver.core.Cluster;
 import com.kudu.lib.*;
 import com.kudu.models.ContactsModel;
+import com.kudu.models.ConversationModel;
 
 @WebServlet({"/contacts", "/contacts/*"})
 public class contacts extends HttpServlet {
@@ -38,6 +39,8 @@ public class contacts extends HttpServlet {
 			retrieve(req,res);
 		else if (req.getParameter("add").equals("true"))
 			addContact(req,res);
+		else if (req.getParameter("addConv").equals("true"));
+			addConversation(req, res);
 	}
 
 	public void retrieve(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException{
@@ -72,6 +75,18 @@ public class contacts extends HttpServlet {
 		}
 		out.print(jsonObject);
 		out.flush();
+	}
+	
+	private void addConversation(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
+	{
+		String username = request.getParameter("username");
+		String contact = request.getParameter("contact");
+		
+		ContactsModel conMod = new ContactsModel();
+		conMod.setCluster(cluster);
+		
+		conMod.addConversation(username, contact);
+		
 	}
 	
 }

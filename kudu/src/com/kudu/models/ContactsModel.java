@@ -4,12 +4,14 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
+import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpPost;
@@ -93,6 +95,20 @@ public class ContactsModel {
 		} else {
 			return false;
 		}
+	}
+	
+	public void startConversation(String username, String contact) throws ClientProtocolException, IOException, JSONException
+	{
+		HttpClient httpclient = new DefaultHttpClient();
+		HttpPost httppost = new HttpPost(url);
+		List<NameValuePair> params = new ArrayList<NameValuePair>();
+		params.add(new BasicNameValuePair("username", username));
+		params.add(new BasicNameValuePair("contact", contact));
+		params.add(new BasicNameValuePair("addConv", "true"));
+		params.add(new BasicNameValuePair("retrieve", "false"));
+		params.add(new BasicNameValuePair("add", "false"));
+		httppost.setEntity(new UrlEncodedFormEntity(params));
+		httpclient.execute(httppost);		
 	}
 	
 	private boolean parseResult(String line) throws JSONException 

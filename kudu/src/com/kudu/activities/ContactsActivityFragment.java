@@ -3,10 +3,13 @@ package com.kudu.activities;
 import java.io.IOException;
 import java.util.LinkedList;
 
+import org.apache.http.client.ClientProtocolException;
 import org.json.JSONException;
 
 import android.app.Activity;
 import android.app.DialogFragment;
+import android.app.Fragment;
+import android.app.FragmentManager;
 import android.app.ListFragment;
 import android.content.Context;
 import android.net.ConnectivityManager;
@@ -84,10 +87,36 @@ public class ContactsActivityFragment extends ListFragment {
     }
     
     public void onListItemClick(ListView lv, View v, int position, long id) {
-    	String itemSelection = getListView().getItemAtPosition(position).toString();
-    	//new addDialog(getActivity(), itemSelection); 
-    }
-    
+    	final String itemSelection = getListView().getItemAtPosition(position).toString();
+    	final ContactsModel cm = new ContactsModel();
+    	new Thread(new Runnable (){
+    		public void run()
+    		{
+    			try {
+    				cm.startConversation(username, itemSelection);
+    			} catch (ClientProtocolException e) {
+    				// TODO Auto-generated catch block
+    				e.printStackTrace();
+    			} catch (IOException e) {
+    				// TODO Auto-generated catch block
+    				e.printStackTrace();
+    			} catch (JSONException e) {
+    				// TODO Auto-generated catch block
+    				e.printStackTrace();
+    			}
+    		}
+    	}).start();
+    	
+    	
+    	Fragment fragment = new ConversationOverviewActivityFragment();
+		fragmentManager(fragment);
+		//closeDrawer(position);
+	}
+	
+	private void fragmentManager(Fragment fragment) {
+		FragmentManager fragmentManager = getFragmentManager();
+		fragmentManager.beginTransaction().replace(R.id.content_frame, fragment).commit();
+	}
     public boolean onOptionsItemSelected(MenuItem item) {
     	switch(item.getItemId()) {
     		case R.id.add_contact:

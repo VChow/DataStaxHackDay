@@ -11,6 +11,8 @@ import com.datastax.driver.core.ResultSet;
 import com.datastax.driver.core.Row;
 import com.datastax.driver.core.Session;
 
+import com.kudu.models.*;
+
 public class ContactsModel {
 
 private Cluster cluster;
@@ -42,7 +44,6 @@ private Cluster cluster;
 	public boolean addContact(String contact, String username)
 	{
 		boolean contactAdded = true;
-		UUID uuid = UUID.randomUUID();
 		Session session = cluster.connect("kududb");
 		
 		String checkContact = "SELECT username FROM users WHERE username='"+contact+"';"; 
@@ -57,9 +58,14 @@ private Cluster cluster;
 		
 		
 		if(!result1.isExhausted() & result2.isExhausted()) {
-			String insertContact = "INSERT INTO friends (username, friendname, conversation) VALUES ('"+username+"', '"+contact+"', "+uuid+");"; 
+			String insertContact = "INSERT INTO friends (username, friendname) VALUES ('"+username+"', '"+contact+"' );"; 
 			PreparedStatement statement1 = session.prepare(insertContact);
 			BoundStatement boundStatement1 = new BoundStatement(statement1);
+			session.execute(boundStatement1);
+			
+			String repeatInsert = "INSERT INTO friends (username, friendname) VALUES ('"+contact+"', '"+username+"' );";
+			statement1 = session.prepare(repeatInsert);
+			boundStatement1 = new BoundStatement(statement1);
 			session.execute(boundStatement1);
 			
 			String checkAdded = "SELECT friendname FROM friends WHERE username='"+username+"';";
@@ -74,6 +80,24 @@ private Cluster cluster;
 			contactAdded = false;
 		}
 		return contactAdded;
+	}
+	
+	public void addConversation(String username, String friend)
+	{
+		UUID uuid = UUID.randomUUID();
+		
+		Session session = cluster.connect("kududb");
+		String addConversation1 = "UPDATE friends SET conversation = " + uuid + " WHERE username = \'" + username + "\' and friendname =\'" +
+				friend + "\';"; 
+		PreparedStatement statement1 = session.prepare(addConversation1);
+		BoundStatement boundStatement1 = new BoundStatement(statement1);
+		session.execute(boundStatement1);
+		
+		String addConversation2 = "UPDATE friends SET conversation = " + uuid + " WHERE username = \'" + friend + "\' and friendname =\'" +
+				username + "\';"; 
+		PreparedStatement statement2 = session.prepare(addConversation2);
+		BoundStatement boundStatement2 = new BoundStatement(statement2);
+		session.execute(boundStatement2);
 	}
 	
 }
