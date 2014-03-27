@@ -84,7 +84,8 @@ public class ConversationOverviewActivityFragment extends ListFragment {
 		{values[i] = array[i];}
 		((Activity)context).runOnUiThread(new Runnable(){
 			public void run(){
-				ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1, values);
+				//ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1, values);
+				ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(), R.layout.row_layout,R.id.label, values);
 				setListAdapter(adapter);
 			}
 		});
