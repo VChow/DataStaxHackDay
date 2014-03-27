@@ -52,7 +52,7 @@ public final class R {
         public static final int lbl_biography=0x7f0a001e;
         public static final int lbl_email=0x7f0a0017;
         public static final int lbl_location=0x7f0a001d;
-        public static final int lbl_name=0x7f0a0014;
+        public static final int lbl_name=0x7f0a0015;
         public static final int lbl_password_new=0x7f0a001b;
         public static final int lbl_password_old=0x7f0a0019;
         public static final int lbl_username=0x7f0a0012;
@@ -71,8 +71,8 @@ public final class R {
         public static final int txt_biography=0x7f0a001f;
         public static final int txt_email=0x7f0a0018;
         public static final int txt_location=0x7f0a001c;
-        public static final int txt_name=0x7f0a0015;
-        public static final int txt_password_new=0x7f0a0016;
+        public static final int txt_name=0x7f0a0016;
+        public static final int txt_password_new=0x7f0a0014;
         public static final int txt_password_old=0x7f0a001a;
         public static final int txt_username=0x7f0a0013;
         public static final int update_btn=0x7f0a0020;
