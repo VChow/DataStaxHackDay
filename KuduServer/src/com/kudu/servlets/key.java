@@ -43,7 +43,7 @@ public class key extends HttpServlet {
 			km.setCluster(cluster);
 			km.insertKey(username, friend, key);
 		} 
-		else if(req.getParameter("retrieve").equals(("false"))) 
+		else if(req.getParameter("retrieve").equals(("true"))) 
 		{
 			String username = req.getParameter("username");
 			km.setCluster(cluster);
