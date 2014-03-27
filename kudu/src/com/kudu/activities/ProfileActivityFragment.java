@@ -74,24 +74,22 @@ public class ProfileActivityFragment extends Fragment {
 		usernameText = (EditText) view.findViewById(R.id.txt_username);
 		emailText = (EditText) view.findViewById(R.id.txt_email);
 		newPasswordText = (EditText) view.findViewById(R.id.txt_password_new);
-		oldPasswordText = (EditText) view.findViewById(R.id.txt_password_old);
 		locText = (EditText) view.findViewById(R.id.txt_location);
 		bioText = (EditText) view.findViewById(R.id.txt_biography);
 
 		String name = nameText.getText().toString();
 		String username = usernameText.getText().toString();
+		String password = newPasswordText.getText().toString();
 		String email = emailText.getText().toString();
 		String location = locText.getText().toString();
 		String bio = bioText.getText().toString();
-		
-		Log.v("Email: ", email);
 
-		ProfileModel profileModel = new ProfileModel(name, username, email, location, bio, uuid);
+		ProfileModel profileModel = new ProfileModel(name, username, password, email, location, bio, uuid);
 		if(newPasswordText.getText().toString().equals(oldPasswordText.getText().toString())) {
 			if(!newPasswordText.getText().toString().equals("")) { 
 				try {
-					String password = ShaThis.getSha(newPasswordText.getText().toString());
-					profileModel.setPassword(password);
+					String encrypted_password = ShaThis.getSha(newPasswordText.getText().toString());
+					profileModel.setPassword(encrypted_password);
 				} catch (Throwable e) {
 					e.printStackTrace();
 				}
@@ -125,12 +123,17 @@ public class ProfileActivityFragment extends Fragment {
 			
 			((Activity)context).runOnUiThread(new Runnable(){
 			    public void run(){
-			    	System.out.println(pm.getUsername());
-			    	nameText.setText(pm.getName());
-					usernameText.setText(pm.getUsername());
-					emailText.setText(pm.getEmail());
-					locText.setText(pm.getLocation());
-					bioText.setText(pm.getBio());
+
+			    	if(!pm.getName().equals("null"))
+			    		nameText.setText(pm.getName());
+			    	if(!pm.getUsername().equals("null"))
+			    		usernameText.setText(pm.getUsername());
+			    	if(!pm.getEmail().equals("null"))
+			    		emailText.setText(pm.getEmail());
+			    	if(!pm.getLocation().equals("null"))
+			    		locText.setText(pm.getLocation());
+			    	if(!pm.getBio().equals("null"))
+			    		bioText.setText(pm.getBio());
 			    }
 			});
 		} catch (IllegalStateException e) {
