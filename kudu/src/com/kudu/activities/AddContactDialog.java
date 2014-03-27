@@ -11,12 +11,14 @@ import android.app.Fragment;
 import android.content.Context;
 import android.net.ConnectivityManager;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
 import com.kudu.models.ContactsModel;
+import com.kudu.models.KeyModel;
 
 public class AddContactDialog extends DialogFragment {
 	String username = "admin";
@@ -44,6 +46,7 @@ public class AddContactDialog extends DialogFragment {
     	addContact.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View view) {
+				//final String contactToAdd = editText.getText().toString();
 				if (checkInternetConnection()) {
 					new Thread(new Runnable() {
 						public void run(){
@@ -62,6 +65,14 @@ public class AddContactDialog extends DialogFragment {
 										}
 								    }
 								});
+								
+								KeyModel km = new KeyModel();
+								try {
+									Log.v("HERE", "1");
+									km.calculateClientKey(username, contactToAdd);
+								} catch (Exception e) {
+									e.printStackTrace();
+								}
 							} catch (IllegalStateException e) {
 								e.printStackTrace();
 							} catch (IOException e) {

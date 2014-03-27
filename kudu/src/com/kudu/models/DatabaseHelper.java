@@ -26,14 +26,15 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 	public static final String KEYS_TABLE = "keys";
 	//KeysColumns
 	public static final String KEYS_USERNAME = "keys_username";
-	public static final String KEYS_FRIEND_UUID = "keys_friend_uuid";
+	public static final String KEYS_FRIEND = "keys_friend_uuid";
 	public static final String KEYS_DIFFIE = "keys_diffie";
 	//KeysTable - Create Statement
 	public static final String CREATE_TABLE_KEYS = "CREATE TABLE IF NOT EXISTS "
 				+KEYS_TABLE+ "(" +KEYS_USERNAME + " TEXT PRIMARY KEY,"
-				+KEYS_FRIEND_UUID+ " TEXT, " +KEYS_DIFFIE+ " TEXT" + ")";
-	private String[] allColumns = new String[] { SESSION_USERNAME, SESSION_UUID };
-
+				+KEYS_FRIEND+ " TEXT, " +KEYS_DIFFIE+ " TEXT" + ")";
+	private String[] allSessionColumns = new String[] { SESSION_USERNAME, SESSION_UUID };
+	private String[] allKeyColumns = new String[] { KEYS_USERNAME, KEYS_FRIEND, KEYS_DIFFIE }; 
+	
 	public DatabaseHelper(Context context) {
 		super(context, DATABASE_NAME, null, DATABASE_VERSION);
 	}
@@ -68,15 +69,12 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 		db.insert(SESSION_TABLE, null, values);
 		ns.setUsername(username);
 		ns.setUuid(uuid);
-		Log.v("Session:", "insertSession: "+ns.getUsername());
-		Log.v("Session:", "insertSession: "+ns.getUuid());
-		Log.v("Session:", "insertSession");
 		db.close();
 	}
 	
 	public Session getSession(String uuid, String username) {
 		SQLiteDatabase db = this.getWritableDatabase();
-		Cursor cursor = db.query(SESSION_TABLE, allColumns, null, null, null, null, null);
+		Cursor cursor = db.query(SESSION_TABLE, allSessionColumns, null, null, null, null, null);
 		if(cursor!=null && cursor.getCount()>0) {
 			cursor.moveToFirst();
 			String sessionUsername = cursor.getString(0);
@@ -94,7 +92,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 	
 	public Session checkSessionExists() {
 		SQLiteDatabase db = this.getWritableDatabase();
-		Cursor cursor = db.query(SESSION_TABLE, allColumns, null, null, null, null, null);
+		Cursor cursor = db.query(SESSION_TABLE, allSessionColumns, null, null, null, null, null);
 		if(cursor!=null && cursor.getCount()>0) {
 			cursor.moveToFirst();
 			return ns;
@@ -110,5 +108,27 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 		ns.setUsername(null);
 		ns.setUuid(null);
 		db.close();
+	}
+	
+	public void insertKey(String username, String friend, String diffie) {
+		SQLiteDatabase db = this.getWritableDatabase();
+		ContentValues values = new ContentValues();
+		values.put(KEYS_USERNAME, username);
+		values.put(KEYS_FRIEND, friend);
+		values.put(KEYS_FRIEND, diffie);
+		db.insert(KEYS_TABLE, null, values);
+		db.close();
+	}
+	
+	public boolean checkKeyExists(String username) {
+		SQLiteDatabase db = this.getWritableDatabase();
+		Cursor cursor = db.query(SESSION_TABLE, allSessionColumns, "+KEYS_USERNAME+"+"=?", new String[] {username}, null, null, null);
+		if(cursor!=null && cursor.getCount()>0) {
+			cursor.moveToFirst();
+			db.close();
+			return true;
+		}
+		db.close();
+		return false;
 	}
 }
