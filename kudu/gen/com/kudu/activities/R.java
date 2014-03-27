@@ -30,25 +30,31 @@ public final class R {
         public static final int btn_border_onclick=0x7f020003;
         public static final int hdpi_logo=0x7f020004;
         public static final int ic_add_contact=0x7f020005;
-        public static final int ic_launcher=0x7f020006;
-        public static final int ic_search=0x7f020007;
-        public static final int ldpi_logo=0x7f020008;
-        public static final int login_logo=0x7f020009;
-        public static final int mdpi_logo=0x7f02000a;
-        public static final int received_message_shape=0x7f02000b;
-        public static final int selector=0x7f02000c;
-        public static final int sent_message_shape=0x7f02000d;
-        public static final int xhdpi_logo=0x7f02000e;
-        public static final int xxhdpi_logo=0x7f02000f;
+        public static final int ic_arrow_right=0x7f020006;
+        public static final int ic_empty_avatar=0x7f020007;
+        public static final int ic_launcher=0x7f020008;
+        public static final int ic_menu_forward=0x7f020009;
+        public static final int ic_search=0x7f02000a;
+        public static final int ldpi_logo=0x7f02000b;
+        public static final int login_logo=0x7f02000c;
+        public static final int mdpi_logo=0x7f02000d;
+        public static final int received_message_shape=0x7f02000e;
+        public static final int selector=0x7f02000f;
+        public static final int sent_message_shape=0x7f020010;
+        public static final int xhdpi_logo=0x7f020011;
+        public static final int xxhdpi_logo=0x7f020012;
     }
     public static final class id {
         public static final int add_button=0x7f0a000e;
-        public static final int add_contact=0x7f0a0022;
+        public static final int add_contact=0x7f0a0025;
         public static final int add_contact_txtb=0x7f0a000a;
         public static final int cancel_button=0x7f0a000b;
         public static final int content_frame=0x7f0a0010;
         public static final int drawer_layout=0x7f0a000f;
         public static final int email=0x7f0a0007;
+        public static final int icon=0x7f0a0022;
+        public static final int icon2=0x7f0a0024;
+        public static final int label=0x7f0a0023;
         public static final int lbl_biography=0x7f0a001e;
         public static final int lbl_email=0x7f0a0017;
         public static final int lbl_location=0x7f0a001d;
@@ -90,7 +96,8 @@ public final class R {
         public static final int drawer_list_item=0x7f030008;
         public static final int profile_activity_fragment=0x7f030009;
         public static final int received_row=0x7f03000a;
-        public static final int sender_row=0x7f03000b;
+        public static final int row_layout=0x7f03000b;
+        public static final int sender_row=0x7f03000c;
     }
     public static final class menu {
         public static final int action_bar_icons_contacts=0x7f090000;
