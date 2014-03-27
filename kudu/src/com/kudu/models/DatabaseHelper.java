@@ -22,6 +22,16 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 	public static final String CREATE_TABLE_SESSION = "CREATE TABLE IF NOT EXISTS "
 			+SESSION_TABLE+ "(" + SESSION_USERNAME + " TEXT PRIMARY KEY,"
 			+SESSION_UUID+ " TEXT" + ")";
+	//KeysTable
+	public static final String KEYS_TABLE = "keys";
+	//KeysColumns
+	public static final String KEYS_USERNAME = "keys_username";
+	public static final String KEYS_FRIEND_UUID = "keys_friend_uuid";
+	public static final String KEYS_DIFFIE = "keys_diffie";
+	//KeysTable - Create Statement
+	public static final String CREATE_TABLE_KEYS = "CREATE TABLE IF NOT EXISTS "
+				+KEYS_TABLE+ "(" +KEYS_USERNAME + " TEXT PRIMARY KEY,"
+				+KEYS_FRIEND_UUID+ " TEXT, " +KEYS_DIFFIE+ " TEXT" + ")";
 	private String[] allColumns = new String[] { SESSION_USERNAME, SESSION_UUID };
 
 	public DatabaseHelper(Context context) {
@@ -31,11 +41,13 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 	@Override
 	public void onCreate(SQLiteDatabase db) {
 		db.execSQL(CREATE_TABLE_SESSION);
+		db.execSQL(CREATE_TABLE_KEYS);
 	}
 
 	@Override
 	public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
 		db.execSQL("DROP TABLE IF EXISTS " + SESSION_TABLE);
+		db.execSQL("DROP TABLE IF EXISTS " + KEYS_TABLE);
 		onCreate(db);	
 	}
 	
@@ -43,7 +55,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 		SQLiteDatabase db = this.getWritableDatabase();
 		//DROP TABLES - used for testing
 		//db.execSQL("DROP TABLE IF EXISTS " + SESSION_TABLE);
+		//db.execSQL("DROP TABLE IF EXISTS " + KEYS_TABLE);
 		db.execSQL(CREATE_TABLE_SESSION);
+		db.execSQL(CREATE_TABLE_KEYS);
 	}
 	
 	public void insertSession(String uuid, String username) {
@@ -70,9 +84,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 			
 			ns.setUsername(sessionUsername);
 			ns.setUuid(sessionUUID);
-			//Testing
-			Log.v("Session:", "getSession: "+ns.getUsername());
-			Log.v("Session:", "getSession: "+ns.getUuid());
 			db.close();
 			return ns;
 		} else {
@@ -86,14 +97,10 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 		Cursor cursor = db.query(SESSION_TABLE, allColumns, null, null, null, null, null);
 		if(cursor!=null && cursor.getCount()>0) {
 			cursor.moveToFirst();
-			Log.v("Session:", "cse1: "+ns.getUsername());
-			Log.v("Session:", "cse1: "+ns.getUuid());
 			return ns;
 		}
 		ns.setUsername(null);
 		ns.setUuid(null);
-		Log.v("Session:", "cse2: "+ns.getUuid());
-		Log.v("Session:", "cse2: "+ns.getUsername());
 		return ns;
 	}
 	
@@ -102,7 +109,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 		db.delete(SESSION_TABLE, SESSION_USERNAME+" = ?", new String[] { username });
 		ns.setUsername(null);
 		ns.setUuid(null);
-		Log.v("Session:", "deleteSession");
 		db.close();
 	}
 }
