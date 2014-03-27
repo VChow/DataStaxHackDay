@@ -41,6 +41,7 @@ public class ConversationOverviewActivityFragment extends ListFragment {
 		username = session.getUsername();
 		setHasOptionsMenu(true);
 		displayConversations();
+		getActivity().setTitle("Conversations");
 		return rootView;
 	}
 
