@@ -68,9 +68,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 	public void createTables() {
 		SQLiteDatabase db = this.getWritableDatabase();
 		//DROP TABLES - used for testing
-		//db.execSQL("DROP TABLE IF EXISTS " + SESSION_TABLE);
-		//db.execSQL("DROP TABLE IF EXISTS " + AES_TABLE);
-		//db.execSQL("DROP TABLE IF EXISTS " + DIFFIE_TABLE);
+		db.execSQL("DROP TABLE IF EXISTS " + SESSION_TABLE);
+		db.execSQL("DROP TABLE IF EXISTS " + AES_TABLE);
+		db.execSQL("DROP TABLE IF EXISTS " + DIFFIE_TABLE);
 		db.execSQL(CREATE_TABLE_SESSION);
 		db.execSQL(CREATE_TABLE_AES);
 		db.execSQL(CREATE_TABLE_DIFFIE);
@@ -158,7 +158,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 		
 		if(cursor!=null && cursor.getCount()>0) {
 			cursor.moveToFirst();
-			String friendName = cursor.getString(0);
+			String friendName = cursor.getString(1);
 			db.close();
 			return friendName;
 		} else {
@@ -199,11 +199,11 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 	
 	public String getDiffie(String friend) {
 		SQLiteDatabase db = this.getWritableDatabase();
-		Cursor cursor = db.query(AES_TABLE, allSessionColumns, DIFFIE_FRIEND+""+"=?", new String[] {friend}, null, null, null);
+		Cursor cursor = db.query(DIFFIE_TABLE, allDiffieColumns, DIFFIE_FRIEND+"=?", new String[] {friend}, null, null, null);
 		
 		if(cursor!=null && cursor.getCount()>0) {
 			cursor.moveToFirst();
-			String friendName = cursor.getString(0);
+			String friendName = cursor.getString(1);
 			db.close();
 			return friendName;
 		} else {
@@ -213,7 +213,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 		
 	public boolean deleteDiffie(String friend) {
 		SQLiteDatabase db = this.getWritableDatabase();
-		db.delete(AES_TABLE, DIFFIE_FRIEND+" = ?", new String[] { friend });	
+		db.delete(DIFFIE_TABLE, DIFFIE_FRIEND+" = ?", new String[] { friend });	
 		db.close();
 		return true;
 	}

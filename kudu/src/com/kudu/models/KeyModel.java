@@ -4,7 +4,6 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.io.UnsupportedEncodingException;
 import java.math.BigDecimal;
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
@@ -25,16 +24,19 @@ import org.apache.http.message.BasicNameValuePair;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import android.util.Log;
+
 import com.kudu.activities.MainActivity;
 
 public class KeyModel {
 	String url = "http://10.0.3.2:8080/KuduServer/key";
 	private final BigDecimal p = new BigDecimal(
-			"18532395500947174450709383384936679868383424444311405679463280782405796233163977");
+			"170251718214558806475093943055621547342725914558276901862731921101025373345183203766503793401078330287306133087019398886054513149934020527592894886076837597125664444387511413843243161474172418254393305790110877636276486154958173329219723494700475404602104944072565865257093336414884194032992540369638390241559");
 	private final BigDecimal g = new BigDecimal(
-			"2193992993218604310884461864618001945131790925282531768679169054389241527895222169476723691605898517");
+			"20380168968783289261041432298494798373267709921716514919118051861699360605096686451635585045280077711531684380972902943900521986696566893077956435869388678582964796058963479557539538680897351792217018966238799242901221648112399568285623532125960239634431576271046686825745588544160244283947953684660908754447");
 	String send = "false";
 	String retrieve = "false";
+	Boolean receivedDiffie = false;
 
 	public KeyModel() {}
 
@@ -105,11 +107,14 @@ public class KeyModel {
 				Map.Entry<String, String> entry = list.entrySet().iterator().next();
 				if(checkLocalDiffie(entry.getKey()))
 				{
+					Log.d("username", entry.getKey());
 					calculateAESKey(entry.getKey(), entry.getValue());
 				}
 				else
 				{
+					Log.d("username", entry.getKey());
 					sendDiffie(entry.getKey());
+					calculateAESKey(entry.getKey(), entry.getValue());
 				}
 			}
 			else
@@ -125,6 +130,7 @@ public class KeyModel {
 					else
 					{
 						sendDiffie(entry.getKey());
+						calculateAESKey(entry.getKey(), entry.getValue());
 					}
 				}
 			}
@@ -144,12 +150,14 @@ public class KeyModel {
 		DatabaseHelper db = MainActivity.db;
 
 		int a = Integer.parseInt(db.getDiffie(friend));
+		db.deleteDiffie(friend);
 		BigDecimal B = new BigDecimal(diffieNumber);
 
 		BigDecimal calculate = B.pow(a);
 		BigDecimal modClient = calculate.remainder(p);
 
 		String AESKey = modClient.toString();
+		Log.e("AESKEY", AESKey);
 
 		db.insertAES(friend, AESKey);
 	}
@@ -162,7 +170,10 @@ public class KeyModel {
 		int a = 0;
 		try {
 			sr = SecureRandom.getInstance("SHA1PRNG");
-			a = sr.nextInt(1024); //local database
+			a = sr.nextInt(2056); //local database
+			Log.e("a", String.valueOf(a));
+			Log.e("g", g.toString());
+			Log.e("p", p.toString());
 		} catch (NoSuchAlgorithmException nsae) {}
 
 		BigDecimal calculate = g.pow(a);
@@ -180,6 +191,7 @@ public class KeyModel {
 		params.add(new BasicNameValuePair("retrieve", "false"));
 		params.add(new BasicNameValuePair("send", "true"));
 		params.add(new BasicNameValuePair("username", username));
+		params.add(new BasicNameValuePair("friend", friend));
 		params.add(new BasicNameValuePair("key", modClient.toString()));
 		httppost.setEntity(new UrlEncodedFormEntity(params));
 		httpclient.execute(httppost);

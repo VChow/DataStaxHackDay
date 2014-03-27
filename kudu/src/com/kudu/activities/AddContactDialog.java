@@ -19,9 +19,10 @@ import android.widget.TextView;
 
 import com.kudu.models.ContactsModel;
 import com.kudu.models.KeyModel;
+import com.kudu.models.Session;
 
 public class AddContactDialog extends DialogFragment {
-	String username = "admin";
+	String username;
 	public AddContactDialog() {}
 	
     public static AddContactDialog newInstance() {
@@ -31,6 +32,9 @@ public class AddContactDialog extends DialogFragment {
     
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
+    	Session session = new Session();
+		session = MainActivity.db.checkSessionExists();
+		username = session.getUsername();
     	AlertDialog.Builder adb = new AlertDialog.Builder(getActivity());
     	View view = getActivity().getLayoutInflater().inflate(R.layout.add_contact, null);
     	adb.setView(view);
@@ -65,13 +69,15 @@ public class AddContactDialog extends DialogFragment {
 										}
 								    }
 								});
-								
-								KeyModel km = new KeyModel();
+								if(added)
+								{
+									KeyModel km = new KeyModel();
 								try {
 									Log.v("HERE", "1");
 									km.sendDiffie(contactToAdd);
 								} catch (Exception e) {
 									e.printStackTrace();
+								}
 								}
 							} catch (IllegalStateException e) {
 								e.printStackTrace();
