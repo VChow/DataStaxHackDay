@@ -11,6 +11,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -19,7 +20,9 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
-import com.kudu.models.*;
+import com.kudu.models.DatabaseHelper;
+import com.kudu.models.KeyModel;
+import com.kudu.models.LoginModel;
 
 public class MainActivity extends Activity {
 
