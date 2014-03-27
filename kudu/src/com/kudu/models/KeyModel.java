@@ -107,12 +107,10 @@ public class KeyModel {
 				Map.Entry<String, String> entry = list.entrySet().iterator().next();
 				if(checkLocalDiffie(entry.getKey()))
 				{
-					Log.d("username", entry.getKey());
 					calculateAESKey(entry.getKey(), entry.getValue());
 				}
 				else
 				{
-					Log.d("username", entry.getKey());
 					sendDiffie(entry.getKey());
 					calculateAESKey(entry.getKey(), entry.getValue());
 				}
@@ -171,9 +169,6 @@ public class KeyModel {
 		try {
 			sr = SecureRandom.getInstance("SHA1PRNG");
 			a = sr.nextInt(2056); //local database
-			Log.e("a", String.valueOf(a));
-			Log.e("g", g.toString());
-			Log.e("p", p.toString());
 		} catch (NoSuchAlgorithmException nsae) {}
 
 		BigDecimal calculate = g.pow(a);

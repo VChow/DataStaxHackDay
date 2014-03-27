@@ -68,9 +68,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 	public void createTables() {
 		SQLiteDatabase db = this.getWritableDatabase();
 		//DROP TABLES - used for testing
-		db.execSQL("DROP TABLE IF EXISTS " + SESSION_TABLE);
-		db.execSQL("DROP TABLE IF EXISTS " + AES_TABLE);
-		db.execSQL("DROP TABLE IF EXISTS " + DIFFIE_TABLE);
+		//db.execSQL("DROP TABLE IF EXISTS " + SESSION_TABLE);
+		//db.execSQL("DROP TABLE IF EXISTS " + AES_TABLE);
+		//db.execSQL("DROP TABLE IF EXISTS " + DIFFIE_TABLE);
 		db.execSQL(CREATE_TABLE_SESSION);
 		db.execSQL(CREATE_TABLE_AES);
 		db.execSQL(CREATE_TABLE_DIFFIE);
@@ -187,6 +187,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 	
 	public boolean checkDiffieExists(String friend) {
 		SQLiteDatabase db = this.getWritableDatabase();
+		Log.e("friend in", friend);
 		Cursor cursor = db.query(DIFFIE_TABLE, allDiffieColumns, DIFFIE_FRIEND+""+"=?", new String[] {friend}, null, null, null);
 		if(cursor!=null && cursor.getCount()>0) {
 			cursor.moveToFirst();
