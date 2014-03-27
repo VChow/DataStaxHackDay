@@ -17,7 +17,7 @@
 	<string name="username">Username</string>
 	<string name="email">Email </string>
 	<string name="password1">Password </string>
-	<string name="password2">Re-enter Password </string>
+	<string name="password2">Re-type Password</string>
 	
 	<string name="name">Name&#58;</string>
 	<string name="username2">Username&#58;</string>

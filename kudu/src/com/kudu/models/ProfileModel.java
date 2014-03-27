@@ -20,18 +20,15 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 public class ProfileModel {
-	
-	//String url = "http://10.0.2.2:8080/KuduServer/profile";
 	String url = "http://10.0.3.2:8080/KuduServer/profile";
-	String name, username, password, email, location, bio;
-	UUID id;
+	String name, username, password, email, location, bio, id;
 	String update = "false";
 	String retrieve = "false";
 	
 	public ProfileModel(){}
 	
-	public ProfileModel(String name, String username, String password,
-			String email, String location, String bio, UUID id){
+	public ProfileModel(String name, String username,
+			String email, String location, String bio, String id){
 		this.name = name;
 		this.username = username;
 		this.password = password;
@@ -47,21 +44,15 @@ public class ProfileModel {
     public String getEmail() { return email; }    
     public String getLocation() { return location; }   
     public String getBio() { return bio; }
-    public UUID getID() { return id; }
+    public String getID() { return id; }
 	
 	public void setName(String name) { this.name = name; }
 	public void setUsername(String username) { this.username = username; }
 	public void setEmail(String email) { this.email = email; }
 	public void setLocation(String location) { this.location = location; }
 	public void setBio(String bio) { this.bio = bio; }
-	public void setID(String uuid) { 
-		UUID id = UUID.fromString(uuid);
-		this.id = id; 
-	}
-	public void setPassword(String password) throws Throwable { 
-		ShaThis.getSha(password);
-		this.password = password; 
-	}
+	public void setID(String id) { this.id = id; }
+	public void setPassword(String password) { this.password = password; }
     
 	public boolean updateProfile() throws IOException, IllegalStateException, JSONException
     {
@@ -76,7 +67,7 @@ public class ProfileModel {
 		params.add(new BasicNameValuePair("email", email));
 		params.add(new BasicNameValuePair("location", location));
 		params.add(new BasicNameValuePair("bio", bio));
-		params.add(new BasicNameValuePair("id", "63d09c45-9cdc-4245-87d9-bcb9e4847f37"));
+		params.add(new BasicNameValuePair("id", id));
 		
 		HttpResponse response = null;
 		httppost.setEntity(new UrlEncodedFormEntity(params));
@@ -101,11 +92,7 @@ public class ProfileModel {
     }
     
     public void retrieveProfile() throws IOException, IllegalStateException, JSONException
-    {
-    	//testing values
-    	username = "admin";
-    	id = UUID.fromString("5934738f-cc87-40c1-b592-12457d08481b");
-    	  	
+    {	  	
     	retrieve = "true";   	
     	HttpClient httpclient = new DefaultHttpClient();
 		HttpPost httppost = new HttpPost(url);
@@ -113,7 +100,7 @@ public class ProfileModel {
 		params.add(new BasicNameValuePair("retrieve", retrieve));
 		params.add(new BasicNameValuePair("update", update));
 		params.add(new BasicNameValuePair("username", username));
-		params.add(new BasicNameValuePair("id", id.toString()));
+		params.add(new BasicNameValuePair("id", id));
 		
 		HttpResponse response = null;
 		httppost.setEntity(new UrlEncodedFormEntity(params));
@@ -135,8 +122,9 @@ public class ProfileModel {
     	setID(userDetails.getString(1));
     	setName(userDetails.getString(2));
     	setEmail(userDetails.getString(3));
-    	setBio(userDetails.getString(5));
-    	setLocation(userDetails.getString(6));
+    	setBio(userDetails.getString(4));
+    	setLocation(userDetails.getString(5));
+    	setPassword(userDetails.getString(6));
     	retrieve = "false";
     }
     

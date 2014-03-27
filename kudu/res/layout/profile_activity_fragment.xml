@@ -6,33 +6,7 @@
     android:layout_marginRight="5dp"
     android:orientation="vertical" >
 
-     <!-- =================Names==================== -->
-     
-     <EditText
-        android:id="@+id/txt_name"
-        android:layout_width="100dp"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/txt_password_new"
-        android:layout_alignParentTop="true"
-        android:layout_marginTop="15dp"
-        android:ems="10"
-        android:inputType="text"
-        android:maxLength="20"
-        android:hint="@string/name" >
-        <requestFocus />
-	</EditText>
-
-    <TextView
-        android:id="@+id/lbl_name"
-        android:layout_width="50dp"
-        android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/txt_name"
-        android:layout_alignParentLeft="true"
-        android:layout_marginLeft="38dp"
-        android:text="@string/name" />
-    
-
-    <!-- =================Usernames==================== -->
+     <!-- =================Usernames==================== -->
 
 	<TextView
         android:id="@+id/lbl_username"
@@ -50,8 +24,31 @@
         android:layout_below="@+id/txt_name"
         android:ems="10"
         android:inputType="text"
-        android:maxLength="20"
-        android:hint="@string/username" /> 
+        android:maxLength="20" /> 
+     
+     <!-- =================Names==================== -->
+     
+     <EditText
+        android:id="@+id/txt_name"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/txt_password_new"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="15dp"
+        android:ems="10"
+        android:inputType="text"
+        android:maxLength="20" >
+        <requestFocus />
+	</EditText>
+
+    <TextView
+        android:id="@+id/lbl_name"
+        android:layout_width="50dp"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/txt_name"
+        android:layout_alignParentLeft="true"
+        android:layout_marginLeft="38dp"
+        android:text="@string/name" />
         
     <!-- ==================Email====================== -->
 
@@ -72,7 +69,6 @@
         android:layout_below="@+id/txt_username"
         android:ems="10"
         android:inputType="textEmailAddress"
-        android:hint="@string/email"
         android:maxLength="20" />
     
     <!-- =================Old Password================== -->
@@ -93,8 +89,7 @@
         android:layout_below="@+id/lbl_email"
         android:ems="10"
         android:inputType="textPassword"
-        android:maxLength="20" 
-        android:hint="@string/password1"/>
+        android:maxLength="20" />
   
     <!-- ================New Password==================== -->
 
@@ -116,8 +111,7 @@
         android:layout_toRightOf="@+id/lbl_password_new"
         android:ems="10"
         android:inputType="textPassword"
-        android:maxLength="20" 
-        android:hint="@string/password1" >
+        android:maxLength="20" >
     </EditText>
     
     <!-- =================Location===================== -->
@@ -139,8 +133,7 @@
         android:layout_alignLeft="@+id/txt_password_old"
         android:ems="10"
         android:inputType="text"
-        android:maxLength="40" 
-        android:hint="@string/location"/>
+        android:maxLength="40" />
     
     <!-- =================Biography=================== -->
 
@@ -161,8 +154,7 @@
         android:layout_below="@+id/txt_location"
         android:ems="10"
         android:inputType="text|textMultiLine"
-        android:maxLength="100"
-        android:hint="@string/biography" />
+        android:maxLength="100" />
     
      <!-- =================Update Button================= -->
 
@@ -176,6 +168,5 @@
         android:layout_marginTop="50dp"
         android:onClick="addGoal"
         android:text="@string/update" 
-        android:background="@drawable/btn_border"/>"
-    
+        android:background="@drawable/btn_border"/>
 </RelativeLayout>

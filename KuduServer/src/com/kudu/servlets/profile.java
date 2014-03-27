@@ -59,7 +59,7 @@ public class profile extends HttpServlet{
 		PrintWriter out = res.getWriter();
 		JSONObject jsonObject = new JSONObject();
 		profileModel.updateProfile(username, name, uuid, password, email, location, bio);
-		jsonObject.put("profileUpdate", true);
+		jsonObject.put("update", true);
 		out.print(jsonObject);
 		out.flush();
 	}
@@ -68,6 +68,8 @@ public class profile extends HttpServlet{
 		String [] userProfile = new String[7];
 		final String username = req.getParameter("username");
 		final String id = req.getParameter("id");
+		System.out.println("USERNAME: "+username);
+		System.out.println("ID: "+id);
 		
 		ProfileModel profileModel = new ProfileModel();
 		profileModel.setCluster(cluster);

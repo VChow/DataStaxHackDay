@@ -104,24 +104,33 @@ public class MainActivity extends Activity {
 							LoginModel login = new LoginModel(username, password);
 							
 							try {
-								String uuid = login.checkLogin();
-								if(uuid != null) {
-									db.getSession(uuid, username);
-									Intent myIntent = new Intent(MainActivity.this,
+								if(!(username.equals("")) && !(password.equals(""))) {
+									String uuid = login.checkLogin();
+									if(uuid.equals("null")) {
+										MainActivity.this.runOnUiThread(new Runnable(){
+											public void run(){
+												passwordEditText.setError("Incorrect username or password.");
+												usernameEditText.setError("Incorrect username or password");
+											}
+										});
+									}
+									else {
+										db.getSession(uuid, username);
+										Intent myIntent = new Intent(MainActivity.this,
 											ConversationOverviewActivity.class);
-									MainActivity.this.startActivity(myIntent);
-									finish();
-								}
-								else {
+										MainActivity.this.startActivity(myIntent);
+										finish();
+									}
+								} else {
 									MainActivity.this.runOnUiThread(new Runnable(){
-									    public void run(){
-									    	passwordEditText.setError("Incorrect username or password.");
-									    	usernameEditText.setError("Incorrect username or password");
-									    }
+										public void run(){
+											passwordEditText.setError("Incorrect username or password.");
+											usernameEditText.setError("Incorrect username or password");
+										}
 									});
 								}
 							} catch (IllegalStateException e) {
-								e.printStackTrace();
+									e.printStackTrace();
 							} catch (IOException e) {
 								e.printStackTrace();
 							} catch (JSONException e) {

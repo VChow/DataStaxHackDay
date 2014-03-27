@@ -16,7 +16,7 @@ public class ProfileModel {
 		this.cluster = cluster; 
 	}
 	
-	public void updateProfile(String username, String name, UUID uuid, String email, String password, String location, String bio) {
+	public void updateProfile(String username, String name, UUID uuid, String password, String email, String location, String bio) {
 		Session session = cluster.connect("kududb");
 		String query = "UPDATE users SET name='"+name+"', email='"+email+"', location='"+location+"', bio='"+bio+"' WHERE username='"+username+"' AND iduuid="+uuid+";";
 		String query2 = "UPDATE login SET password='"+password+"' WHERE iduuid="+uuid+";";
@@ -31,7 +31,7 @@ public class ProfileModel {
 		
 		session.close();
 	}
-	
+	 
 	public String[] getProfile(String id, String username) {
 		String [] userProfile = new String[7];
 		Session session = cluster.connect("kududb");
@@ -50,7 +50,6 @@ public class ProfileModel {
 				userProfile[1] = temp.toString(); //id 
 				userProfile[2] = r.getString(2); //name
 				userProfile[3] = r.getString(3); //email
-				userProfile[4] = r.getString(4); //pic
 				userProfile[4] = r.getString(5); //bio
 				userProfile[5] = r.getString(6); //location
 			}
@@ -66,7 +65,7 @@ public class ProfileModel {
 			Iterator<Row> it = rs.iterator();
 			while(it.hasNext()){
 				Row r = it.next();
-				userProfile[7] = r.getString(2); //password
+				userProfile[6] = r.getString(2); //password
 			}
 		}
 		session.close();
