@@ -6,30 +6,19 @@
     android:layout_marginRight="5dp"
     android:orientation="vertical" >
 
-     <!-- =================Usernames==================== -->
-
-	<TextView
+    <!-- =================UserNames==================== -->
+     
+       <TextView
         android:id="@+id/lbl_username"
         android:layout_width="75dp"
         android:layout_height="wrap_content"
         android:layout_alignBottom="@+id/txt_username"
-        android:layout_alignLeft="@+id/lbl_name"
+        android:layout_alignParentLeft="true"
+        android:layout_marginLeft="38dp"
         android:text="@string/username2" />
-
-    <EditText
-        android:id="@+id/txt_username"
-        android:layout_width="100dp"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/txt_name"
-        android:layout_below="@+id/txt_name"
-        android:ems="10"
-        android:inputType="text"
-        android:maxLength="20" /> 
-     
-     <!-- =================Names==================== -->
      
      <EditText
-        android:id="@+id/txt_name"
+        android:id="@+id/txt_username"
         android:layout_width="100dp"
         android:layout_height="wrap_content"
         android:layout_alignLeft="@+id/txt_password_new"
@@ -37,18 +26,31 @@
         android:layout_marginTop="15dp"
         android:ems="10"
         android:inputType="text"
-        android:maxLength="20" >
-        <requestFocus />
+        android:maxLength="30"
+        android:focusable="false" >
+        
 	</EditText>
 
-    <TextView
+    <!-- =================Names==================== -->
+
+	<TextView
         android:id="@+id/lbl_name"
-        android:layout_width="50dp"
+        android:layout_width="75dp"
         android:layout_height="wrap_content"
         android:layout_alignBottom="@+id/txt_name"
-        android:layout_alignParentLeft="true"
-        android:layout_marginLeft="38dp"
+        android:layout_alignLeft="@+id/lbl_username"
         android:text="@string/name" />
+
+    <EditText
+        android:id="@+id/txt_name"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/txt_username"
+        android:layout_below="@+id/txt_username"
+        android:ems="10"
+        android:inputType="text"
+        android:maxLength="20"
+         /> 
         
     <!-- ==================Email====================== -->
 
@@ -56,8 +58,8 @@
         android:id="@+id/lbl_email"
         android:layout_width="50dp"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/lbl_username"
-        android:layout_below="@+id/lbl_username"
+        android:layout_alignLeft="@+id/lbl_name"
+        android:layout_below="@+id/lbl_name"
         android:layout_marginTop="17dp"
         android:text="@string/email2" />
 
@@ -65,8 +67,8 @@
         android:id="@+id/txt_email"
         android:layout_width="100dp"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/txt_username"
-        android:layout_below="@+id/txt_username"
+        android:layout_alignLeft="@+id/txt_name"
+        android:layout_below="@+id/txt_name"
         android:ems="10"
         android:inputType="textEmailAddress"
         android:maxLength="20" />
