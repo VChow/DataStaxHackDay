@@ -154,7 +154,13 @@ public class KeyModel {
 		BigDecimal calculate = B.pow(a);
 		BigDecimal modClient = calculate.remainder(p);
 
-		String AESKey = modClient.toString();
+		String AESKey = null;
+		try {
+			AESKey = ShaThis.getSha(modClient.toString());
+		} catch (Throwable e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		Log.e("AESKEY", AESKey);
 
 		db.insertAES(friend, AESKey);
