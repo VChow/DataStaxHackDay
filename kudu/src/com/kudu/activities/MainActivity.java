@@ -11,7 +11,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -20,14 +19,13 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
-import com.kudu.models.DatabaseHelper;
-import com.kudu.models.LoginModel;
-import com.kudu.models.Session;
+import com.kudu.models.*;
 
 public class MainActivity extends Activity {
 
 	static public DatabaseHelper db;
 	private Button btnLogin, btnRegister;
+	private KeyModel keyMod;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -44,6 +42,7 @@ public class MainActivity extends Activity {
 		
 		setLoginButtonListener();
 		setRegisterButtonListener();
+		keyMod = new KeyModel();
 	} 
 
 	@Override
@@ -116,6 +115,7 @@ public class MainActivity extends Activity {
 									}
 									else {
 										db.getSession(uuid, username);
+										keyMod.getKey();
 										Intent myIntent = new Intent(MainActivity.this,
 											ConversationOverviewActivity.class);
 										MainActivity.this.startActivity(myIntent);

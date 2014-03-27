@@ -35,57 +35,41 @@ public class KeyModel {
 			"2193992993218604310884461864618001945131790925282531768679169054389241527895222169476723691605898517");
 	String send = "false";
 	String retrieve = "false";
-	
+
 	public KeyModel() {}
-	
-	public BigDecimal generateNewKey() {
-		SecureRandom sr;
-		int a = 0;
-		try {
-			sr = SecureRandom.getInstance("SHA1PRNG");
-			a = sr.nextInt(1024); //local database
-		} catch (NoSuchAlgorithmException nsae) {}
 
-		BigDecimal calculate = g.pow(a);
-		BigDecimal modClient = calculate.remainder(p);
-		return modClient;
-	}
-	
-	/*
-	 * Calculate the key that has been sent from the server.
-	 */
-	public BigDecimal calculateKeyFromServer(int keyFromServer) {
-		BigDecimal calculate = p.pow(keyFromServer);
-		BigDecimal modServer = calculate.remainder(g);
-		return modServer;
-	}
-	
-	/*
-	 * The key that is calculated to send to server.
-	 */
-	public void calculateClientKey(String username, String friend) throws IOException, Exception {
-		String A = generateNewKey().toString();
+	//	public BigDecimal generateNewKey() {
+	//		SecureRandom sr;
+	//		int a = 0;
+	//		try {
+	//			sr = SecureRandom.getInstance("SHA1PRNG");
+	//			a = sr.nextInt(1024); //local database
+	//		} catch (NoSuchAlgorithmException nsae) {}
+	//
+	//		BigDecimal calculate = g.pow(a);
+	//		BigDecimal modClient = calculate.remainder(p);
+	//		return modClient;
+	//	}
+	//	
+	//	/*
+	//	 * Calculate the key that has been sent from the server.
+	//	 */
+	//	public BigDecimal calculateKeyFromServer(int keyFromServer) {
+	//		BigDecimal calculate = p.pow(keyFromServer);
+	//		BigDecimal modServer = calculate.remainder(g);
+	//		return modServer;
+	//	}
 
-		HttpClient httpclient = new DefaultHttpClient();
-		HttpPost httppost = new HttpPost(url);
-		List<NameValuePair> params = new ArrayList<NameValuePair>();
-		params.add(new BasicNameValuePair("send", send));
-		params.add(new BasicNameValuePair("username", username));
-		params.add(new BasicNameValuePair("friend", friend));
-		params.add(new BasicNameValuePair("key", A));
-		httppost.setEntity(new UrlEncodedFormEntity(params));
-		httpclient.execute(httppost);
-	}
-	
 	public void getKey() throws ClientProtocolException, IOException, JSONException {
 		retrieve = "true";
 		Session session = new Session();
 		session = MainActivity.db.checkSessionExists();
 		String username = session.getUsername();
-		
+
 		HttpClient httpclient = new DefaultHttpClient();
 		HttpPost httppost = new HttpPost(url);
 		List<NameValuePair> params = new ArrayList<NameValuePair>();
+		params.add(new BasicNameValuePair("send", "false"));
 		params.add(new BasicNameValuePair("retrieve", retrieve));
 		params.add(new BasicNameValuePair("username", username));
 		httppost.setEntity(new UrlEncodedFormEntity(params));
@@ -100,38 +84,25 @@ public class KeyModel {
 			sb.append((char)cp);
 		}
 		in.close();
-		
-		JSONObject json = new JSONObject(sb.toString());
-		
-		HashMap<String, String> list = new HashMap<String, String>();
-		Iterator<String> iterate = json.keys();
-		while(iterate.hasNext()) {
-			String key = iterate.next();
-			list.put(key, json.getString(key));
 
-		}
-		if (list.isEmpty())
+		if(sb.length() > 1)
 		{
-			
-		}
-		else if (list.size() == 1)
-		{
-			Map.Entry<String, String> entry = list.entrySet().iterator().next();
-			if(checkLocalDiffie(entry.getKey()))
-			{
-				calculateAESKey(entry.getKey(), entry.getValue());
+			JSONObject json = new JSONObject(sb.toString());
+
+			HashMap<String, String> list = new HashMap<String, String>();
+			Iterator<String> iterate = json.keys();
+			while(iterate.hasNext()) {
+				String key = iterate.next();
+				list.put(key, json.getString(key));
+
 			}
-			else
+			if (list.isEmpty())
 			{
-				sendDiffie(entry.getKey());
+
 			}
-		}
-		else
-		{
-			Iterator iterator = list.keySet().iterator();
-			while(iterator.hasNext())
+			else if (list.size() == 1)
 			{
-				Map.Entry<String, String> entry = (Map.Entry<String, String>)iterator.next();
+				Map.Entry<String, String> entry = list.entrySet().iterator().next();
 				if(checkLocalDiffie(entry.getKey()))
 				{
 					calculateAESKey(entry.getKey(), entry.getValue());
@@ -141,36 +112,52 @@ public class KeyModel {
 					sendDiffie(entry.getKey());
 				}
 			}
+			else
+			{
+				Iterator iterator = list.keySet().iterator();
+				while(iterator.hasNext())
+				{
+					Map.Entry<String, String> entry = (Map.Entry<String, String>)iterator.next();
+					if(checkLocalDiffie(entry.getKey()))
+					{
+						calculateAESKey(entry.getKey(), entry.getValue());
+					}
+					else
+					{
+						sendDiffie(entry.getKey());
+					}
+				}
+			}
 		}
-		
+
 	}
-	
+
 	private boolean checkLocalDiffie(String friend)
 	{
 		DatabaseHelper db = MainActivity.db;
-		
+
 		return db.checkDiffieExists(friend);
 	}
-	
+
 	private void calculateAESKey(String friend, String diffieNumber)
 	{
 		DatabaseHelper db = MainActivity.db;
-		
+
 		int a = Integer.parseInt(db.getDiffie(friend));
 		BigDecimal B = new BigDecimal(diffieNumber);
-		
+
 		BigDecimal calculate = B.pow(a);
 		BigDecimal modClient = calculate.remainder(p);
-		
+
 		String AESKey = modClient.toString();
-		
+
 		db.insertAES(friend, AESKey);
 	}
-	
-	private void sendDiffie(String friend) throws ClientProtocolException, IOException
+
+	public void sendDiffie(String friend) throws ClientProtocolException, IOException
 	{
 		DatabaseHelper db = MainActivity.db;
-		
+
 		SecureRandom sr;
 		int a = 0;
 		try {
@@ -180,13 +167,13 @@ public class KeyModel {
 
 		BigDecimal calculate = g.pow(a);
 		BigDecimal modClient = calculate.remainder(p);
-		
+
 		db.insertDiffie(friend, String.valueOf(a));
-		
+
 		Session session = new Session();
 		session = MainActivity.db.checkSessionExists();
 		String username = session.getUsername();
-		
+
 		HttpClient httpclient = new DefaultHttpClient();
 		HttpPost httppost = new HttpPost(url);
 		List<NameValuePair> params = new ArrayList<NameValuePair>();
@@ -196,7 +183,7 @@ public class KeyModel {
 		params.add(new BasicNameValuePair("key", modClient.toString()));
 		httppost.setEntity(new UrlEncodedFormEntity(params));
 		httpclient.execute(httppost);
-		
+
 	}
 }
 

@@ -69,7 +69,7 @@ public class AddContactDialog extends DialogFragment {
 								KeyModel km = new KeyModel();
 								try {
 									Log.v("HERE", "1");
-									km.calculateClientKey(username, contactToAdd);
+									km.sendDiffie(contactToAdd);
 								} catch (Exception e) {
 									e.printStackTrace();
 								}
