@@ -27,7 +27,7 @@ public class ProfileModel {
 	
 	public ProfileModel(){}
 	
-	public ProfileModel(String name, String username,
+	public ProfileModel(String name, String username, String password, 
 			String email, String location, String bio, String id){
 		this.name = name;
 		this.username = username;
