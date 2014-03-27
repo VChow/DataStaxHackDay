@@ -22,7 +22,6 @@ import com.kudu.activities.MainActivity;
 import android.util.Log;
 
 public class KeyModel {
-	private BigDecimal modClient, modServer;
 	String url = "http://10.0.3.2:8080/KuduServer/key";
 	private final BigDecimal p = new BigDecimal(
 			"161584800623216335992162648767916562904579054975368147874489181252733246179848615146351680005876145824996724218326196142529142478089334141929656834361770748807571230517120578728630655119420784349953120523486154042134143011086385279644621600607278180380013105059384728688894847847831738856050183971640767199817");
@@ -33,20 +32,33 @@ public class KeyModel {
 	
 	public KeyModel() {}
 	
-	/*
-	 * The key that is calculated to send to server.
-	 */
-	public void calculateClientKey(String username, String friend) throws IOException, Exception {
-		send = "true";
+	public BigDecimal generateNewKey() {
 		SecureRandom sr;
 		int a = 0;
 		try {
 			sr = SecureRandom.getInstance("SHA1PRNG");
-			a = sr.nextInt(1024);
+			a = sr.nextInt(1024); //local database
 		} catch (NoSuchAlgorithmException nsae) {}
 
 		BigDecimal calculate = p.pow(a);
-		modClient = calculate.remainder(g);
+		BigDecimal modClient = calculate.remainder(g);
+		return modClient;
+	}
+	
+	/*
+	 * Calculate the key that has been sent from the server.
+	 */
+	public BigDecimal calculateKeyFromServer(int keyFromServer) {
+		BigDecimal calculate = p.pow(keyFromServer);
+		BigDecimal modServer = calculate.remainder(g);
+		return modServer;
+	}
+	
+	/*
+	 * The key that is calculated to send to server.
+	 */
+	public void calculateClientKey(String username, String friend) throws IOException, Exception {
+		String A = generateNewKey().toString();
 
 		HttpClient httpclient = new DefaultHttpClient();
 		HttpPost httppost = new HttpPost(url);
@@ -54,7 +66,7 @@ public class KeyModel {
 		params.add(new BasicNameValuePair("send", send));
 		params.add(new BasicNameValuePair("username", username));
 		params.add(new BasicNameValuePair("friend", friend));
-		params.add(new BasicNameValuePair("key", modClient.toString()));
+		params.add(new BasicNameValuePair("key", A));
 		httppost.setEntity(new UrlEncodedFormEntity(params));
 		httpclient.execute(httppost);
 		send = "false";
@@ -75,15 +87,6 @@ public class KeyModel {
 		HttpResponse response = null;
 		response = httpclient.execute(httppost);
 		retrieve = "false";
-	}
-	
-	/*
-	 * Calculate the key that has been sent from the server.
-	 */
-	public BigDecimal calculateServerKey(int keyFromServer) {
-		BigDecimal calculate = p.pow(keyFromServer);
-		modServer = calculate.remainder(g);
-		return modServer;
 	}
 }
 
