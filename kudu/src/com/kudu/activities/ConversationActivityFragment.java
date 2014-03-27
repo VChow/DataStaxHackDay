@@ -12,12 +12,15 @@ import java.util.Map;
 import java.util.TreeMap;
 
 import org.apache.http.client.ClientProtocolException;
+import org.json.JSONException;
 
+import android.annotation.SuppressLint;
 import android.app.ListFragment;
 import android.content.Context;
 import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -36,6 +39,7 @@ import com.kudu.models.Session;
 
 
 
+@SuppressLint("NewApi")
 public class ConversationActivityFragment extends ListFragment{
 	private Context context;
 	private ConversationModel conversationModel;
@@ -45,6 +49,8 @@ public class ConversationActivityFragment extends ListFragment{
 	private MessageAdapter adapter;
 	private EditText messagebox;
 	Handler mHandler = new Handler();
+	Thread checkMessageThread;
+	volatile boolean activityStopped = false;
 
 	@Override
 	public View onCreateView(final LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -65,27 +71,31 @@ public class ConversationActivityFragment extends ListFragment{
 		
 		updateConversation(inflater);
 		
-		new Thread(new Runnable() {
-	        @Override
-	        public void run() {
-	            // TODO Auto-generated method stub
-	            while (true) {
-	                try {
-	                    Thread.sleep(3000);
-	                    mHandler.post(new Runnable() {
+		checkMessageThread = new Thread() {
+			@Override
+			public void run() {
+				while (!activityStopped) {
+					try {
+						mHandler.post(new Runnable() {
 
-	                        @Override
-	                        public void run() {
-	                            adapter.clear();
-	                            updateConversation(inflater);
-	                        }
-	                    });
-	                } catch (Exception e) {
-	                    // TODO: handle exception
-	                }
-	            }
-	        }
-	    }).start();
+							@Override
+							public void run() {
+								adapter.clear();
+								updateConversation(inflater);
+								
+							}
+						});
+						Thread.sleep(2000);
+					} catch (Exception e) {
+						// TODO: handle exception
+					}
+				}
+			}
+		};
+		checkMessageThread.start();
+		
+
+	    
 		
 		Button button = (Button) rootView.findViewById(R.id.send_button);
 	    button.setOnClickListener(new View.OnClickListener() {
@@ -97,11 +107,29 @@ public class ConversationActivityFragment extends ListFragment{
 		
 		return rootView;
 	}
+	
+	@Override
+	public void onPause()
+	{
+		super.onPause();
+		//checkMessageThread.interrupt();
+		Log.e("sup", "sup");
+		activityStopped = true;
+	}
+	
+	@Override
+	public void onResume()
+	{
+		super.onResume();
+		activityStopped = false;
+		
+	}
 
 	@Override
 	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
 		super.onCreateOptionsMenu(menu, inflater);
 	}
+	
 	
 	public void onSendClicked(LayoutInflater inflater)
 	{
@@ -149,7 +177,6 @@ public class ConversationActivityFragment extends ListFragment{
 		conversation = getMessages.getConversation();
 		
 		List<Item> items = displayConversation(conversation);
-		
 		
 		adapter = new MessageAdapter(getActivity(), inflater, items);
 		setListAdapter(adapter); 

@@ -28,6 +28,7 @@ public class ConversationModel {
 	//String url = "http://10.0.2.2:8080/KuduServer/conversation";
 	String url = "http://10.0.3.2:8080/KuduServer/conversation";
 	String conversationID, friendName, username, convKey;
+	LinkedHashMap<String, String> conversation;
 
 	public ConversationModel(String friendName, String username){
 		this.friendName = friendName;
@@ -76,7 +77,7 @@ public class ConversationModel {
 
 	public LinkedHashMap<String, String> getConversation() throws ClientProtocolException, IOException, JSONException
 	{
-		LinkedHashMap<String, String> conversation = new LinkedHashMap<String, String>();
+		//LinkedHashMap<String, String> conversation = new LinkedHashMap<String, String>();
 		HttpClient httpclient = new DefaultHttpClient();
 		HttpPost httppost = new HttpPost(url);
 		List<NameValuePair> params = new ArrayList<NameValuePair>();
