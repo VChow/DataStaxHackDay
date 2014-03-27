@@ -48,6 +48,12 @@ public class KeyModel {
 				keys.put(friendName, diffie);
 			}
 		}
+		
+		String query1 = "DELETE * FROM key WHERE username = \'" + username + "\';";
+		PreparedStatement statement1 = session.prepare(query1);
+		BoundStatement boundStatement1 = new BoundStatement(statement1);
+		session.execute(boundStatement1);
+		session.close();
 		return keys;
 	}
 	

@@ -1,6 +1,8 @@
 package com.kudu.activities;
 
 import java.io.IOException;
+import java.security.InvalidKeyException;
+import java.security.NoSuchAlgorithmException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -11,8 +13,11 @@ import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 
+import javax.crypto.BadPaddingException;
+import javax.crypto.IllegalBlockSizeException;
+import javax.crypto.NoSuchPaddingException;
+
 import org.apache.http.client.ClientProtocolException;
-import org.json.JSONException;
 
 import android.annotation.SuppressLint;
 import android.app.ListFragment;
@@ -33,6 +38,7 @@ import com.kudu.adapters.Item;
 import com.kudu.adapters.MessageAdapter;
 import com.kudu.adapters.Receiver;
 import com.kudu.adapters.Sender;
+import com.kudu.models.AESEncrypt;
 import com.kudu.models.ConversationModel;
 import com.kudu.models.GetMessagesThread;
 import com.kudu.models.Session;
@@ -50,6 +56,7 @@ public class ConversationActivityFragment extends ListFragment{
 	private EditText messagebox;
 	Handler mHandler = new Handler();
 	Thread checkMessageThread;
+	String friendName;
 	volatile boolean activityStopped = false;
 
 	@Override
@@ -58,7 +65,7 @@ public class ConversationActivityFragment extends ListFragment{
 		context = container.getContext();
 		//setHasOptionsMenu(true);
 		Bundle args = getArguments();
-		String friendName = args.getString("friendname");
+		friendName = args.getString("friendname");
 		getActivity().setTitle(friendName);
 		
 		Session session = new Session();
@@ -139,12 +146,31 @@ public class ConversationActivityFragment extends ListFragment{
 			new Thread(new Runnable() {
 				public void run(){
 					try {
+						AESEncrypt encrypt = new AESEncrypt();
+						String encryptoMessage = encrypt.Encrypt(message, friendName);
+						Log.v("ENCRYPTO: ",encryptoMessage);
+						String decryptoMessage = encrypt.Encrypt(message, friendName);
 						conversationModel.sendMessage(message);
-						
+						Log.v("DECRYPTO: ",decryptoMessage);
 					} catch (ClientProtocolException e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
 					} catch (IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					} catch (InvalidKeyException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					} catch (NoSuchAlgorithmException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					} catch (NoSuchPaddingException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					} catch (IllegalBlockSizeException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					} catch (BadPaddingException e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
