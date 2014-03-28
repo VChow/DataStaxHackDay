@@ -1,8 +1,11 @@
 package com.kudu.activities;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.Fragment;
 import android.app.FragmentManager;
+import android.content.DialogInterface;
+import android.content.DialogInterface.OnClickListener;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
@@ -15,6 +18,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.kudu.models.Session;
 
@@ -26,7 +30,9 @@ public class ConversationOverviewActivity extends Activity{
     private CharSequence mDrawerTitle;
     private CharSequence mTitle;
     private String[] mListTitles;
-	
+
+    private long backPressedTime = 0;    // used by onBackPressed()
+    
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -135,7 +141,7 @@ public class ConversationOverviewActivity extends Activity{
 	
 	private void fragmentManager(Fragment fragment) {
 		FragmentManager fragmentManager = getFragmentManager();
-		fragmentManager.beginTransaction().replace(R.id.content_frame, fragment).commit();
+		fragmentManager.beginTransaction().replace(R.id.content_frame, fragment).addToBackStack(null).commit();
 	}
 	
 	private void closeDrawer(int position) {
@@ -161,4 +167,24 @@ public class ConversationOverviewActivity extends Activity{
         super.onConfigurationChanged(newConfig);
         mDrawerToggle.onConfigurationChanged(newConfig);
     }
+    
+    @Override
+    public void onBackPressed() {        // to prevent irritating accidental logouts
+       
+    	FragmentManager fragmentManager = getFragmentManager();
+    	
+    	if(fragmentManager.getBackStackEntryCount() == 1){
+    	long t = System.currentTimeMillis();
+        if (t - backPressedTime > 2000) {    // 2 secs
+            backPressedTime = t;
+            Toast.makeText(this, "Press back again to logout",
+                                Toast.LENGTH_SHORT).show();
+        } else {    
+            super.onBackPressed(); 
+        }
+    	}else{
+    		super.onBackPressed();
+    	}
+    }
+    
 }

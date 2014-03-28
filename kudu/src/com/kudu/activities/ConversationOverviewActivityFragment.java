@@ -130,4 +130,5 @@ public class ConversationOverviewActivityFragment extends ListFragment {
 			return false;
 		}
 	}
+	
 }
