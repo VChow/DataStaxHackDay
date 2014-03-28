@@ -103,7 +103,7 @@ public class ConversationOverviewActivityFragment extends ListFragment {
 	
 	private void fragmentManager(Fragment fragment) {
 		FragmentManager fragmentManager = getFragmentManager();
-		fragmentManager.beginTransaction().replace(R.id.content_frame, fragment).commit();
+		fragmentManager.beginTransaction().replace(R.id.content_frame, fragment).addToBackStack(null).commit();
 	}
 
 	/*
@@ -130,4 +130,5 @@ public class ConversationOverviewActivityFragment extends ListFragment {
 			return false;
 		}
 	}
+	
 }
