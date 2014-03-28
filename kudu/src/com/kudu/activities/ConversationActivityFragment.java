@@ -147,33 +147,23 @@ public class ConversationActivityFragment extends ListFragment{
 				public void run(){
 					try {
 						AESEncrypt encrypt = new AESEncrypt();
-						String encryptoMessage = encrypt.Encrypt(message, friendName);
-						Log.v("ENCRYPTO: ",encryptoMessage);
-						String decryptoMessage = encrypt.Encrypt(message, friendName);
+						String encrypted = encrypt.encrypt(message);
+						Log.e("encrypted", encrypted);
+						String decrypted = encrypt.decrypt(encrypted);
+						Log.e("decrypted", decrypted);
+						
 						conversationModel.sendMessage(message);
-						Log.v("DECRYPTO: ",decryptoMessage);
+						
 					} catch (ClientProtocolException e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
 					} catch (IOException e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
-					} catch (InvalidKeyException e) {
+					} catch (Exception e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
-					} catch (NoSuchAlgorithmException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					} catch (NoSuchPaddingException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					} catch (IllegalBlockSizeException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					} catch (BadPaddingException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
+					} 
 				}}).start();
 
 			messagebox.setText("");

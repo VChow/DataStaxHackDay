@@ -101,7 +101,6 @@ public class ConversationModel {
 		String jsonText = sb.toString();
 		if(!jsonText.isEmpty())
 		{
-			Log.d("text", jsonText);
 			conversation = parseJSON(jsonText);
 
 		}
