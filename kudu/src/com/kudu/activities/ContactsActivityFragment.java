@@ -117,6 +117,7 @@ public class ContactsActivityFragment extends ListFragment {
 		FragmentManager fragmentManager = getFragmentManager();
 		fragmentManager.beginTransaction().replace(R.id.content_frame, fragment).commit();
 	}
+	
     public boolean onOptionsItemSelected(MenuItem item) {
     	switch(item.getItemId()) {
     		case R.id.add_contact:

@@ -23,6 +23,7 @@ import android.widget.Toast;
 import com.kudu.models.DatabaseHelper;
 import com.kudu.models.KeyModel;
 import com.kudu.models.LoginModel;
+import com.kudu.models.Validation;
 
 public class MainActivity extends Activity {
 
@@ -106,7 +107,8 @@ public class MainActivity extends Activity {
 							LoginModel login = new LoginModel(username, password);
 							
 							try {
-								if(!(username.equals("")) && !(password.equals(""))) {
+								Validation v = new Validation(MainActivity.this);
+								if((v.validate(usernameEditText)) && ((v.validate(passwordEditText)))) {
 									String uuid = login.checkLogin();
 									if(uuid.equals("null")) {
 										MainActivity.this.runOnUiThread(new Runnable(){
@@ -124,13 +126,6 @@ public class MainActivity extends Activity {
 										MainActivity.this.startActivity(myIntent);
 										finish();
 									}
-								} else {
-									MainActivity.this.runOnUiThread(new Runnable(){
-										public void run(){
-											passwordEditText.setError("Incorrect username or password.");
-											usernameEditText.setError("Incorrect username or password");
-										}
-									});
 								}
 							} catch (IllegalStateException e) {
 									e.printStackTrace();

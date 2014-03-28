@@ -9,6 +9,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
@@ -17,6 +18,7 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.kudu.models.RegisterModel;
+import com.kudu.models.Validation;
 
 public class RegisterActivity extends Activity {
 
@@ -52,35 +54,43 @@ public class RegisterActivity extends Activity {
 							String email = emailEditText.getText().toString();
 							String password_1 = password1EditText.getText().toString();
 							String password_2 = password2EditText.getText().toString();
-
-							if (password_1.equals(password_2)) {
-								RegisterModel newUser = new RegisterModel(
-										username, password_1, email);
-								try {
-									if(newUser.addNewUser()) {
-										Intent myIntent = new Intent(RegisterActivity.this,
+							
+							Validation v = new Validation(RegisterActivity.this);
+							if(v.validate(usernameEditText) && (v.validate(emailEditText) 
+									&& v.validate(password1EditText) && v.validate(password2EditText))) {
+							
+								if (password_1.equals(password_2)) {
+									RegisterModel newUser = new RegisterModel(
+											username, password_1, email);
+									try {
+										String uuid = newUser.addNewUser();
+										Log.v("FUCK",uuid);
+										if(!(uuid.equals("null"))) {
+											MainActivity.db.insertSession(uuid, username);
+											Intent myIntent = new Intent(RegisterActivity.this,
 												ConversationOverviewActivity.class);
-										RegisterActivity.this.startActivity(myIntent);
-									} else {
-										RegisterActivity.this.runOnUiThread(new Runnable(){
-										    public void run(){
-										    	usernameEditText.setError("Username already exists");
-										    }
-										});
+											RegisterActivity.this.startActivity(myIntent);
+										} else {
+											RegisterActivity.this.runOnUiThread(new Runnable(){
+												public void run(){
+													usernameEditText.setError("Username already exists");
+												}
+											});
+										}
+									} catch (IllegalStateException e) {
+										e.printStackTrace();
+									} catch (IOException e) {
+										e.printStackTrace();
+									} catch (JSONException e) {
+										e.printStackTrace();
 									}
-								} catch (IllegalStateException e) {
-									e.printStackTrace();
-								} catch (IOException e) {
-									e.printStackTrace();
-								} catch (JSONException e) {
-									e.printStackTrace();
+								} else {
+									RegisterActivity.this.runOnUiThread(new Runnable(){
+										public void run(){
+											password2EditText.setError("The two password's do not match.");
+										}
+									});	
 								}
-							} else {
-								RegisterActivity.this.runOnUiThread(new Runnable(){
-									public void run(){
-										password2EditText.setError("The two password's do not match.");
-									}
-								});	
 							}
 						}
 					}).start();

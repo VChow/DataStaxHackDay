@@ -34,8 +34,9 @@ public class RegisterModel {
 		this.email = email;
 	}
 	
-	public boolean addNewUser() throws IOException, IllegalStateException, JSONException
+	public String addNewUser() throws IOException, IllegalStateException, JSONException
 	{
+		String uuid = null;
 		HttpClient httpclient = new DefaultHttpClient();
 		HttpPost httppost = new HttpPost(url);
 		List<NameValuePair> params = new ArrayList<NameValuePair>();
@@ -55,23 +56,8 @@ public class RegisterModel {
 			returnVal = line;
 		}
 		
-		if(parseResult(returnVal)) {
-			System.out.println("TRUE: "+returnVal);
-			return true;
-		}
-		else {
-			System.out.println("FALSE: "+returnVal);
-			return false;
-		}
-	}
-	
-	private boolean parseResult(String line) throws JSONException 
-	{
-		JSONObject result = new JSONObject(line);
-		
-		if(result.getString("register").equals("true"))
-			return true;
-		else
-			return false;
+		JSONObject result = new JSONObject(returnVal);
+		uuid = result.getString("register");
+		return uuid;
 	}
 }

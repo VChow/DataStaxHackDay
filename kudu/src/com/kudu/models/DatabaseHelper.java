@@ -142,7 +142,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 	
 	public boolean checkAESExists(String friend) {
 		SQLiteDatabase db = this.getWritableDatabase();
-		Cursor cursor = db.query(AES_TABLE, allSessionColumns, AES_FRIEND+""+"=?", new String[] {friend}, null, null, null);
+		Cursor cursor = db.query(AES_TABLE, allAESColumns, AES_FRIEND+"=?", new String[] {friend}, null, null, null);
 		if(cursor!=null && cursor.getCount()>0) {
 			cursor.moveToFirst();
 			db.close();
@@ -154,7 +154,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 	
 	public String getAES(String friend) {
 		SQLiteDatabase db = this.getWritableDatabase();
-		Cursor cursor = db.query(AES_TABLE, allAESColumns, AES_FRIEND+""+"=?", new String[] {friend}, null, null, null);
+		Cursor cursor = db.query(AES_TABLE, allAESColumns, AES_FRIEND+"=?", new String[] {friend}, null, null, null);
 		
 		if(cursor!=null && cursor.getCount()>0) {
 			cursor.moveToFirst();

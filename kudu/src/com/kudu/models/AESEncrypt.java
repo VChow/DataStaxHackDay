@@ -12,7 +12,7 @@ import javax.crypto.NoSuchPaddingException;
 import javax.crypto.SecretKey;
 import javax.crypto.spec.SecretKeySpec;
 
-import org.apache.commons.codec.binary.*;
+import android.util.Log;
 
 import com.kudu.activities.MainActivity;
 
@@ -21,7 +21,7 @@ public class AESEncrypt {
 	
 	public String Encrypt(String message, String friendName) throws NoSuchAlgorithmException, NoSuchPaddingException, InvalidKeyException, IllegalBlockSizeException, BadPaddingException, UnsupportedEncodingException {
 		String key = MainActivity.db.getAES(friendName);
-		
+		Log.v("FUCK", key);
 		byte[] bytes = key.getBytes(Charset.forName("UTF-8"));
 		SecretKey sc = new SecretKeySpec(bytes, "AES");
 		Cipher c = Cipher.getInstance("AES");

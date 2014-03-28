@@ -6,6 +6,7 @@ import org.json.JSONException;
 
 import android.app.Activity;
 import android.app.Fragment;
+import android.app.FragmentManager;
 import android.content.Context;
 import android.net.ConnectivityManager;
 import android.os.Bundle;
