@@ -50,12 +50,12 @@ public class ConversationModel {
 
 	}
 	
-	public void addMessage(String username, String conversationID, String message)
+	public void addMessage(String conversationID, String message)
 	{
 		UUID uuid = UUIDs.timeBased();
 		Session session = cluster.connect("kududb");
 		String query1 = "INSERT INTO conversation (conversationuuid, idtimeuuid, message) VALUES (" + 
-		conversationID + ", " + uuid + ", \'" + username + ":" + message + "\');";
+		conversationID + ", " + uuid + ", \'" + message + "\');";
 		PreparedStatement statement = session.prepare(query1);
 		BoundStatement boundStatement = new BoundStatement(statement);
 		session.execute(boundStatement);

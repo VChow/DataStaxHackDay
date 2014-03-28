@@ -62,7 +62,7 @@ public class conversation extends HttpServlet {
 		String getID = request.getParameter("getID");
 		String ID = request.getParameter("convID");
 		if(message != null)
-			convModel.addMessage(username, ID, message);
+			convModel.addMessage(ID, message);
 		else if(getID != null)
 			getID(request, response);
 		else

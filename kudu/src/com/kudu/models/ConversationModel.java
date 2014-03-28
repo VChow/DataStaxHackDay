@@ -21,6 +21,8 @@ import org.apache.http.message.BasicNameValuePair;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import com.kudu.activities.MainActivity;
+
 import android.util.Log;
 
 public class ConversationModel {
@@ -43,7 +45,18 @@ public class ConversationModel {
 		this.conversationID = getConvID.getConversationID();
 		
 		Log.e("convID", conversationID);
-		//this.convKey = db.getKey(conversationID);
+		DatabaseHelper db = MainActivity.db;
+		this.convKey = db.getAES(friendName);
+		
+		if(convKey == null)
+		{
+			try {
+				convKey = ShaThis.getSha("Datastax");
+			} catch (Throwable e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
 	}
 	
 	public String getConversationID() throws ClientProtocolException, IOException, JSONException
@@ -122,7 +135,14 @@ public class ConversationModel {
 				subEntries[j] = subEntries[j].substring(1);
 				subEntries[j] = subEntries[j].substring(0, subEntries[j].length()-1);
 			}
-			conversation.put(subEntries[0], subEntries[1]);
+			String message = null;
+			try {
+				message = decryptMessage(subEntries[1]);
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			conversation.put(subEntries[0], message);
 		}
 
 		return conversation;
@@ -130,6 +150,13 @@ public class ConversationModel {
 
 	public void sendMessage(String message) throws ClientProtocolException, IOException
 	{
+		message = username + ":" + message;
+		try {
+			message = encryptMessage(message);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		HttpClient httpclient = new DefaultHttpClient();
 		HttpPost httppost = new HttpPost(url);
 		List<NameValuePair> params = new ArrayList<NameValuePair>();
@@ -140,5 +167,17 @@ public class ConversationModel {
 		httppost.setEntity(new UrlEncodedFormEntity(params));
 		httpclient.execute(httppost);
 		
+	}
+	
+	private String encryptMessage(String message) throws Exception
+	{
+		AESEncrypt encrypt = new AESEncrypt();
+		return encrypt.encrypt(message, convKey);
+	}
+	
+	private String decryptMessage(String message) throws Exception
+	{
+		AESEncrypt encrypt = new AESEncrypt();
+		return encrypt.decrypt(message, convKey);
 	}
 }

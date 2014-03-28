@@ -10,28 +10,14 @@ import javax.crypto.spec.SecretKeySpec;
 public class AESEncrypt {
 	public AESEncrypt() {}
 	
-	public static String encrypt(String cleartext) throws Exception {
-		String key = null;
-		try {
-			key = ShaThis.getSha("BATMAN");
-		} catch (Throwable e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+	public static String encrypt(String cleartext, String key) throws Exception {
 		key = key.substring(0, 32);
         byte[] rawKey = getRawKey(key.getBytes());
         byte[] result = encryptIt(rawKey, cleartext.getBytes());
         return toHex(result);
 }
 
-public static String decrypt(String encrypted) throws Exception {
-	String key = null;
-	try {
-		key = ShaThis.getSha("BATMAN");
-	} catch (Throwable e) {
-		// TODO Auto-generated catch block
-		e.printStackTrace();
-	}
+public static String decrypt(String encrypted, String key) throws Exception {
 	key = key.substring(0, 32);
     byte[] rawKey = getRawKey(key.getBytes());
         byte[] enc = toByte(encrypted);

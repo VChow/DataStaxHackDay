@@ -146,11 +146,6 @@ public class ConversationActivityFragment extends ListFragment{
 			new Thread(new Runnable() {
 				public void run(){
 					try {
-						AESEncrypt encrypt = new AESEncrypt();
-						String encrypted = encrypt.encrypt(message);
-						Log.e("encrypted", encrypted);
-						String decrypted = encrypt.decrypt(encrypted);
-						Log.e("decrypted", decrypted);
 						
 						conversationModel.sendMessage(message);
 						
