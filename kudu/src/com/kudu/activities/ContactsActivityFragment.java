@@ -14,6 +14,7 @@ import android.app.ListFragment;
 import android.content.Context;
 import android.net.ConnectivityManager;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -27,7 +28,7 @@ import com.kudu.models.ContactsModel;
 import com.kudu.models.Session;
 
 public class ContactsActivityFragment extends ListFragment {
-    String username = "admin";
+    String username = "";
     private Context context;
 	public ContactsActivityFragment() {}
     
@@ -60,7 +61,10 @@ public class ContactsActivityFragment extends ListFragment {
 						int size = temp.size();
 						String[] values = new String[size];
 						for(int i = 0; i < temp.size(); i++)
-							values[i] = temp.get(i);
+						{
+								values[i] = temp.get(i);
+						
+						}
 						setArray(values, size);
 					} catch (IllegalStateException e) {
 						e.printStackTrace();

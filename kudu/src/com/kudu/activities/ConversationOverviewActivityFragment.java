@@ -13,6 +13,7 @@ import android.app.ListFragment;
 import android.content.Context;
 import android.net.ConnectivityManager;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -64,7 +65,11 @@ public class ConversationOverviewActivityFragment extends ListFragment {
 						String[] values = new String[size];
 
 						for(int i = 0; i < temp.size(); i++)
-							values[i] = temp.get(i);
+						{
+							if(!temp.get(i).equals("null"))
+								values[i] = temp.get(i);
+							Log.e("temp.get(i)", temp.get(i));
+						}
 						setArray(values, size);
 					} catch (IllegalStateException e) {
 						e.printStackTrace();

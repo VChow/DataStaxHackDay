@@ -40,7 +40,9 @@ public class ContactsModel {
 		HttpClient httpclient = new DefaultHttpClient();
 		HttpPost httppost = new HttpPost(url);
 		List<NameValuePair> params = new ArrayList<NameValuePair>();
-		params.add(new BasicNameValuePair("retrieve", retrieve));
+		params.add(new BasicNameValuePair("retrieve", "true"));
+		params.add(new BasicNameValuePair("add", "false"));
+		params.add(new BasicNameValuePair("addConv", "false"));
 		params.add(new BasicNameValuePair("username", username));
 		
 		//response
@@ -100,16 +102,19 @@ public class ContactsModel {
 	
 	public void startConversation(String username, String contact) throws ClientProtocolException, IOException, JSONException
 	{
-		HttpClient httpclient = new DefaultHttpClient();
-		HttpPost httppost = new HttpPost(url);
-		List<NameValuePair> params = new ArrayList<NameValuePair>();
-		params.add(new BasicNameValuePair("username", username));
-		params.add(new BasicNameValuePair("contact", contact));
-		params.add(new BasicNameValuePair("addConv", "true"));
-		params.add(new BasicNameValuePair("retrieve", "false"));
-		params.add(new BasicNameValuePair("add", "false"));
-		httppost.setEntity(new UrlEncodedFormEntity(params));
-		httpclient.execute(httppost);		
+		if(username != null && contact != null)
+		{
+			HttpClient httpclient = new DefaultHttpClient();
+			HttpPost httppost = new HttpPost(url);
+			List<NameValuePair> params = new ArrayList<NameValuePair>();
+			params.add(new BasicNameValuePair("username", username));
+			params.add(new BasicNameValuePair("contact", contact));
+			params.add(new BasicNameValuePair("addConv", "true"));
+			params.add(new BasicNameValuePair("retrieve", "false"));
+			params.add(new BasicNameValuePair("add", "false"));
+			httppost.setEntity(new UrlEncodedFormEntity(params));
+			httpclient.execute(httppost);
+		}
 	}
 	
 	private boolean parseResult(String line) throws JSONException 

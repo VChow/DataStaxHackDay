@@ -86,18 +86,22 @@ private Cluster cluster;
 	{
 		UUID uuid = UUID.randomUUID();
 		
-		Session session = cluster.connect("kududb");
-		String addConversation1 = "UPDATE friends SET conversation = " + uuid + " WHERE username = \'" + username + "\' and friendname =\'" +
-				friend + "\';"; 
-		PreparedStatement statement1 = session.prepare(addConversation1);
-		BoundStatement boundStatement1 = new BoundStatement(statement1);
-		session.execute(boundStatement1);
+		if(username != null && friend != null)
+		{
 		
-		String addConversation2 = "UPDATE friends SET conversation = " + uuid + " WHERE username = \'" + friend + "\' and friendname =\'" +
-				username + "\';"; 
-		PreparedStatement statement2 = session.prepare(addConversation2);
-		BoundStatement boundStatement2 = new BoundStatement(statement2);
-		session.execute(boundStatement2);
+			Session session = cluster.connect("kududb");
+			String addConversation1 = "UPDATE friends SET conversation = " + uuid + " WHERE username = \'" + username + "\' and friendname =\'" +
+					friend + "\';"; 
+			PreparedStatement statement1 = session.prepare(addConversation1);
+			BoundStatement boundStatement1 = new BoundStatement(statement1);
+			session.execute(boundStatement1);
+
+			String addConversation2 = "UPDATE friends SET conversation = " + uuid + " WHERE username = \'" + friend + "\' and friendname =\'" +
+					username + "\';"; 
+			PreparedStatement statement2 = session.prepare(addConversation2);
+			BoundStatement boundStatement2 = new BoundStatement(statement2);
+			session.execute(boundStatement2);
+		}
 	}
 	
 }
