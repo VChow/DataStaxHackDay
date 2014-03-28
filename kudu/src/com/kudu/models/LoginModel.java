@@ -20,7 +20,8 @@ import org.json.JSONObject;
 public class LoginModel {
 	
 	//String url = "http://10.0.2.2:8080/KuduServer/login";
-	String url = "http://10.0.3.2:8080/KuduServer/login";
+	//String url = "http://10.0.3.2:8080/KuduServer/login";
+	String url = "http://kududb.cloudapp.net:8080/KuduServer/login";
 	String username, password;
 	
 	public LoginModel(String username, String password)

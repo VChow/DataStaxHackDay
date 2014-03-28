@@ -20,7 +20,8 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 public class ProfileModel {
-	String url = "http://10.0.3.2:8080/KuduServer/profile";
+	//String url = "http://10.0.3.2:8080/KuduServer/profile";
+	String url = "http://kududb.cloudapp.net:8080/KuduServer/profile";
 	String name, username, password, email, location, bio, id;
 	String update = "false";
 	String retrieve = "false";

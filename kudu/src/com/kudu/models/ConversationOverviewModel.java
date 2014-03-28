@@ -15,9 +15,6 @@ import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicNameValuePair;
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
 import org.json.*;
 
 import android.util.Log;
@@ -25,7 +22,8 @@ import android.util.Log;
 public class ConversationOverviewModel {
 
 	//String url = "http://10.0.2.2:8080/KuduServer/conversationOverview";
-	String url = "http://10.0.3.2:8080/KuduServer/conversationOverview";
+	//String url = "http://10.0.3.2:8080/KuduServer/conversationOverview";
+	String url = "http://kududb.cloudapp.net:8080/KuduServer/conversationOverview";
 	String retrieve = "false";
 	String insert = "false";
 	LinkedList<String> temp = new LinkedList<String>();

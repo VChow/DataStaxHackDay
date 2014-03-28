@@ -21,7 +21,8 @@ import org.json.JSONObject;
 
 public class GetConversationIDThread extends Thread {
 	String username,friend,conversationID;
-	String url = "http://10.0.3.2:8080/KuduServer/conversation";
+	//String url = "http://10.0.3.2:8080/KuduServer/conversation";
+	String url = "http://kududb.cloudapp.net:8080/KuduServer/conversation";
 	
 	public GetConversationIDThread(String username, String friend)
 	{

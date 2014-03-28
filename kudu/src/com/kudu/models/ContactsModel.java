@@ -27,7 +27,8 @@ import android.util.Log;
 public class ContactsModel {
 
 	//String url = "http://10.0.2.2:8080/KuduServer/contacts";
-	String url = "http://10.0.3.2:8080/KuduServer/contacts";
+	//String url = "http://10.0.3.2:8080/KuduServer/contacts";
+	String url = "http://kududb.cloudapp.net:8080/KuduServer/contacts";
 	String retrieve = "false";
 	String add = "false";
 	LinkedList<String> temp = new LinkedList<String>();
